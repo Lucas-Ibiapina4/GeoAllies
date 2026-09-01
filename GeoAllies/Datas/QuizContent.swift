@@ -9,7 +9,7 @@ import SwiftUI
 
 struct QuizContent: View {
     
-    var quiz : QuizType
+    var quiz : QuestionsModel
     
     var body: some View {
         

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct Quiz: View {
     
-    @State private var questao: [QuizType] = []
+    @State private var questao: [QuestionsModel] = []
     
     var body: some View {
         
