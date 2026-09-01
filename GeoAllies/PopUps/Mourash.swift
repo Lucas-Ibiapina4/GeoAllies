@@ -8,14 +8,22 @@
 import SwiftUI
 
 struct Mourash: View {
-    let mourash = Country(economia: 1, militarismo: 1, tecnologia: 5)
+    
+    @Environment(GameManager.self) private var gamemanager
+    
     var body: some View {
-        Text("Economia = \(mourash.economia)")
-        Text("Militarismo = \(mourash.militarismo)")
-        Text("Tecnologia = \(mourash.tecnologia)")
+        
+        VStack {
+            Text("Mourash")
+            
+            Text("Economia: \(gamemanager.mourash.economia)")
+            Text("Militarismo: \(gamemanager.mourash.militarismo)")
+            Text("Tecnologia: \(gamemanager.mourash.tecnologia)")
+        }
     }
 }
 
 #Preview {
     Mourash()
+        .environment(GameManager())
 }

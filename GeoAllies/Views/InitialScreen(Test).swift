@@ -65,4 +65,5 @@ struct InitialScreen_Test_: View {
 
 #Preview {
     InitialScreen_Test_()
+        .environment(GameManager())
 }
