@@ -6,7 +6,7 @@
 //
 
 import Observation
-
+import SwiftUI
 
 //avisa quando os dados mudam
 @Observable
