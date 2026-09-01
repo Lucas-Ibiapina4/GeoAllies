@@ -8,14 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var isPresented: Bool = false
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationStack {
+            Button{
+                isPresented = true
+            } label: {
+                Label("Conversar com o Conselheiro", systemImage: "person.fill")
+                    .navigationDestination(isPresented: $isPresented){
+                        CounsilView()
+                    }
+            }
         }
-        .padding()
     }
 }
 
