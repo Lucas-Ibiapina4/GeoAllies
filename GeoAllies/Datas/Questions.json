@@ -1,91 +1,112 @@
 [
     {
-        pilar: "Economia",
-        question: "O que caracteriza o fenômeno geopolítico e econômico conhecido como Nearshoring?",
-        options: [
-            "Transferência da produção para países distantes de custo muito baixo.", "Relocalização de fábricas para países geograficamente próximos ou aliados.", "Nacionalização total de empresas estrangeiras em território nacional.", "Proibição de transações comerciais em moedas estrangeiras."
+        "pilar": "Economia",
+        "question": "O que caracteriza o fenômeno geopolítico e econômico conhecido como Nearshoring?",
+        "options": [
+            "Transferência da produção para países distantes de custo muito baixo.",
+            "Relocalização de fábricas para países geograficamente próximos ou aliados.",
+            "Nacionalização total de empresas estrangeiras em território nacional.",
+            "Proibição de transações comerciais em moedas estrangeiras."
         ],
-        answer: "Relocalização de fábricas para países geograficamente próximos ou aliados."
+        "answer": "Relocalização de fábricas para países geograficamente próximos ou aliados."
     },
-    
     {
-        pilar: "Economia",
-        question: "Qual é o principal objetivo geopolítico dos países do bloco BRICS ao debaterem a de-dolarização?",
-        options: [
-            "Eliminar a circulação de moedas físicas globalmente.", "Adotar o Euro como moeda universal de comércio.", "Reduzir a dependência do dólar americano nas transações internacionais.", "Unificar o sistema fiscal de todos os países membros."
+        "pilar": "Economia",
+        "question": "Qual é o principal objetivo geopolítico dos países do bloco BRICS ao debaterem a de-dolarização?",
+        "options": [
+            "Eliminar a circulação de moedas físicas globalmente.",
+            "Adotar o Euro como moeda universal de comércio.",
+            "Reduzir a dependência do dólar americano nas transações internacionais.",
+            "Unificar o sistema fiscal de todos os países membros."
         ],
-        answer: "Reduzir a dependência do dólar americano nas transações internacionais."
+        "answer": "Reduzir a dependência do dólar americano nas transações internacionais."
     },
-    
     {
-      pilar: "Economia",
-      question: "Como os bloqueios e conflitos no Estreito de Ormuz impactam a economia global?",
-      options: [
-          "Afetam o fornecimento e provocam a alta do preço do petróleo.", "Paralisam o comércio internacional de semicondutores.", "Reduzem drasticamente a produção global de alimentos.", "Causam o fechamento imediato das bolsas de valores europeias."
-      ],
-      answer: "Afetam o fornecimento e provocam a alta do preço do petróleo.",
+        "pilar": "Economia",
+        "question": "Como os bloqueios e conflitos no Estreito de Ormuz impactam a economia global?",
+        "options": [
+            "Afetam o fornecimento e provocam a alta do preço do petróleo.",
+            "Paralisam o comércio internacional de semicondutores.",
+            "Reduzem drasticamente a produção global de alimentos.",
+            "Causam o fechamento imediato das bolsas de valores europeias."
+        ],
+        "answer": "Afetam o fornecimento e provocam a alta do preço do petróleo."
     },
-    
     {
-      pilar: "Economia",
-      question: "Qual é o foco geopolítico da iniciativa chinesa conhecida como Belt and Road (Nova Rota da Seda)?",
-      options: [
-          "Criar uma moeda única para todo o continente asiático.", "Financiar e construir infraestruturas para expandir rotas comerciais.", "Proibir exportações de commodities para a Europa.", "Otimizar acordos exclusivos de energia nuclear na América Latina."
-      ],
-      answer: "Financiar e construir infraestruturas para expandir rotas comerciais.",
+        "pilar": "Economia",
+        "question": "Qual é o foco geopolítico da iniciativa chinesa conhecida como Belt and Road (Nova Rota da Seda)?",
+        "options": [
+            "Criar uma moeda única para todo o continente asiático.",
+            "Financiar e construir infraestruturas para expandir rotas comerciais.",
+            "Proibir exportações de commodities para a Europa.",
+            "Otimizar acordos exclusivos de energia nuclear na América Latina."
+        ],
+        "answer": "Financiar e construir infraestruturas para expandir rotas comerciais."
     },
-    
     {
-      pilar: "Economia",
-      question: "O que representa o conceito de Friendship-shoring nas relações econômicas globais?",
-      options: [
-          "Restrição de comércio apenas entre países do mesmo continente.", "Realocação de cadeias de suprimento para nações aliadas politicamente.", "Isenção total de impostos comerciais para todos os países emergentes.", "Criação de blocos econômicos voltados unicamente para a defesa militar."
-      ],
-      answer: "Realocação de cadeias de suprimento para nações aliadas politicamente.",
+        "pilar": "Economia",
+        "question": "O que representa o conceito de Friendship-shoring nas relações econômicas globais?",
+        "options": [
+            "Restrição de comércio apenas entre países do mesmo continente.",
+            "Realocação de cadeias de suprimento para nações aliadas politicamente.",
+            "Isenção total de impostos comerciais para todos os países emergentes.",
+            "Criação de blocos econômicos voltados unicamente para a defesa militar."
+        ],
+        "answer": "Realocação de cadeias de suprimento para nações aliadas politicamente."
     },
-    
     {
-      pilar: "Economia",
-      question: "Por que os semicondutores (chips) se tornaram centrais nas disputas geopolíticas atuais?",
-      options: [
-          "São os principais componentes usados na fabricação de fertilizantes.", "Controlam o valor de troca das moedas de reserva internacionais.", "São insumos vitais para a indústria tecnológica e de defesa.", "Substituem o petróleo como fonte geradora de energia primária."
-      ],
-      answer: "São insumos vitais para a indústria tecnológica e de defesa.",
+        "pilar": "Economia",
+        "question": "Por que os semicondutores (chips) se tornaram centrais nas disputas geopolíticas atuais?",
+        "options": [
+            "São os principais componentes usados na fabricação de fertilizantes.",
+            "Controlam o valor de troca das moedas de reserva internacionais.",
+            "São insumos vitais para a indústria tecnológica e de defesa.",
+            "Substituem o petróleo como fonte geradora de energia primária."
+        ],
+        "answer": "São insumos vitais para a indústria tecnológica e de defesa."
     },
-    
     {
-      pilar: "Economia",
-      question: "Qual é o principal risco econômico global do conflito geopolítico no Mar Vermelho?",
-      options: [
-          "Escassez imediata de reservas de ouro nos bancos centrais.", "Encarecimento do frete marítimo e atrasos em suprimentos.", "Colapso definitivo do comércio eletrônico mundial.", "Queda drástica da produção agrícola no hemisfério sul."
-      ],
-      answer: "Encarecimento do frete marítimo e atrasos em suprimentos.",
+        "pilar": "Economia",
+        "question": "Qual é o principal risco econômico global do conflito geopolítico no Mar Vermelho?",
+        "options": [
+            "Escassez imediata de reservas de ouro nos bancos centrais.",
+            "Encarecimento do frete marítimo e atrasos em suprimentos.",
+            "Colapso definitivo do comércio eletrônico mundial.",
+            "Queda drástica da produção agrícola no hemisfério sul."
+        ],
+        "answer": "Encarecimento do frete marítimo e atrasos em suprimentos."
     },
-    
     {
-      pilar: "Economia",
-      question: "Qual é a função geopolítica e econômica de sanções financeiras como o bloqueio ao sistema SWIFT?",
-      options: [
-          "Impedir transações bancárias e isolar um país do comércio mundial.", "Congelar a cotação de moedas no mercado de câmbio internacional.", "Obrigar um país a mudar o regime de tributação interna.", "Cancelar todos os contratos de dívida externa da nação afetada."
-      ],
-      answer: "Impedir transações bancárias e isolar um país do comércio mundial.",
+        "pilar": "Economia",
+        "question": "Qual é a função geopolítica e econômica de sanções financeiras como o bloqueio ao sistema SWIFT?",
+        "options": [
+            "Impedir transações bancárias e isolar um país do comércio mundial.",
+            "Congelar a cotação de moedas no mercado de câmbio internacional.",
+            "Obrigar um país a mudar o regime de tributação interna.",
+            "Cancelar todos os contratos de dívida externa da nação afetada."
+        ],
+        "answer": "Impedir transações bancárias e isolar um país do comércio mundial."
     },
-    
     {
-      pilar: "Economia",
-      question: "O que define o conceito econômico e geopolítico de protecionismo?",
-      options: [
-          "Incentivo irrestrito à entrada de produtos importados sem taxas.", "Barreiras e tarifas para proteger a indústria nacional da concorrência externa.", "Doação de insumos fabris para economias em desenvolvimento.", "Padronização universal das leis trabalhistas industriais."
-      ],
-      answer: "Barreiras e tarifas para proteger a indústria nacional da concorrência externa.",
+        "pilar": "Economia",
+        "question": "O que define o conceito econômico e geopolítico de protecionismo?",
+        "options": [
+            "Incentivo irrestrito à entrada de produtos importados sem taxas.",
+            "Barreiras e tarifas para proteger a indústria nacional da concorrência externa.",
+            "Doação de insumos fabris para economias em desenvolvimento.",
+            "Padronização universal das leis trabalhistas industriais."
+        ],
+        "answer": "Barreiras e tarifas para proteger a indústria nacional da concorrência externa."
     },
-    
     {
-      pilar: "Economia",
-      question: "De que forma o domínio de reservas de terras raras confere poder geopolítico a um país?",
-      options: [
-          "Permite controlar o preço dos combustíveis fósseis no mercado.", "Assegura a hegemonia sobre minerais essenciais para tecnologia de ponta.", "Garante o controle sobre os preços globais de commodities agrícolas.", "Substitui a necessidade de sistemas bancários tradicionais."
-      ],
-      answer: "Assegura a hegemonia sobre minerais essenciais para tecnologia de ponta.",
-    },
+        "pilar": "Economia",
+        "question": "De que forma o domínio de reservas de terras raras confere poder geopolítico a um país?",
+        "options": [
+            "Permite controlar o preço dos combustíveis fósseis no mercado.",
+            "Assegura a hegemonia sobre minerais essenciais para tecnologia de ponta.",
+            "Garante o controle sobre os preços globais de commodities agrícolas.",
+            "Substitui a necessidade de sistemas bancários tradicionais."
+        ],
+        "answer": "Assegura a hegemonia sobre minerais essenciais para tecnologia de ponta."
+    }
 ]
