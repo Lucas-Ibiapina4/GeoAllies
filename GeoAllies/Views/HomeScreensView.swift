@@ -13,7 +13,6 @@ struct HomeScreensView: View {
         NavigationStack {
             
             ZStack {
-                
                 // Fundo da tela
                 Color(
                     red: 26 / 255,
