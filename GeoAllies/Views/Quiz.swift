@@ -8,17 +8,45 @@
 import SwiftUI
 
 struct Quiz: View {
-    @State var yourCountry = Country(economia: 0, militarismo: 0, tecnologia: 0)
     
-    @State var irParaYourCountry: Bool = false
+    @State private var questao: [QuizType] = []
+    
     var body: some View {
-        Button(action: {
-            yourCountry.economia += 1
-            }) {
-                Image(systemName: "plus")
+        
+        HStack {
+            ZStack{
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color("QuizTextBox"))
+                    .frame(width: 300, height: 300)
+                
+                Text("teste")
+                
             }
+           
+            VStack(spacing: 35){
+                ForEach(0..<4, id: \.self){ _ in
+                    
+                    
+                        Button {
+                            
+                        } label: {
+                            ZStack{
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color("QuizTextBox"))
+                                    .frame(width: 300, height: 50)
+                                
+                                Text("teste")
+                                    .foregroundColor(.black)
+                            }
+                        }
+                    
+                }
+            }
+                
         }
+                
     }
+}
 
 
 #Preview {

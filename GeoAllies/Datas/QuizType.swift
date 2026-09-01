@@ -9,11 +9,10 @@
 //import Foundation
 //import Playgrounds
 //
-//struct Quiz: Codable, Identifiable {
-//    let id: UUID = UUID()
-//    let pilar, question, information, image: String
-//    let tipSection: [TipSection]
-//    static let listaDicas: [Tip] = Bundle.main.decode(file: "Tips")
+//struct QuizType: Codable {
+//    let pilar, question, answer: String
+//    let options: [String]
+//    static let listaDeperguntas: [QuizType] = Bundle.main.decode(file: "Questions")
 //    
 //}
 //
@@ -41,9 +40,5 @@
 //}
 //
 //#Playground {
-//    let result: [Tip] = Bundle.main.decode(file: "Tips")
-//      
+//   // let result: [QuizType] = Bundle.main.decode(file: "Questions")
 //}
-
-
-//olaaaaa
