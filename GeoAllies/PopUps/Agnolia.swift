@@ -8,15 +8,21 @@
 import SwiftUI
 
 struct Agnolia: View {
-    let agnolia = Country(economia: 5, militarismo: 1, tecnologia: 1)
+    
+    @Environment(GameManager.self) private var gamemanager
     
     var body: some View {
-        Text("Economia = \(agnolia.economia)")
-        Text("Militarismo = \(agnolia.militarismo)")
-        Text("Tecnologia = \(agnolia.tecnologia)")
+        VStack {
+                    Text("Agnolia")
+                    
+                    Text("Economia: \(gamemanager.agnolia.economia)")
+                    Text("Militarismo: \(gamemanager.agnolia.militarismo)")
+                    Text("Tecnologia: \(gamemanager.agnolia.tecnologia)")
+                }
     }
 }
 
-//#Preview {
-//    Agnolia()
-//}
+#Preview {
+    Agnolia()
+        .environment(GameManager())
+}

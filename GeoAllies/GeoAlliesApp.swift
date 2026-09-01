@@ -9,9 +9,15 @@ import SwiftUI
 
 @main
 struct GeoAlliesApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
+    
+    //mantem os dados enquanto o app está rodando e cria a instancia baseada no GameManager
+    @State private var gamemanager = GameManager()
+    
+    
+        var body: some Scene {
+            WindowGroup {
+                ContentView()
+                    .environment(gamemanager) //disponibiliza essa instancia para todo mundo
+            }
         }
-    }
 }

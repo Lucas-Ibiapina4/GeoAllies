@@ -13,6 +13,7 @@ class Country {
     var economia : Int = 0
     var militarismo : Int = 0
     var tecnologia : Int = 0
+
     
 
     init(economia: Int, militarismo: Int, tecnologia: Int){
