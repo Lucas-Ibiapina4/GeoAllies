@@ -15,7 +15,7 @@ struct GeoAlliesApp: App {
     
         var body: some Scene {
             WindowGroup {
-                ContentView()
+                HomeScreensView()
                     .environment(gamemanager) //disponibiliza essa instancia para todo mundo
                     .preferredColorScheme(.light)
             }
