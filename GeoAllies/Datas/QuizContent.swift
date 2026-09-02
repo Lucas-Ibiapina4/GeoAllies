@@ -13,34 +13,31 @@ struct QuizContent: View {
     
     var body: some View {
         
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 10) {
-                        
-                        Text(quiz.pilar)
-                        
-                        Spacer()
-                        
+                HStack(spacing: 10) {
+                    VStack {
+                     
                         Text(quiz.question)
-                        
-                        Spacer()
-                        
+                    }
+                    VStack {
                         ForEach(quiz.options, id: \.self) { index in
-                            Spacer()
-                            
                             Text(index)
                             
                         }
                         
-                        Text(quiz.answer)
-                    
+                    }
+                    Text(quiz.answer)
                 }
-            }
-        }
         
     }
 }
 
 #Preview {
-   // QuizContent()
+    QuizContent(
+        quiz: QuestionsModel(
+            pilar: "pilar",
+            question: "question",
+            options: ["option1", "option 2", "option 3", "option 4"],
+            answer: "option 1"
+        )
+    )
 }

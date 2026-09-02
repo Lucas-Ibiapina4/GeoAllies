@@ -9,46 +9,129 @@ import SwiftUI
 
 struct Quiz: View {
     
-    @State private var questao: [QuestionsModel] = []
+    
+    let pilar: QuizPilar
+    let questions: [QuestionsModel]
+    
+    @State private var correctOption: Int? = nil
+    @State private var currentQuestionIndex = 0
+    @State private var wrongOptions: Set<Int> = []
+    @State private var quizFinished = false
+    
+    init(pilar: QuizPilar) {
+        self.pilar = pilar
+        
+        let allQuestions: [QuestionsModel] =
+        Bundle.main.decode(file: "Questions.json")
+        
+        self.questions = allQuestions
+            .filter { $0.pilar == pilar.rawValue}
+    }
+    
+
+    var currentQuestion: QuestionsModel? {
+        guard currentQuestionIndex < questions.count else { return nil }
+        
+        return questions[currentQuestionIndex]
+    }
     
     var body: some View {
         
-        HStack {
-            ZStack{
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color("QuizTextBox"))
-                    .frame(width: 300, height: 300)
+        if quizFinished {
+            
+            VStack(spacing: 20) {
                 
-                Text("teste")
+                Text ("Quiz concluido")
+                    .font(.largeTitle)
+                    .bold()
+                
+                Text("Você respondeu todas as perguntas")
                 
             }
-           
-            VStack(spacing: 35){
-                ForEach(0..<4, id: \.self){ _ in
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+        } else if let question = currentQuestion {
+            
+            HStack(spacing: 10) {
+                ZStack{
                     
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color("QuizTextBox"))
                     
+                    Text(question.question)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                }
+                .frame(width: 300, height: 300)
+                
+                VStack(spacing: 15) {
+                    ForEach(question.options.indices, id: \.self) { index in
+                        
                         Button {
-                            
+                            checkAnswer(
+                                option: question.options[index],
+                                index: index
+                            )
                         } label: {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 10)
-                                    .fill(Color("QuizTextBox"))
-                                    .frame(width: 300, height: 50)
+                                    .fill(
+                                        correctOption == index
+                                        ? Color.green
+                                        : wrongOptions.contains(index)
+                                            ? Color.red
+                                            : Color("QuizTextBox")
+                                    )
                                 
-                                Text("teste")
+                                Text(question.options[index])
                                     .foregroundColor(.black)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 10)
                             }
+                            .frame(width: 300, height: 65)
                         }
-                    
+                        .disabled(wrongOptions.contains(index) || correctOption != nil)
+                    }
                 }
             }
-                
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+        } else {
+            Text("Nenhuma pergunta encontrada para este quiz")
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-                
+    }
+    
+    func checkAnswer(option: String, index: Int) {
+        guard let question = currentQuestion else {
+            return
+        }
+        
+        if option == question.answer {
+            correctOption = index
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                nextQuestion()
+            }
+        } else {
+            wrongOptions.insert(index)
+        }
+    }
+    
+    func nextQuestion() {
+        
+        if currentQuestionIndex + 1 < questions.count {
+            
+            currentQuestionIndex += 1
+            wrongOptions.removeAll()
+            correctOption = nil
+            
+        } else {
+            quizFinished = true
+        }
     }
 }
 
 
 #Preview {
-    Quiz()
+    Quiz(pilar: .economia)
 }
