@@ -12,3 +12,4 @@ enum QuizPilar: String {
     case militarismo = "Militarismo"
     case tecnologia = "Tecnologia"
 }
+//
