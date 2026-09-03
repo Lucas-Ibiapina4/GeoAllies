@@ -21,4 +21,5 @@ class Country {
         self.militarismo = militarismo
         self.tecnologia = tecnologia
     }
-
+    
+}

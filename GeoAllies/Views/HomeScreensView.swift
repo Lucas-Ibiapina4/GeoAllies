@@ -13,11 +13,11 @@ struct HomeScreensView: View {
         NavigationStack {
             ZStack {
                 // Fundo da tela
-                Color(
-                    red: 26 / 255,
-                    green: 34 / 255,
-                    blue: 125 / 255
-                )
+                Group {
+                    Color.blueSea
+                    Image("fundo")
+                        .resizable()
+                }
                 .ignoresSafeArea()
                 // Botão que leva para o mapa
                 NavigationLink {

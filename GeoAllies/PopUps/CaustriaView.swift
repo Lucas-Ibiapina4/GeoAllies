@@ -51,13 +51,13 @@ struct CaustriaView: View {
                 )
                 
                 
-                if showingCounsil {
-                    
-                    CounsilView(
-                        isPresent: $showingCounsil
-                    )
-                    .zIndex(10)
-                }
+//                if showingCounsil {
+//                    
+//                    CounsilView(
+//                        isPresent: $showingCounsil
+//                    )
+//                    .zIndex(10)
+//                }
             }
             .frame(
                 width: geometry.size.width,

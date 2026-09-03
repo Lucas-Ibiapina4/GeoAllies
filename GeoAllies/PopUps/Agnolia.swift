@@ -15,56 +15,56 @@ struct AgnoliaView: View {
     
     @State private var showingCounsil = false
     
-    
     private var canAlly: Bool {
         gameManager.yourCountry.militarismo >= 4
     }
     
-    
     var body: some View {
-        
-        GeometryReader { geometry in
-            
-            ZStack {
+        NavigationStack {
+            GeometryReader { geometry in
                 
-                ZStack(alignment: .topTrailing) {
+                ZStack {
                     
-                    RoundedRectangle(cornerRadius: 35)
-                        .fill(Color(.systemGray6))
-                    
-                    
-                    HStack(spacing: 30) {
+                    ZStack(alignment: .topTrailing) {
                         
-                        countrySection
+                        RoundedRectangle(cornerRadius: 35)
+                            .fill(Color(.systemGray6))
                         
-                        statisticSection
+                        
+                        HStack(spacing: 30) {
+                            
+                            countrySection
+                            
+                            statisticSection
+                        }
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 18)
+                        
+                        
+                        closeButton
                     }
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 18)
+                    .frame(
+                        width: geometry.size.width * 0.84,
+                        height: geometry.size.height * 0.68
+                    )
                     
                     
-                    closeButton
+                    // Popup Conselheiro
+                    //                if showingCounsil {
+                    //
+                    //                    CounsilView(
+                    //                        isPresent: $showingCounsil
+                    //                    )
+                    //                    .zIndex(10)
+                    //                }
                 }
                 .frame(
-                    width: geometry.size.width * 0.84,
-                    height: geometry.size.height * 0.68
+                    width: geometry.size.width,
+                    height: geometry.size.height
                 )
-                
-                
-                // Popup Conselheiro
-                if showingCounsil {
-                    
-                    CounsilView(
-                        isPresent: $showingCounsil
-                    )
-                    .zIndex(10)
-                }
             }
-            .frame(
-                width: geometry.size.width,
-                height: geometry.size.height
-            )
         }
+        .navigationBarHidden(true)
     }
     
     

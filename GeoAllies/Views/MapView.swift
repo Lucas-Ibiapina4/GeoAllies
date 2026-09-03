@@ -57,7 +57,7 @@ struct MapView: View {
                 .offset(x: -180, y: -80)
                 
                 .navigationDestination(isPresented: $isPresentedAgnolia){
-                    HomeScreensView()
+                    AgnoliaView(isPresent: $isPresentedAgnolia)
                 }
                 
                 Button(action: {
@@ -73,9 +73,9 @@ struct MapView: View {
                 .buttonStyle(EstiloIlha3D())
                 .offset(x: -180, y: 100)
                 
-                .navigationDestination(isPresented: $isPresentedSeuPais){
-                    PlayerCountryView(isPresent: $isPresentedAgnolia)
-                }
+//                .navigationDestination(isPresented: $isPresentedSeuPais){
+//                    PlayerCountryView(isPresent: $isPresentedSeuPais)
+//                }
                 
                 Button(action: {
                     isPresentedCaustria = true
@@ -90,7 +90,7 @@ struct MapView: View {
                 .offset(x: 20, y: 30)
                 
                 .navigationDestination(isPresented: $isPresentedCaustria){
-                    HomeScreensView()
+                    CaustriaView(isPresent: $isPresentedCaustria)
                 }
                 
                 Button(action: {
@@ -107,7 +107,7 @@ struct MapView: View {
                 .offset(x: 230, y: -0)
                 
                 .navigationDestination(isPresented: $isPresentedLucasia){
-                    HomeScreensView()
+                    LucaciaView(isPresent: $isPresentedLucasia)
                 }
                 
                 VStack {
@@ -119,9 +119,14 @@ struct MapView: View {
                     }
                     Spacer()
                 }
+                
+                if isPresentedSeuPais {
+                    PlayerCountryView(isPresent: $isPresentedSeuPais)
+                        .zIndex(100)
+                }
             }
-            
         }
+        .navigationBarHidden(true)
         .environment(gameManager)
     }
 }
