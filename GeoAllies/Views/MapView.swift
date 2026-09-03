@@ -7,9 +7,122 @@
 
 import SwiftUI
 
+struct EstiloIlha3D: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ZStack {
+            configuration.label
+                .overlay(Color(red: 0.6, green: 0.35, blue: 0.1))
+                .mask(configuration.label)
+                .offset(x: 4, y: 7)
+            
+            configuration.label
+                .offset(
+                    x: configuration.isPressed ? 4 : 0,
+                    y: configuration.isPressed ? 7 : 0
+                )
+        }
+        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+    }
+}
+
 struct MapView: View {
+    @State private var gameManager = GameManager()
+    
+    @State private var isPresentedSeuPais: Bool = false
+    @State private var isPresentedAgnolia: Bool = false
+    @State private var isPresentedCaustria: Bool = false
+    @State private var isPresentedLucasia: Bool = false
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationStack {
+            ZStack {
+                Group {
+                    Color.blueSea
+                    Image("fundo")
+                        .resizable()
+                }
+                .ignoresSafeArea(edges: .all)
+                
+                Button(action: {
+                    isPresentedAgnolia = true
+                }) {
+                    Image("AgnoliaImage")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 220)
+                        .contentShape(Circle())
+                }
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: -180, y: -80)
+                
+                .navigationDestination(isPresented: $isPresentedAgnolia){
+                    HomeScreensView()
+                }
+                
+                Button(action: {
+                    isPresentedSeuPais = true
+                }) {
+                    Image("PaísSeu")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 190)
+                        .contentShape(Circle())
+                }
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: -180, y: 100)
+                
+                .navigationDestination(isPresented: $isPresentedSeuPais){
+                    PlayerCountryView(isPresent: $isPresentedAgnolia)
+                }
+                
+                Button(action: {
+                    isPresentedCaustria = true
+                }) {
+                    Image("CaustriaImage")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 210)
+                }
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: 20, y: 30)
+                
+                .navigationDestination(isPresented: $isPresentedCaustria){
+                    HomeScreensView()
+                }
+                
+                Button(action: {
+                    isPresentedLucasia = true
+                }) {
+                    Image("LucaciaImage")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 190)
+                        .contentShape(Capsule())
+                }
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: 230, y: -0)
+                
+                .navigationDestination(isPresented: $isPresentedLucasia){
+                    HomeScreensView()
+                }
+                
+                VStack {
+                    HStack {
+                        Spacer()
+                        CounsilButtonView()
+                            .padding(.top, 32)
+                            .padding(.trailing, 48)
+                    }
+                    Spacer()
+                }
+            }
+            
+        }
+        .environment(gameManager)
     }
 }
 

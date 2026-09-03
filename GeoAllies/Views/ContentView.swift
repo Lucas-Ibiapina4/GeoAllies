@@ -8,19 +8,11 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var isPresented: Bool = false
+    @State private var isPresentedGeo: Bool = false
+    @State private var isPresentedGame: Bool = false
     
     var body: some View {
-        NavigationStack {
-            Button{
-                isPresented = true
-            } label: {
-                Label("Conversar com o Conselheiro", systemImage: "person.fill")
-                    .navigationDestination(isPresented: $isPresented){
-                        CounsilView()
-                    }
-            }
-        }
+        HomeScreensView()
     }
 }
 
