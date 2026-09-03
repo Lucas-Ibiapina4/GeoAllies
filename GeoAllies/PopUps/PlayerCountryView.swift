@@ -18,14 +18,32 @@ struct PlayerCountryView: View {
     
     
     var body: some View {
-        
         GeometryReader { geometry in
-            
-            ZStack {
+            ZStack(alignment: .topTrailing) {
+                // MARK: - Fundo principal do popup
                 
-                // MARK: - Popup do país
+                RoundedRectangle(cornerRadius: 35)
+                    .fill(
+                        Color(
+                            red: 245 / 255,
+                            green: 245 / 255,
+                            blue: 245 / 255
+                        )
+                    )
+                // MARK: - Conteúdo principal
+                HStack(spacing: 30) {
+                    // Lado esquerdo
+                    countrySection
+                    // Lado direito
+                    statisticSection
+                }
+                .padding(.horizontal, 32)
+                .padding(.vertical, 18)
                 
-                ZStack(alignment: .topTrailing) {
+                // MARK: - Botão fechar
+                Button {
+                    isPresent = false
+                } label: {
                     
                     RoundedRectangle(cornerRadius: 35)
                         .fill(
@@ -85,14 +103,10 @@ struct PlayerCountryView: View {
             )
         }
     }
-    
-    
-    // MARK: - País
-    
+    // MARK: - Lado esquerdo
     private var countrySection: some View {
-        
         VStack(spacing: 10) {
-            
+            // MARK: Nome do país
             Text("SEU PAÍS")
                 .font(
                     .system(
@@ -112,28 +126,30 @@ struct PlayerCountryView: View {
                     )
                 )
                 .clipShape(Capsule())
-            
-            
+            // MARK: Imagem do país
             Image("PaísSeu")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 210, height: 180)
-            
-            
+                .frame(
+                    width: 210,
+                    height: 180
+                )
+            // MARK: Sombra abaixo do país
             Ellipse()
-                .fill(Color.gray.opacity(0.20))
-                .frame(width: 170, height: 22)
-            
-            
+                .fill(
+                    Color.gray.opacity(0.20)
+                )
+                .frame(
+                    width: 170,
+                    height: 22
+                )
+            // MARK: Conselheiro
             HStack {
                 
                 // Conselheiro
                 Button {
-                    
-                    showingCounsil = true
-                    
+                    print("Abrir Conselheiro")
                 } label: {
-                    
                     Image(systemName: "person.fill")
                         .font(.system(size: 22, weight: .bold))
                         .foregroundStyle(.white)
@@ -141,8 +157,6 @@ struct PlayerCountryView: View {
                         .background(.orange)
                         .clipShape(Circle())
                 }
-                
-                
                 Spacer()
             }
         }
@@ -151,13 +165,10 @@ struct PlayerCountryView: View {
             maxHeight: .infinity
         )
     }
-    
-    
-    // MARK: - Estatísticas
-    
+    // MARK: - Lado direito
     private var statisticSection: some View {
-        
         VStack(spacing: 12) {
+            // MARK: Economia
             
             ProgressBar(
                 name: "Economia",
@@ -168,8 +179,7 @@ struct PlayerCountryView: View {
             ) {
                 print("Abrir quiz de Economia")
             }
-            
-            
+            // MARK: Militarismo
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -179,7 +189,7 @@ struct PlayerCountryView: View {
             ) {
                 print("Abrir quiz de Militarismo")
             }
-            
+            // MARK: Tecnologia
             
             ProgressBar(
                 name: "Tecnologia",
@@ -202,34 +212,39 @@ struct PlayerCountryView: View {
             RoundedRectangle(cornerRadius: 22)
         )
     }
-}
-
-
-// MARK: - Preview
-
-#Preview {
     
+    
+    // MARK: - Funções dos quizzes
+    private func openEconomyQuiz() {
+        
+        print("Abrir quiz de Economia")
+    }
+    private func openMilitarismQuiz() {
+        
+        print("Abrir quiz de Militarismo")
+    }
+    private func openTechnologyQuiz() {
+        
+        print("Abrir quiz de Tecnologia")
+    }
+}
+// MARK: - Preview
+#Preview {
     PlayerCountryPreview()
 }
 
-
+// MARK: - Preview auxiliar
 private struct PlayerCountryPreview: View {
-    
     @State private var gameManager = GameManager()
-    
-    
     var body: some View {
-        
         ZStack {
-            
+            // Fundo azul do jogo
             Color(
                 red: 30 / 255,
                 green: 42 / 255,
                 blue: 130 / 255
             )
             .ignoresSafeArea()
-            
-            
             PlayerCountryView(
                 isPresent: .constant(true)
             )
