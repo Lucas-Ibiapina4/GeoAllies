@@ -13,6 +13,9 @@ struct PlayerCountryView: View {
     
     @Binding var isPresent: Bool
     
+    // Controla o popup do conselheiro
+    @State private var showingCounsil = false
+    
     
     var body: some View {
         GeometryReader { geometry in
@@ -42,38 +45,61 @@ struct PlayerCountryView: View {
                     isPresent = false
                 } label: {
                     
-                    Image(systemName: "xmark")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .heavy
+                    RoundedRectangle(cornerRadius: 35)
+                        .fill(
+                            Color(
+                                red: 245 / 255,
+                                green: 245 / 255,
+                                blue: 245 / 255
                             )
                         )
-                        .foregroundStyle(.white)
-                        .frame(
-                            width: 50,
-                            height: 50
-                        )
-                        .background(.red)
-                        .clipShape(Circle())
+                    
+                    
+                    HStack(spacing: 30) {
+                        
+                        countrySection
+                        
+                        statisticSection
+                    }
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 18)
+                    
+                    
+                    // Fechar popup
+                    Button {
+                        
+                        isPresent = false
+                        
+                    } label: {
+                        
+                        Image(systemName: "xmark")
+                            .font(.system(size: 22, weight: .heavy))
+                            .foregroundStyle(.white)
+                            .frame(width: 50, height: 50)
+                            .background(.red)
+                            .clipShape(Circle())
+                    }
+                    .offset(x: 12, y: -12)
                 }
-                .offset(
-                    x: 12,
-                    y: -12
+                .frame(
+                    width: geometry.size.width * 0.84,
+                    height: geometry.size.height * 0.68
                 )
+                
+                
+                // MARK: - Popup do Conselheiro
+                
+                if showingCounsil {
+                    
+                    CounsilView(
+                        isPresent: $showingCounsil
+                    )
+                    .zIndex(10)
+                }
             }
-            
-            // MARK: - Tamanho do popup
-            
             .frame(
-                width: geometry.size.width * 0.84,
-                height: geometry.size.height * 0.72
-            )
-            
-            // Centraliza o popup
-            .position(
-                x: geometry.size.width / 2,
-                y: geometry.size.height / 2
+                width: geometry.size.width,
+                height: geometry.size.height
             )
         }
     }
@@ -119,21 +145,15 @@ struct PlayerCountryView: View {
                 )
             // MARK: Conselheiro
             HStack {
+                
+                // Conselheiro
                 Button {
                     print("Abrir Conselheiro")
                 } label: {
                     Image(systemName: "person.fill")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold
-                            )
-                        )
+                        .font(.system(size: 22, weight: .bold))
                         .foregroundStyle(.white)
-                        .frame(
-                            width: 52,
-                            height: 52
-                        )
+                        .frame(width: 52, height: 52)
                         .background(.orange)
                         .clipShape(Circle())
                 }
@@ -157,8 +177,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .economia
             ) {
-                
-                openEconomyQuiz()
+                print("Abrir quiz de Economia")
             }
             // MARK: Militarismo
             ProgressBar(
@@ -168,8 +187,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .militarismo
             ) {
-                
-                openMilitarismQuiz()
+                print("Abrir quiz de Militarismo")
             }
             // MARK: Tecnologia
             
@@ -180,8 +198,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .tecnologia
             ) {
-                
-                openTechnologyQuiz()
+                print("Abrir quiz de Tecnologia")
             }
         }
         .padding(.horizontal, 22)
@@ -192,9 +209,7 @@ struct PlayerCountryView: View {
         )
         .background(.white)
         .clipShape(
-            RoundedRectangle(
-                cornerRadius: 22
-            )
+            RoundedRectangle(cornerRadius: 22)
         )
     }
     
