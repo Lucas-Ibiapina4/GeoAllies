@@ -32,8 +32,8 @@ class FoundationModelServices {
                 
                 INSTRUÇÕES OBRIGATÓRIAS:
                 1. O usuário enviará uma pergunta. Procure essa pergunta na BASE DE CONHECIMENTO DO JOGO acima.
-                2. Escreva um parágrafo curto (máximo de 3 frases) explicando o contexto histórico ou econômico do tema.
-                3. Você DEVE incluir a exata frase da resposta correta da BASE DE CONHECIMENTO dentro do seu texto explicativo.
+                2. Escreva um parágrafo curto (máximo 15 linhas) explicando o contexto histórico ou econômico ou político do tema.
+                3. Você DEVE incluir a exata frase da resposta correta da BASE DE CONHECIMENTO dentro do seu texto explicativo de preferência no meio do texto ou para o final.
                 4. Se a pergunta do usuário NÃO estiver na BASE DE CONHECIMENTO, ignore as regras anteriores e responda EXATAMENTE com a frase: "Não estou apto a responder."
                 """
         )

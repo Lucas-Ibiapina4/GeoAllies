@@ -13,12 +13,12 @@ struct Agnolia: View {
     
     var body: some View {
         VStack {
-                    Text("Agnolia")
-                    
-                    Text("Economia: \(gamemanager.agnolia.economia)")
-                    Text("Militarismo: \(gamemanager.agnolia.militarismo)")
-                    Text("Tecnologia: \(gamemanager.agnolia.tecnologia)")
-                }
+            Text("Agnolia")
+            
+            Text("Economia: \(gamemanager.agnolia.economia)")
+            Text("Militarismo: \(gamemanager.agnolia.militarismo)")
+            Text("Tecnologia: \(gamemanager.agnolia.tecnologia)")
+        }
     }
 }
 
