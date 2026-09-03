@@ -12,25 +12,23 @@ enum ProgressBarType {
     case economia
     case militarismo
     case tecnologia
-    
+
     var color: Color {
-        
         switch self {
-            
         case .economia:
             return Color(
                 red: 65 / 255,
                 green: 67 / 255,
                 blue: 170 / 255
             )
-            
+
         case .militarismo:
             return Color(
                 red: 30 / 255,
                 green: 67 / 255,
                 blue: 67 / 255
             )
-            
+
         case .tecnologia:
             return Color(
                 red: 237 / 255,
@@ -43,34 +41,38 @@ enum ProgressBarType {
 
 
 struct ProgressBar: View {
-    
+
     let name: String
     let icon: String
-    
     let value: Int
     let maximumValue: Int
-    
     let type: ProgressBarType
-    
+
+    // Define se o botão + aparece
+    var showImproveButton: Bool = true
+
     let onImprove: () -> Void
-    
-    
-    // Calcula quanto da barra será preenchido
+
+
     private var progress: CGFloat {
-        
-        CGFloat(value) / CGFloat(maximumValue)
+        guard maximumValue > 0 else {
+            return 0
+        }
+
+        return min(
+            CGFloat(value) / CGFloat(maximumValue),
+            1
+        )
     }
-    
-    
+
+
     var body: some View {
-        
+
         VStack(
             alignment: .leading,
             spacing: 8
         ) {
-            
-            // MARK: - Nome
-            
+
             Label(
                 name,
                 systemImage: icon
@@ -85,33 +87,26 @@ struct ProgressBar: View {
             .foregroundStyle(.white)
             .padding(.horizontal, 12)
             .padding(.vertical, 5)
-            .background(
-                type.color
-            )
+            .background(type.color)
             .clipShape(Capsule())
-            
-            
-            // MARK: - Barra + botão
-            
+
+
             HStack(spacing: 14) {
-                
+
                 VStack(
                     alignment: .trailing,
                     spacing: 4
                 ) {
-                    
+
                     GeometryReader { geometry in
-                        
+
                         ZStack(alignment: .leading) {
-                            
-                            // Fundo da barra
+
                             Capsule()
                                 .fill(
                                     Color.gray.opacity(0.12)
                                 )
-                            
-                            
-                            // Progresso
+
                             Capsule()
                                 .fill(type.color)
                                 .frame(
@@ -122,10 +117,8 @@ struct ProgressBar: View {
                         }
                     }
                     .frame(height: 24)
-                    
-                    
-                    // MARK: Valor
-                    
+
+
                     Text(
                         "\(value)/\(maximumValue)"
                     )
@@ -137,36 +130,36 @@ struct ProgressBar: View {
                     )
                     .foregroundStyle(.black)
                 }
-                
-                
-                // MARK: - Botão +
-                
-                Button {
-                    
-                    onImprove()
-                    
-                } label: {
-                    
-                    Image(systemName: "plus")
-                        .font(
-                            .system(
-                                size: 21,
-                                weight: .heavy
+
+
+                // O botão só aparece no próprio país
+                if showImproveButton {
+
+                    Button {
+                        onImprove()
+                    } label: {
+
+                        Image(systemName: "plus")
+                            .font(
+                                .system(
+                                    size: 21,
+                                    weight: .heavy
+                                )
                             )
-                        )
-                        .foregroundStyle(.white)
-                        .frame(
-                            width: 40,
-                            height: 40
-                        )
-                        .background(
-                            Color(
-                                red: 137 / 255,
-                                green: 180 / 255,
-                                blue: 112 / 255
+                            .foregroundStyle(.white)
+                            .frame(
+                                width: 40,
+                                height: 40
                             )
-                        )
-                        .clipShape(Circle())
+                            .background(
+                                Color(
+                                    red: 137 / 255,
+                                    green: 180 / 255,
+                                    blue: 112 / 255
+                                )
+                            )
+                            .clipShape(Circle())
+                    }
                 }
             }
         }

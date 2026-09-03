@@ -183,7 +183,8 @@ struct LucaciaView: View {
                 icon: "dollarsign.circle.fill",
                 value: gameManager.yourCountry.economia,
                 maximumValue: 10,
-                type: .economia
+                type: .economia,
+                showImproveButton: false
             ) {
                 print("Abrir quiz de Economia")
             }
@@ -195,7 +196,8 @@ struct LucaciaView: View {
                 icon: "shield.fill",
                 value: gameManager.yourCountry.militarismo,
                 maximumValue: 10,
-                type: .militarismo
+                type: .militarismo,
+                showImproveButton: false
             ) {
                 print("Abrir quiz de Militarismo")
             }
@@ -207,7 +209,8 @@ struct LucaciaView: View {
                 icon: "desktopcomputer",
                 value: gameManager.yourCountry.tecnologia,
                 maximumValue: 10,
-                type: .tecnologia
+                type: .tecnologia,
+                showImproveButton: false
             ) {
                 print("Abrir quiz de Tecnologia")
             }

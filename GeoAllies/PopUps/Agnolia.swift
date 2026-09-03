@@ -148,7 +148,8 @@ struct AgnoliaView: View {
                 icon: "dollarsign.circle.fill",
                 value: gameManager.yourCountry.economia,
                 maximumValue: 10,
-                type: .economia
+                type: .economia,
+                showImproveButton: false
             ) {
                 print("Abrir quiz de Economia")
             }
@@ -159,7 +160,8 @@ struct AgnoliaView: View {
                 icon: "shield.fill",
                 value: gameManager.yourCountry.militarismo,
                 maximumValue: 10,
-                type: .militarismo
+                type: .militarismo,
+                showImproveButton: false
             ) {
                 print("Abrir quiz de Militarismo")
             }
@@ -170,7 +172,8 @@ struct AgnoliaView: View {
                 icon: "desktopcomputer",
                 value: gameManager.yourCountry.tecnologia,
                 maximumValue: 10,
-                type: .tecnologia
+                type: .tecnologia,
+                showImproveButton: false
             ) {
                 print("Abrir quiz de Tecnologia")
             }
