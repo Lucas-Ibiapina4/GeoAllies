@@ -20,88 +20,50 @@ struct PlayerCountryView: View {
     var body: some View {
 
         GeometryReader { geometry in
-            ZStack(alignment: .topTrailing) {
-                // MARK: - Fundo principal do popup
+            ZStack {
+                Color.black.opacity(0.3)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        isPresent = false
+                    }
                 
-                RoundedRectangle(cornerRadius: 35)
-                    .fill(
-                        Color(
-                            red: 245 / 255,
-                            green: 245 / 255,
-                            blue: 245 / 255
-                        )
-                    )
-                // MARK: - Conteúdo principal
-                HStack(spacing: 30) {
-                    // Lado esquerdo
-                    countrySection
-                    // Lado direito
-                    statisticSection
-                }
-                .padding(.horizontal, 32)
-                .padding(.vertical, 18)
-                
-                // MARK: - Botão fechar
-                Button {
-                    isPresent = false
-                } label: {
+                ZStack(alignment: .topTrailing) {
                     
+                    // MARK: - 1. Fundo do popup
                     RoundedRectangle(cornerRadius: 35)
-                        .fill(
-                            Color(
-                                red: 245 / 255,
-                                green: 245 / 255,
-                                blue: 245 / 255
-                            )
-                        )
+                        .fill(Color(red: 245 / 255, green: 245 / 255, blue: 245 / 255))
                     
-                    
+                    // MARK: - 2. Conteúdo principal
                     HStack(spacing: 30) {
-                        
                         countrySection
-                        
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
                     
-                    
-                    // Fechar popup
+                    // MARK: - 3. Botão fechar (X)
                     Button {
-                        
                         isPresent = false
-                        
                     } label: {
-                        
                         Image(systemName: "xmark")
                             .font(.system(size: 22, weight: .heavy))
                             .foregroundStyle(.white)
                             .frame(width: 50, height: 50)
                             .background(.red)
                             .clipShape(Circle())
+                            .shadow(radius: 3)
                     }
-                    .offset(x: 12, y: -12)
+                    .offset(x: 15, y: -15)
                 }
-                .frame(
-                    width: geometry.size.width * 0.84,
-                    height: geometry.size.height * 0.68
-                )
-                
-                
-                // MARK: - Popup do Conselheiro
-                
-                if showingCounsil {
-                    
-                    CounsilView(
-                        isPresent: $showingCounsil
-                    )
-                    .zIndex(10)
-                }
+                .padding(.horizontal, 65)
+                .padding(.vertical, 25)
+//                .frame(
+//                    width: geometry.size.width * 0.84,
+//                    height: geometry.size.height * 0.72
+//                )
+//                
+//                .position (x: geometry.size.width / 2, y: geometry.size.height / 2)
             }
-            .frame(
-                width: geometry.size.width,
-                height: geometry.size.height
-            )
         }
     }
     // MARK: - Lado esquerdo

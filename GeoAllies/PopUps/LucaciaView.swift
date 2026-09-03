@@ -66,13 +66,13 @@ struct LucaciaView: View {
                 
                 // MARK: - Popup do Conselheiro
                 
-                if showingCounsil {
-                    
-                    CounsilView(
-                        isPresent: $showingCounsil
-                    )
-                    .zIndex(10)
-                }
+//                if showingCounsil {
+//                    
+//                    CounsilView(
+//                        isPresent: $showingCounsil
+//                    )
+//                    .zIndex(10)
+//                }
             }
             .frame(
                 width: geometry.size.width,
