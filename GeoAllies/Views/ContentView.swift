@@ -19,7 +19,7 @@ struct ContentView: View {
                 } label: {
                     Label("Conversar sobre Geopolitica", systemImage: "person.fill")
                         .navigationDestination(isPresented: $isPresentedGeo){
-                            CounsilView()
+                            CounsilView(isPresent: $isPresentedGeo)
                         }
                 }
                 .padding(70)

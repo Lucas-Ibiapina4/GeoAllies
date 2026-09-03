@@ -21,4 +21,4 @@ import SwiftData
             self.tecnologia = tecnologia
         }
     }
-}
+

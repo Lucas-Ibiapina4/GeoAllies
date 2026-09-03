@@ -13,91 +13,85 @@ struct PlayerCountryView: View {
     
     @Binding var isPresent: Bool
     
+    // Controla o popup do conselheiro
+    @State private var showingCounsil = false
+    
     
     var body: some View {
         
         GeometryReader { geometry in
             
-            ZStack(alignment: .topTrailing) {
+            ZStack {
                 
-                // MARK: - Fundo principal do popup
+                // MARK: - Popup do país
                 
-                RoundedRectangle(cornerRadius: 35)
-                    .fill(
-                        Color(
-                            red: 245 / 255,
-                            green: 245 / 255,
-                            blue: 245 / 255
-                        )
-                    )
-                
-                
-                // MARK: - Conteúdo principal
-                
-                HStack(spacing: 30) {
+                ZStack(alignment: .topTrailing) {
                     
-                    // Lado esquerdo
-                    countrySection
-                    
-                    // Lado direito
-                    statisticSection
-                }
-                .padding(.horizontal, 32)
-                .padding(.vertical, 18)
-                
-                
-                // MARK: - Botão fechar
-                
-                Button {
-                    
-                    isPresent = false
-                    
-                } label: {
-                    
-                    Image(systemName: "xmark")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .heavy
+                    RoundedRectangle(cornerRadius: 35)
+                        .fill(
+                            Color(
+                                red: 245 / 255,
+                                green: 245 / 255,
+                                blue: 245 / 255
                             )
                         )
-                        .foregroundStyle(.white)
-                        .frame(
-                            width: 50,
-                            height: 50
-                        )
-                        .background(.red)
-                        .clipShape(Circle())
+                    
+                    
+                    HStack(spacing: 30) {
+                        
+                        countrySection
+                        
+                        statisticSection
+                    }
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 18)
+                    
+                    
+                    // Fechar popup
+                    Button {
+                        
+                        isPresent = false
+                        
+                    } label: {
+                        
+                        Image(systemName: "xmark")
+                            .font(.system(size: 22, weight: .heavy))
+                            .foregroundStyle(.white)
+                            .frame(width: 50, height: 50)
+                            .background(.red)
+                            .clipShape(Circle())
+                    }
+                    .offset(x: 12, y: -12)
                 }
-                .offset(
-                    x: 12,
-                    y: -12
+                .frame(
+                    width: geometry.size.width * 0.84,
+                    height: geometry.size.height * 0.68
                 )
+                
+                
+                // MARK: - Popup do Conselheiro
+                
+                if showingCounsil {
+                    
+                    CounsilView(
+                        isPresent: $showingCounsil
+                    )
+                    .zIndex(10)
+                }
             }
-            
-            // MARK: - Tamanho do popup
-            
             .frame(
-                width: geometry.size.width * 0.84,
-                height: geometry.size.height * 0.72
-            )
-            
-            // Centraliza o popup
-            .position(
-                x: geometry.size.width / 2,
-                y: geometry.size.height / 2
+                width: geometry.size.width,
+                height: geometry.size.height
             )
         }
     }
     
     
-    // MARK: - Lado esquerdo
+    // MARK: - País
     
     private var countrySection: some View {
         
         VStack(spacing: 10) {
-            
-            // MARK: Nome do país
             
             Text("SEU PAÍS")
                 .font(
@@ -120,51 +114,30 @@ struct PlayerCountryView: View {
                 .clipShape(Capsule())
             
             
-            // MARK: Imagem do país
-            
             Image("PaísSeu")
                 .resizable()
                 .scaledToFit()
-                .frame(
-                    width: 210,
-                    height: 180
-                )
+                .frame(width: 210, height: 180)
             
-            
-            // MARK: Sombra abaixo do país
             
             Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
+                .fill(Color.gray.opacity(0.20))
+                .frame(width: 170, height: 22)
             
-            
-            // MARK: Conselheiro
             
             HStack {
                 
+                // Conselheiro
                 Button {
                     
-                    print("Abrir Conselheiro")
+                    showingCounsil = true
                     
                 } label: {
                     
                     Image(systemName: "person.fill")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold
-                            )
-                        )
+                        .font(.system(size: 22, weight: .bold))
                         .foregroundStyle(.white)
-                        .frame(
-                            width: 52,
-                            height: 52
-                        )
+                        .frame(width: 52, height: 52)
                         .background(.orange)
                         .clipShape(Circle())
                 }
@@ -180,13 +153,11 @@ struct PlayerCountryView: View {
     }
     
     
-    // MARK: - Lado direito
+    // MARK: - Estatísticas
     
     private var statisticSection: some View {
         
         VStack(spacing: 12) {
-            
-            // MARK: Economia
             
             ProgressBar(
                 name: "Economia",
@@ -195,12 +166,9 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .economia
             ) {
-                
-                openEconomyQuiz()
+                print("Abrir quiz de Economia")
             }
             
-            
-            // MARK: Militarismo
             
             ProgressBar(
                 name: "Militarismo",
@@ -209,12 +177,9 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .militarismo
             ) {
-                
-                openMilitarismQuiz()
+                print("Abrir quiz de Militarismo")
             }
             
-            
-            // MARK: Tecnologia
             
             ProgressBar(
                 name: "Tecnologia",
@@ -223,8 +188,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .tecnologia
             ) {
-                
-                openTechnologyQuiz()
+                print("Abrir quiz de Tecnologia")
             }
         }
         .padding(.horizontal, 22)
@@ -235,30 +199,8 @@ struct PlayerCountryView: View {
         )
         .background(.white)
         .clipShape(
-            RoundedRectangle(
-                cornerRadius: 22
-            )
+            RoundedRectangle(cornerRadius: 22)
         )
-    }
-    
-    
-    // MARK: - Funções dos quizzes
-    
-    private func openEconomyQuiz() {
-        
-        print("Abrir quiz de Economia")
-    }
-    
-    
-    private func openMilitarismQuiz() {
-        
-        print("Abrir quiz de Militarismo")
-    }
-    
-    
-    private func openTechnologyQuiz() {
-        
-        print("Abrir quiz de Tecnologia")
     }
 }
 
@@ -271,8 +213,6 @@ struct PlayerCountryView: View {
 }
 
 
-// MARK: - Preview auxiliar
-
 private struct PlayerCountryPreview: View {
     
     @State private var gameManager = GameManager()
@@ -281,8 +221,6 @@ private struct PlayerCountryPreview: View {
     var body: some View {
         
         ZStack {
-            
-            // Fundo azul do jogo
             
             Color(
                 red: 30 / 255,
