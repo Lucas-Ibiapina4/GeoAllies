@@ -8,14 +8,11 @@
 import SwiftUI
 
 struct PlayerCountryView: View {
-    
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
     
     // Controla o popup do conselheiro
     @State private var showingCounsil = false
-    
     
     var body: some View {
         GeometryReader { geometry in
@@ -107,18 +104,7 @@ struct PlayerCountryView: View {
                 )
             // MARK: Conselheiro
             HStack {
-                
-                // Conselheiro
-                Button {
-                    print("Abrir Conselheiro")
-                } label: {
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: 52, height: 52)
-                        .background(.orange)
-                        .clipShape(Circle())
-                }
+                CounsilButtonView()
                 Spacer()
             }
         }
@@ -174,7 +160,6 @@ struct PlayerCountryView: View {
             RoundedRectangle(cornerRadius: 22)
         )
     }
-    
     
     // MARK: - Funções dos quizzes
     private func openEconomyQuiz() {
