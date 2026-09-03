@@ -17,11 +17,6 @@ struct CounsilView: View {
     
     var body: some View{
         NavigationStack {
-//            Spacer()
-//            Spacer()
-//            Spacer()
-//            Spacer()
-
             HStack {
                 Image("counsil")
                     .resizable()

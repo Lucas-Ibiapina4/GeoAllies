@@ -21,12 +21,3 @@ class Country {
         self.tecnologia = tecnologia
     }
 }
-
-//var yourCountry = Country(economia: 0, militarismo: 0, tecnologia: 0)
-
-//var agnólia = Country(economia: 10, militarismo: 3, tecnologia: 1)
-//
-//var castria = Country(economia: 4, militarismo: 10, tecnologia: 5)
-//
-//var mourash = Country(economia: 5, militarismo: 7, tecnologia: 10)
-
