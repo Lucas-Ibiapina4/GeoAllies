@@ -7,9 +7,11 @@
 
 import Foundation
 
-enum QuizPilar: String {
+enum QuizPilar: String, Hashable, Identifiable {
     case economia = "Economia"
     case militarismo = "Militarismo"
     case tecnologia = "Tecnologia"
+    
+    var id: Self { self }
 }
 //

@@ -15,11 +15,15 @@ struct Quiz: View {
     
     @Environment(GameManager.self) private var gameManager
     
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var correctOption: Int? = nil
     @State private var currentQuestionIndex = 0
     @State private var wrongOptions: Set<Int> = []
     @State private var quizFinished = false
     @State private var points: Int = 0
+    
+  //  @Binding var quizFinished: Bool
     
     init(pilar: QuizPilar) {
         self.pilar = pilar
@@ -52,6 +56,7 @@ struct Quiz: View {
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
             
         } else if let question = currentQuestion {
             
@@ -133,14 +138,18 @@ struct Quiz: View {
         } else {
             quizFinished = true
             addPointInpilar()
-            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                dismiss()
+            }
         }
     }
     
     func addPointInpilar(){
         switch pilar {
         case .economia:
-            gameManager.yourCountry.economia += points
+            if gameManager.yourCountry.economia <= 10 {
+                gameManager.yourCountry.economia += points
+            }
         case .militarismo:
             gameManager.yourCountry.militarismo += points
         case .tecnologia:
