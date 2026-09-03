@@ -11,7 +11,6 @@ struct HomeScreensView: View {
     
     var body: some View {
         NavigationStack {
-            
             ZStack {
                 // Fundo da tela
                 Color(
@@ -20,8 +19,6 @@ struct HomeScreensView: View {
                     blue: 125 / 255
                 )
                 .ignoresSafeArea()
-                
-                
                 // Botão que leva para o mapa
                 NavigationLink {
                     MapView()
@@ -38,8 +35,6 @@ struct HomeScreensView: View {
                             )
                             .frame(width: 285, height: 108)
                             .offset(y: 6)
-                        
-                        
                         // Botão
                         RoundedRectangle(cornerRadius: 50)
                             .fill(
@@ -50,8 +45,6 @@ struct HomeScreensView: View {
                                 )
                             )
                             .frame(width: 285, height: 102)
-                        
-                        
                         // Conteúdo do botão
                         HStack(spacing: 14) {
                             
@@ -72,7 +65,6 @@ struct HomeScreensView: View {
                     }
                 }
             }
-            
             // Esconde a barra de navegação
             .toolbar(.hidden, for: .navigationBar)
         }
