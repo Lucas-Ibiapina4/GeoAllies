@@ -13,9 +13,11 @@ struct PlayerCountryView: View {
     
     @Binding var isPresent: Bool
     
+    @State private var pilarQuizselected: QuizPilar?
+    
     
     var body: some View {
-        
+
         GeometryReader { geometry in
             
             ZStack(alignment: .topTrailing) {
@@ -246,17 +248,23 @@ struct PlayerCountryView: View {
     
     private func openEconomyQuiz() {
         
+        pilarQuizselected = .economia
+
         print("Abrir quiz de Economia")
     }
     
     
     private func openMilitarismQuiz() {
         
+        pilarQuizselected = .militarismo
+        
         print("Abrir quiz de Militarismo")
     }
     
     
     private func openTechnologyQuiz() {
+        
+        pilarQuizselected = .tecnologia
         
         print("Abrir quiz de Tecnologia")
     }

@@ -13,10 +13,13 @@ struct Quiz: View {
     let pilar: QuizPilar
     let questions: [QuestionsModel]
     
+    @Environment(GameManager.self) private var gameManager
+    
     @State private var correctOption: Int? = nil
     @State private var currentQuestionIndex = 0
     @State private var wrongOptions: Set<Int> = []
     @State private var quizFinished = false
+    @State private var points: Int = 0
     
     init(pilar: QuizPilar) {
         self.pilar = pilar
@@ -108,6 +111,8 @@ struct Quiz: View {
         
         if option == question.answer {
             correctOption = index
+            points = points + 1
+            print("pontos: \(points)")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 nextQuestion()
@@ -127,6 +132,19 @@ struct Quiz: View {
             
         } else {
             quizFinished = true
+            addPointInpilar()
+            
+        }
+    }
+    
+    func addPointInpilar(){
+        switch pilar {
+        case .economia:
+            gameManager.yourCountry.economia += points
+        case .militarismo:
+            gameManager.yourCountry.militarismo += points
+        case .tecnologia:
+            gameManager.yourCountry.tecnologia += points
         }
     }
 }
@@ -134,4 +152,5 @@ struct Quiz: View {
 
 #Preview {
     Quiz(pilar: .economia)
+        .environment(GameManager())
 }
