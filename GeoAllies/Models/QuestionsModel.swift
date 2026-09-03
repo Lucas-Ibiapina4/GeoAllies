@@ -8,10 +8,19 @@ import Foundation
 import SwiftUI
 
 struct QuestionsModel: Codable, Hashable {
+    var id: UUID = UUID()
+    
     let pilar: String
     let question: String
     let options: [String]
     let answer: String
+    
+    enum CodingKeys: String, CodingKey {
+        case pilar
+        case question
+        case options
+        case answer
+    }
 }
 
 extension Bundle {

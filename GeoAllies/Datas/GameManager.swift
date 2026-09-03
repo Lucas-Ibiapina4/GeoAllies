@@ -8,7 +8,7 @@
 import Observation
 import SwiftUI
 
-////avisa quando os dados mudam
+//avisa quando os dados mudam
 @Observable
 
 //game manager que permite controlar melhor os fluxos do jogo alternando entre os estados de aliança e dados específicos dos países

@@ -108,5 +108,226 @@
             "Substitui a necessidade de sistemas bancários tradicionais."
         ],
         "answer": "Assegura a hegemonia sobre minerais essenciais para tecnologia de ponta."
+    },
+    
+    {
+        "pilar": "Militarismo",
+        "question": "Qual é o principal objetivo geopolítico da expansão da OTAN no leste europeu?",
+        "options": [
+            "Criar um bloco comercial livre de tarifas alfandegárias.",
+            "Garantir a defesa coletiva e conter a influência russa na região.",
+            "Padronizar os sistemas tributários entre os membros do grupo.",
+            "Monopolizar o transporte marítimo de energia no Mar Negro."
+        ],
+        "answer": "Garantir a defesa coletiva e conter a influência russa na região."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "O que caracteriza a estratégia de dissuasão nuclear na geopolítica mundial?",
+        "options": [
+            "Utilizar ogivas atômicas em conflitos territoriais de baixa intensidade.",
+            "Manter arsenais para desestimular ataques por medo da destruição mútua.",
+            "Proibir a pesquisa científica sobre energia atômica para fins civis.",
+            "Substituir forças militares convencionais por armas de longo alcance."
+        ],
+        "answer": "Manter arsenais para desestimular ataques por medo da destruição mútua."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "Por que o Estreito de Malaca é uma área de extrema relevância militar e estratégica?",
+        "options": [
+            "Concentra a maior produção mundial de fertilizantes sintéticos.",
+            "É o único canal de acesso à navegação no Oceano Ártico.",
+            "É uma rota vital por onde passa grande parte do comércio marítimo global.",
+            "Abriga as maiores instalações de testes nucleares do planeta."
+        ],
+        "answer": "É uma rota vital por onde passa grande parte do comércio marítimo global."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "Como o aumento dos gastos militares globais impacta o equilíbrio geopolítico?",
+        "options": [
+            "Estimula corridas armamentistas e eleva tensões regionais.",
+            "Elimina a necessidade de alianças formais de defesa mútua.",
+            "Garante a paz imediata através do desarmamento diplomático.",
+            "Reduz o papel de empresas privadas na indústria de defesa."
+        ],
+        "answer": "Estimula corridas armamentistas e eleva tensões regionais."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "O que define o conceito geopolítico de Guerra Híbrida?",
+        "options": [
+            "Conflito restrito exclusivamente ao combate naval e aéreo.",
+            "Utilização simultânea de meios militares, cibernéticos e de desinformação.",
+            "Emprego de exércitos mercenários sem o envolvimento de estados.",
+            "Luta armada focada no controle de rotas de navegação de água doce."
+        ],
+        "answer": "Utilização simultânea de meios militares, cibernéticos e de desinformação."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "Qual é a função estratégica das bases militares mantidas por potências em países estrangeiros?",
+        "options": [
+            "Gerenciar postos de fiscalização alfandegária e cobrança de impostos.",
+            "Projetar poder militar e proteger interesses geopolíticos regionais.",
+            "Substituir as embaixadas diplomáticas em negociações bilaterais.",
+            "Controlar a emissão de vistos e a imigração de civis."
+        ],
+        "answer": "Projetar poder militar e proteger interesses geopolíticos regionais."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "Qual é a principal implicação geopolítica do avanço das armas hipersônicas?",
+        "options": [
+            "Redução radical no custo financeiro da manutenção de tropas terrestres.",
+            "Dificuldade de interceptação por sistemas tradicionais de defesa antimíssil.",
+            "Fim do uso de tecnologias de navegação via satélite.",
+            "Proibição do uso de drones em zonas de combate urbano."
+        ],
+        "answer": "Dificuldade de interceptação por sistemas tradicionais de defesa antimíssil."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "O que significa a doutrina da 'Projeção de Poder' na geopolítica militar?",
+        "options": [
+            "A capacidade de um estado de aplicar força militar longe de seu território.",
+            "A limitação do uso do exército estritamente às fronteiras nacionais.",
+            "O treinamento de forças policiais civis para atuar em crises internas.",
+            "A proibição do envio de tropas para missões de paz da ONU."
+        ],
+        "answer": "A capacidade de um estado de aplicar força militar longe de seu território."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "De que forma o domínio do espaço sideral afeta a geopolítica militar moderna?",
+        "options": [
+            "Substitui a infantaria terrestre pelo combate orbital direto.",
+            "Garante acesso exclusivo ao comércio espacial de commodities.",
+            "Torna obsoletos os navios de guerra e os submarinos nucleares.",
+            "Garante vantagens cruciais em inteligência, navegação e comunicações."
+        ],
+        "answer": "Garante vantagens cruciais em inteligência, navegação e comunicações."
+    },
+    {
+        "pilar": "Militarismo",
+        "question": "Qual é a relevância militar e geopolítica do Mar da China Meridional?",
+        "options": [
+            "É a única rota de suprimento de água potável no Sudeste Asiático.",
+            "Trata-se de uma zona disputada rica em recursos e rotas estratégicas.",
+            "É o ponto central onde são assinados os tratados de navegação global.",
+            "Abriga a maior frota civil de navios petroleiros da África."
+        ],
+        "answer": "Trata-se de uma zona disputada rica em recursos e rotas estratégicas."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "O que é o conceito geopolítico de 'Soberania Digital'?",
+        "options": [
+            "Garantia de acesso ilimitado à internet pública global.",
+            "Criação de uma moeda criptográfica unificada entre países.",
+            "Proibição do uso de inteligência artificial na administração estatal.",
+            "Capacidade de um Estado de controlar sua própria infraestrutura e dados digitais."
+        ],
+        "answer": "Capacidade de um Estado de controlar sua própria infraestrutura e dados digitais."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Qual é o foco principal das sanções tecnológicas impostas pelos EUA à China no setor de semicondutores?",
+        "options": [
+            "Restringir a venda de microchips avançados e equipamentos de fabricação.",
+            "Impedir o acesso chinês a redes sociais e plataformas de entretenimento.",
+            "Banir a exportação de minérios de ferro e alumínio para a Ásia.",
+            "Cancelar contratos de cabos submarinos de fibra óptica."
+        ],
+        "answer": "Restringir a venda de microchips avançados e equipamentos de fabricação."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Como a tecnologia de rede 5G se tornou um ponto central de disputa geopolítica mundial?",
+        "options": [
+            "Substituiu o uso de satélites na navegação militar marítima.",
+            "Gerou preocupações sobre segurança de dados e espionagem industrial por fornecedores dominantes.",
+            "Reduziu o valor comercial do petróleo no mercado internacional.",
+            "Unificou os sistemas bancários das maiores economias ocidentais."
+        ],
+        "answer": "Gerou preocupações sobre segurança de dados e espionagem industrial por fornecedores dominantes."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Qual é o principal risco geopolítico associado ao controle de cabos submarinos de fibra óptica?",
+        "options": [
+            "Monopólio da venda de computadores pessoais.",
+            "Vulnerabilidade a interceptações de dados globais e sabotagens de infraestrutura.",
+            "Aumento exagerado nos custos da energia elétrica residencial.",
+            "Bloqueio imediato da navegação de navios mercantes."
+        ],
+        "answer": "Vulnerabilidade a interceptações de dados globais e sabotagens de infraestrutura."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "O que define o fenômeno geopolítico chamado de 'Splinternet'?",
+        "options": [
+            "Expansão de redes públicas de Wi-Fi gratuito em zonas de fronteira.",
+            "Fragmentação da internet global em redes regionais reguladas por governos.",
+            "Criação de um protocolo único e mundial para dispositivos móveis.",
+            "Eliminação de qualquer tipo de censura no ambiente virtual."
+        ],
+        "answer": "Fragmentação da internet global em redes regionais reguladas por governos."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Qual é o papel da Inteligência Artificial (IA) na nova corrida tecnológica entre superpotências?",
+        "options": [
+            "Eliminar a necessidade de satélites de observação.",
+            "Substituir o uso de moedas digitais no comércio bilateral.",
+            "Liderar avanços em sistemas autônomos de defesa e otimização econômica.",
+            "Padronizar as leis trabalhistas em indústrias de manufatura."
+        ],
+        "answer": "Liderar avanços em sistemas autônomos de defesa e otimização econômica."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Qual país concentra a produção dos chips de computador mais avançados do mundo (através da empresa TSMC)?",
+        "options": [
+            "Alemanha",
+            "Brasil",
+            "Taiwan",
+            "Índia"
+        ],
+        "answer": "Taiwan"
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "O que caracteriza a prática de Ciberespionagem promovida por governos no cenário global?",
+        "options": [
+            "Invasão de sistemas para roubo de segredos de Estado e propriedade intelectual.",
+            "Desativação presencial de servidores corporativos privados.",
+            "Cobrança de impostos sobre transações de comércio eletrônico.",
+            "Treinamento obrigatório de segurança digital para a população civil."
+        ],
+        "answer": "Invasão de sistemas para roubo de segredos de Estado e propriedade intelectual."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Por que a tecnologia Starlink (internet via satélite de órbita baixa) ganhou relevância em conflitos geopolíticos?",
+        "options": [
+            "Consegue substituir os cabos de transmissão de energia elétrica.",
+            "Permite conectividade em zonas de guerra sem depender da infraestrutura terrestre local.",
+            "Elimina a necessidade de radares militares terrestres.",
+            "Impede ataques cibernéticos contra bancos centrais."
+        ],
+        "answer": "Permite conectividade em zonas de guerra sem depender da infraestrutura terrestre local."
+    },
+    {
+        "pilar": "Tecnologia",
+        "question": "Qual é o objetivo central de regulamentações como o EU AI Act da União Europeia frente a outras potências?",
+        "options": [
+            "Estabelecer padrões éticos e legais globais para o uso seguro da Inteligência Artificial.",
+            "Proibir o desenvolvimento de programas de computador em todo o bloco.",
+            "Obrigar a transferência de código-fonte para empresas estrangeiras.",
+            "Financiar a construção de mineradoras de criptomoedas estatais."
+        ],
+        "answer": "Estabelecer padrões éticos e legais globais para o uso seguro da Inteligência Artificial."
     }
 ]
