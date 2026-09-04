@@ -7,19 +7,23 @@
 
 import SwiftUI
 
+
 struct LucaciaView: View {
     
     @Environment(GameManager.self) private var gameManager
     
-    
     @Binding var isPresent: Bool
     
-    // Controla o popup do Conselheiro
+    
+    // MARK: - Controla o popup do Conselheiro
+    
     @State private var showingCounsil = false
     
     
-    // Verifica se o usuário pode se aliar à Lucácia
+    // MARK: - Verifica se o usuário pode se aliar
+    
     private var canAlly: Bool {
+        
         gameManager.yourCountry.militarismo >= 9
     }
     
@@ -30,11 +34,28 @@ struct LucaciaView: View {
             
             ZStack {
                 
+                // MARK: - Fundo escurecido da Lucácia
+                
+                Color.black
+                    .opacity(0.30)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        
+                        // Só fecha a Lucácia se o
+                        // Conselheiro NÃO estiver aberto
+                        if !showingCounsil {
+                            
+                            isPresent = false
+                        }
+                    }
+                
+                
                 // MARK: - Popup da Lucácia
                 
                 ZStack(alignment: .topTrailing) {
                     
                     // Fundo do popup
+                    
                     RoundedRectangle(cornerRadius: 35)
                         .fill(
                             Color(
@@ -46,6 +67,7 @@ struct LucaciaView: View {
                     
                     
                     // Conteúdo principal
+                    
                     HStack(spacing: 30) {
                         
                         countrySection
@@ -56,7 +78,8 @@ struct LucaciaView: View {
                     .padding(.vertical, 18)
                     
                     
-                    // Botão fechar
+                    // Botão fechar Lucácia
+                    
                     closeButton
                 }
                 .frame(
@@ -64,16 +87,20 @@ struct LucaciaView: View {
                     height: geometry.size.height * 0.68
                 )
                 
+                // Quando o Conselheiro estiver aberto,
+                // não permite clicar no popup da Lucácia
+                .allowsHitTesting(!showingCounsil)
+                
                 
                 // MARK: - Popup do Conselheiro
                 
-//                if showingCounsil {
-//                    
-//                    CounsilView(
-//                        isPresent: $showingCounsil
-//                    )
-//                    .zIndex(10)
-//                }
+                if showingCounsil {
+                    
+                    CounsilView(
+                        isPresent: $showingCounsil
+                    )
+                    .zIndex(1000)
+                }
             }
             .frame(
                 width: geometry.size.width,
@@ -89,7 +116,8 @@ struct LucaciaView: View {
         
         VStack(spacing: 8) {
             
-            // Nome do país
+            // MARK: Nome do país
+            
             Text("LUCÁCIA")
                 .font(
                     .system(
@@ -111,7 +139,8 @@ struct LucaciaView: View {
                 .clipShape(Capsule())
             
             
-            // Imagem da Lucácia
+            // MARK: Imagem da Lucácia
+            
             Image("País3")
                 .resizable()
                 .scaledToFit()
@@ -121,7 +150,8 @@ struct LucaciaView: View {
                 )
             
             
-            // Sombra abaixo do país
+            // MARK: Sombra abaixo do país
+            
             Ellipse()
                 .fill(
                     Color.gray.opacity(0.20)
@@ -132,17 +162,20 @@ struct LucaciaView: View {
                 )
             
             
-            // Parte inferior
+            // MARK: Parte inferior
+            
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
                 
                 // Botão do Conselheiro
+                
                 counselorButton
                 
                 
-                // Texto de requisito
+                // Texto do requisito
+                
                 Text(
                     "Você precisa de 9 pontos de Militarismo para se aliar com esse país"
                 )
@@ -178,42 +211,48 @@ struct LucaciaView: View {
         
         VStack(spacing: 12) {
             
-            // Economia
+            // MARK: Economia
+            
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
-                value: gameManager.yourCountry.economia,
+                value: gameManager.lucacia.economia,
                 maximumValue: 10,
                 type: .economia,
                 showImproveButton: false
             ) {
-                print("Abrir quiz de Economia")
+                
+                // Sem ação
             }
             
             
-            // Militarismo
+            // MARK: Militarismo
+            
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
-                value: gameManager.yourCountry.militarismo,
+                value: gameManager.lucacia.militarismo,
                 maximumValue: 10,
                 type: .militarismo,
                 showImproveButton: false
             ) {
-                print("Abrir quiz de Militarismo")
+                
+                // Sem ação
             }
             
             
-            // Tecnologia
+            // MARK: Tecnologia
+            
             ProgressBar(
                 name: "Tecnologia",
                 icon: "desktopcomputer",
-                value: gameManager.yourCountry.tecnologia,
+                value: gameManager.lucacia.tecnologia,
                 maximumValue: 10,
                 type: .tecnologia,
                 showImproveButton: false
             ) {
-                print("Abrir quiz de Tecnologia")
+                
+                // Sem ação
             }
             
             
@@ -221,12 +260,6 @@ struct LucaciaView: View {
             
             
             // MARK: - Botão Aliar-se
-            
-            Text("Militarismo: \(gameManager.yourCountry.militarismo)")
-                .foregroundStyle(.black)
-
-            Text("Pode aliar: \(canAlly ? "SIM" : "NÃO")")
-                .foregroundStyle(.black)
             
             Button {
                 
@@ -256,6 +289,7 @@ struct LucaciaView: View {
                         )
                     )
             }
+            .buttonStyle(.plain)
             .disabled(!canAlly)
         }
         .padding(.horizontal, 22)
@@ -279,7 +313,7 @@ struct LucaciaView: View {
         
         Button {
             
-            // Abre o popup do Conselheiro
+            // Abre APENAS o popup do Conselheiro
             showingCounsil = true
             
         } label: {
@@ -298,16 +332,20 @@ struct LucaciaView: View {
                 )
                 .background(.orange)
                 .clipShape(Circle())
+                .shadow(radius: 2)
         }
+        .buttonStyle(.plain)
+        .contentShape(Circle())
     }
     
     
-    // MARK: - Botão Fechar
+    // MARK: - Botão Fechar Lucácia
     
     private var closeButton: some View {
         
         Button {
             
+            // Fecha a Lucácia
             isPresent = false
             
         } label: {
@@ -326,7 +364,10 @@ struct LucaciaView: View {
                 )
                 .background(.red)
                 .clipShape(Circle())
+                .shadow(radius: 3)
         }
+        .buttonStyle(.plain)
+        .contentShape(Circle())
         .offset(
             x: 12,
             y: -12
@@ -338,13 +379,16 @@ struct LucaciaView: View {
     
     private func allyWithLucacia() {
         
-        // Só permite aliança se tiver militarismo suficiente
+        // Só permite aliança se tiver
+        // Militarismo suficiente
+        
         guard canAlly else {
             return
         }
         
         
         // Adiciona Lucácia aos aliados
+        
         gameManager.aliados.append(
             gameManager.lucacia
         )
@@ -354,6 +398,7 @@ struct LucaciaView: View {
         
         
         // Fecha o popup da Lucácia
+        
         isPresent = false
     }
 }
@@ -362,6 +407,7 @@ struct LucaciaView: View {
 // MARK: - Preview
 
 #Preview {
+    
     LucaciaPreview()
 }
 

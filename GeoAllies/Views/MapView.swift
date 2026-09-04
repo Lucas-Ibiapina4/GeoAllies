@@ -7,13 +7,33 @@
 
 import SwiftUI
 
+
+// MARK: - Estilo das ilhas
+
 struct EstiloIlha3D: ButtonStyle {
+    
     func makeBody(configuration: Configuration) -> some View {
+        
         ZStack {
+            
+            // Sombra da ilha
+            
             configuration.label
-                .overlay(Color(red: 0.6, green: 0.35, blue: 0.1))
+                .overlay(
+                    Color(
+                        red: 0.6,
+                        green: 0.35,
+                        blue: 0.1
+                    )
+                )
                 .mask(configuration.label)
-                .offset(x: 4, y: 7)
+                .offset(
+                    x: 4,
+                    y: 7
+                )
+            
+            
+            // Ilha
             
             configuration.label
                 .offset(
@@ -21,31 +41,81 @@ struct EstiloIlha3D: ButtonStyle {
                     y: configuration.isPressed ? 7 : 0
                 )
         }
-        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+        .animation(
+            .spring(
+                response: 0.3,
+                dampingFraction: 0.6
+            ),
+            value: configuration.isPressed
+        )
     }
 }
 
+
+// MARK: - Mapa
+
 struct MapView: View {
+    
     @State private var gameManager = GameManager()
     
-    @State private var isPresentedSeuPais: Bool = false
-    @State private var isPresentedAgnolia: Bool = false
-    @State private var isPresentedCaustria: Bool = false
-    @State private var isPresentedLucasia: Bool = false
+    
+    // MARK: - Popups dos países
+    
+    @State private var isPresentedSeuPais = false
+    
+    @State private var isPresentedAgnolia = false
+    
+    @State private var isPresentedCaustria = false
+    
+    @State private var isPresentedLucasia = false
+    
+    
+    // MARK: - Popup do Conselheiro
+    
+    @State private var showingCounsil = false
+    
+    
+    // Verifica se existe algum popup aberto
+    
+    private var hasCountryPopupOpen: Bool {
+        
+        isPresentedSeuPais ||
+        isPresentedAgnolia ||
+        isPresentedCaustria ||
+        isPresentedLucasia ||
+        showingCounsil
+    }
+    
     
     var body: some View {
-        NavigationStack {
+        
+        ZStack {
+            
+            // MARK: - Conteúdo do mapa
+            
             ZStack {
+                
+                // MARK: Fundo
+                
                 Group {
+                    
                     Color.blueSea
+                    
+                    
                     Image("fundo")
                         .resizable()
                 }
-                .ignoresSafeArea(edges: .all)
+                .ignoresSafeArea()
                 
-                Button(action: {
+                
+                // MARK: - Agnólia
+                
+                Button {
+                    
                     isPresentedAgnolia = true
-                }) {
+                    
+                } label: {
+                    
                     Image("AgnoliaImage")
                         .renderingMode(.original)
                         .resizable()
@@ -53,16 +123,23 @@ struct MapView: View {
                         .frame(width: 220)
                         .contentShape(Circle())
                 }
-                .buttonStyle(EstiloIlha3D())
-                .offset(x: -180, y: -80)
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: -180,
+                    y: -80
+                )
                 
-                .navigationDestination(isPresented: $isPresentedAgnolia){
-                    AgnoliaView(isPresent: $isPresentedAgnolia)
-                }
                 
-                Button(action: {
+                // MARK: - Seu País
+                
+                Button {
+                    
                     isPresentedSeuPais = true
-                }) {
+                    
+                } label: {
+                    
                     Image("PaísSeu")
                         .renderingMode(.original)
                         .resizable()
@@ -70,32 +147,47 @@ struct MapView: View {
                         .frame(width: 190)
                         .contentShape(Circle())
                 }
-                .buttonStyle(EstiloIlha3D())
-                .offset(x: -180, y: 100)
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: -180,
+                    y: 100
+                )
                 
-//                .navigationDestination(isPresented: $isPresentedSeuPais){
-//                    PlayerCountryView(isPresent: $isPresentedSeuPais)
-//                }
                 
-                Button(action: {
+                // MARK: - Cáustria
+                
+                Button {
+                    
                     isPresentedCaustria = true
-                }) {
+                    
+                } label: {
+                    
                     Image("CaustriaImage")
                         .renderingMode(.original)
                         .resizable()
                         .scaledToFit()
                         .frame(width: 210)
+                        .contentShape(Circle())
                 }
-                .buttonStyle(EstiloIlha3D())
-                .offset(x: 20, y: 30)
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: 20,
+                    y: 30
+                )
                 
-                .navigationDestination(isPresented: $isPresentedCaustria){
-                    CaustriaView(isPresent: $isPresentedCaustria)
-                }
                 
-                Button(action: {
+                // MARK: - Lucácia
+                
+                Button {
+                    
                     isPresentedLucasia = true
-                }) {
+                    
+                } label: {
+                    
                     Image("LucaciaImage")
                         .renderingMode(.original)
                         .resizable()
@@ -103,34 +195,128 @@ struct MapView: View {
                         .frame(width: 190)
                         .contentShape(Capsule())
                 }
-                .buttonStyle(EstiloIlha3D())
-                .offset(x: 230, y: -0)
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: 230,
+                    y: 0
+                )
                 
-                .navigationDestination(isPresented: $isPresentedLucasia){
-                    LucaciaView(isPresent: $isPresentedLucasia)
-                }
+                
+                // MARK: - Conselheiro do mapa
                 
                 VStack {
+                    
                     HStack {
+                        
                         Spacer()
-                        CounsilButtonView()
+                        
+                        
+                        counselorButton
                             .padding(.top, 32)
                             .padding(.trailing, 48)
                     }
+                    
+                    
                     Spacer()
                 }
+            }
+            .allowsHitTesting(!hasCountryPopupOpen)
+            
+            
+            // MARK: - Popup Seu País
+            
+            if isPresentedSeuPais {
                 
-                if isPresentedSeuPais {
-                    PlayerCountryView(isPresent: $isPresentedSeuPais)
-                        .zIndex(100)
-                }
+                PlayerCountryView(
+                    isPresent: $isPresentedSeuPais
+                )
+                .zIndex(100)
+            }
+            
+            
+            // MARK: - Popup Agnólia
+            
+            if isPresentedAgnolia {
+                
+                AgnoliaView(
+                    isPresent: $isPresentedAgnolia
+                )
+                .zIndex(100)
+            }
+            
+            
+            // MARK: - Popup Cáustria
+            
+            if isPresentedCaustria {
+                
+                CaustriaView(
+                    isPresent: $isPresentedCaustria
+                )
+                .zIndex(100)
+            }
+            
+            
+            // MARK: - Popup Lucácia
+            
+            if isPresentedLucasia {
+                
+                LucaciaView(
+                    isPresent: $isPresentedLucasia
+                )
+                .zIndex(100)
+            }
+            
+            
+            // MARK: - Popup Conselheiro
+            
+            if showingCounsil {
+                
+                CounsilView(
+                    isPresent: $showingCounsil
+                )
+                .zIndex(1000)
             }
         }
-        .navigationBarHidden(true)
         .environment(gameManager)
+    }
+    
+    
+    // MARK: - Botão Conselheiro
+    
+    private var counselorButton: some View {
+        
+        Button {
+            
+            showingCounsil = true
+            
+        } label: {
+            
+            Image(systemName: "person.fill")
+                .font(
+                    .system(
+                        size: 22,
+                        weight: .bold
+                    )
+                )
+                .foregroundStyle(.white)
+                .frame(
+                    width: 52,
+                    height: 52
+                )
+                .background(.orange)
+                .clipShape(Circle())
+        }
+        .buttonStyle(.plain)
+        .contentShape(Circle())
     }
 }
 
+
+// MARK: - Preview
+
 #Preview {
+    
     MapView()
 }

@@ -13,8 +13,11 @@ struct CaustriaView: View {
     
     @Binding var isPresent: Bool
     
+    // MARK: - Controla o popup do Conselheiro
     @State private var showingCounsil = false
     
+    
+    // MARK: - Verifica se pode fazer aliança
     
     private var canAlly: Bool {
         gameManager.yourCountry.militarismo >= 8
@@ -26,6 +29,21 @@ struct CaustriaView: View {
         GeometryReader { geometry in
             
             ZStack {
+                
+                // MARK: - Fundo escurecido da tela
+                
+                Color.black
+                    .opacity(0.30)
+                    .ignoresSafeArea()
+                    .onTapGesture {
+                        
+                        if !showingCounsil {
+                            isPresent = false
+                        }
+                    }
+                
+                
+                // MARK: - Popup da Cáustria
                 
                 ZStack(alignment: .topTrailing) {
                     
@@ -49,15 +67,28 @@ struct CaustriaView: View {
                     width: geometry.size.width * 0.84,
                     height: geometry.size.height * 0.68
                 )
+                .allowsHitTesting(!showingCounsil)
                 
                 
-//                if showingCounsil {
-//                    
-//                    CounsilView(
-//                        isPresent: $showingCounsil
-//                    )
-//                    .zIndex(10)
-//                }
+                // MARK: - POPUP DO CONSELHEIRO
+                
+                if showingCounsil {
+                    
+                    ZStack {
+                        
+                        // Escurece a Cáustria atrás
+                        Color.black
+                            .opacity(0.35)
+                            .ignoresSafeArea()
+                        
+                        
+                        // Conselheiro
+                        CounsilView(
+                            isPresent: $showingCounsil
+                        )
+                    }
+                    .zIndex(1000)
+                }
             }
             .frame(
                 width: geometry.size.width,
@@ -66,6 +97,8 @@ struct CaustriaView: View {
         }
     }
     
+    
+    // MARK: - Lado esquerdo
     
     private var countrySection: some View {
         
@@ -91,12 +124,20 @@ struct CaustriaView: View {
             Image("País2")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 210, height: 170)
+                .frame(
+                    width: 210,
+                    height: 170
+                )
             
             
             Ellipse()
-                .fill(Color.gray.opacity(0.20))
-                .frame(width: 170, height: 22)
+                .fill(
+                    Color.gray.opacity(0.20)
+                )
+                .frame(
+                    width: 170,
+                    height: 22
+                )
             
             
             HStack(
@@ -104,6 +145,7 @@ struct CaustriaView: View {
                 spacing: 12
             ) {
                 
+                // Botão do Conselheiro
                 counselorButton
                 
                 
@@ -123,7 +165,9 @@ struct CaustriaView: View {
                 .padding(.vertical, 10)
                 .background(.white)
                 .clipShape(
-                    RoundedRectangle(cornerRadius: 16)
+                    RoundedRectangle(
+                        cornerRadius: 16
+                    )
                 )
             }
         }
@@ -134,6 +178,8 @@ struct CaustriaView: View {
     }
     
     
+    // MARK: - Lado direito
+    
     private var statisticSection: some View {
         
         VStack(spacing: 12) {
@@ -141,52 +187,47 @@ struct CaustriaView: View {
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
-                value: gameManager.yourCountry.economia,
+                value: gameManager.cuastria.economia,
                 maximumValue: 10,
                 type: .economia,
                 showImproveButton: false
             ) {
-                print("Abrir quiz de Economia")
+                
             }
             
             
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
-                value: gameManager.yourCountry.militarismo,
+                value: gameManager.cuastria.militarismo,
                 maximumValue: 10,
                 type: .militarismo,
                 showImproveButton: false
             ) {
-                print("Abrir quiz de Militarismo")
+                
             }
             
             
             ProgressBar(
                 name: "Tecnologia",
                 icon: "desktopcomputer",
-                value: gameManager.yourCountry.tecnologia,
+                value: gameManager.cuastria.tecnologia,
                 maximumValue: 10,
                 type: .tecnologia,
                 showImproveButton: false
             ) {
-                print("Abrir quiz de Tecnologia")
+                
             }
             
             
             Spacer()
             
             
+            // MARK: - Botão Aliar-se
+            
             Button {
                 
-                if canAlly {
-                    
-                    gameManager.aliados.append(
-                        gameManager.cuastria
-                    )
-                    
-                    isPresent = false
-                }
+                allyWithCaustria()
                 
             } label: {
                 
@@ -207,9 +248,12 @@ struct CaustriaView: View {
                         : Color.gray
                     )
                     .clipShape(
-                        RoundedRectangle(cornerRadius: 20)
+                        RoundedRectangle(
+                            cornerRadius: 20
+                        )
                     )
             }
+            .buttonStyle(.plain)
             .disabled(!canAlly)
         }
         .padding(.horizontal, 22)
@@ -220,28 +264,46 @@ struct CaustriaView: View {
         )
         .background(.white)
         .clipShape(
-            RoundedRectangle(cornerRadius: 22)
+            RoundedRectangle(
+                cornerRadius: 22
+            )
         )
     }
     
+    
+    // MARK: - Botão Conselheiro
     
     private var counselorButton: some View {
         
         Button {
             
+            // Abre o Conselheiro em formato de popup
             showingCounsil = true
             
         } label: {
             
             Image(systemName: "person.fill")
-                .font(.system(size: 22, weight: .bold))
+                .font(
+                    .system(
+                        size: 22,
+                        weight: .bold
+                    )
+                )
                 .foregroundStyle(.white)
-                .frame(width: 52, height: 52)
+                .frame(
+                    width: 52,
+                    height: 52
+                )
                 .background(.orange)
                 .clipShape(Circle())
+                .shadow(radius: 2)
         }
+        .buttonStyle(.plain)
+        .contentShape(Circle())
     }
     
+    
+    // MARK: - Botão Fechar Cáustria
     
     private var closeButton: some View {
         
@@ -252,12 +314,47 @@ struct CaustriaView: View {
         } label: {
             
             Image(systemName: "xmark")
-                .font(.system(size: 22, weight: .heavy))
+                .font(
+                    .system(
+                        size: 22,
+                        weight: .heavy
+                    )
+                )
                 .foregroundStyle(.white)
-                .frame(width: 50, height: 50)
+                .frame(
+                    width: 50,
+                    height: 50
+                )
                 .background(.red)
                 .clipShape(Circle())
+                .shadow(radius: 3)
         }
-        .offset(x: 12, y: -12)
+        .buttonStyle(.plain)
+        .contentShape(Circle())
+        .offset(
+            x: 12,
+            y: -12
+        )
+    }
+    
+    
+    // MARK: - Função de aliança
+    
+    private func allyWithCaustria() {
+        
+        guard canAlly else {
+            return
+        }
+        
+        
+        gameManager.aliados.append(
+            gameManager.cuastria
+        )
+        
+        
+        print("Aliança realizada com Cáustria")
+        
+        
+        isPresent = false
     }
 }
