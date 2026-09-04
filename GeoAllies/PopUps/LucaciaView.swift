@@ -21,16 +21,13 @@ struct LucaciaView: View {
     
     // Verifica se o usuário pode se aliar à Lucácia
     private var canAlly: Bool {
-        
         gameManager.yourCountry.militarismo >= 9
     }
 
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                
                 // MARK: - Fundo escurecido da Lucácia
-                
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
@@ -72,7 +69,7 @@ struct LucaciaView: View {
                     width: geometry.size.width * 0.84,
                     height: geometry.size.height * 0.68
                 )
-                
+                .offset(y: 15)
                 // Quando o Conselheiro estiver aberto,
                 // não permite clicar no popup da Lucácia
                 .allowsHitTesting(!showingCounsil)
@@ -95,15 +92,11 @@ struct LucaciaView: View {
         }
     }
     
-    
     // MARK: - Lado esquerdo
     
     private var countrySection: some View {
-        
         VStack(spacing: 8) {
-            
             // MARK: Nome do país
-            
             Text("LUCÁCIA")
                 .font(
                     .system(
@@ -113,7 +106,7 @@ struct LucaciaView: View {
                     )
                 )
                 .foregroundStyle(.white)
-                .padding(.horizontal, 24)
+                .padding(.horizontal, 20)
                 .padding(.vertical, 6)
                 .background(
                     Color(
@@ -124,20 +117,16 @@ struct LucaciaView: View {
                 )
                 .clipShape(Capsule())
             
-            
             // MARK: Imagem da Lucácia
-            
             Image("País3")
                 .resizable()
                 .scaledToFit()
                 .frame(
-                    width: 210,
-                    height: 170
+                    width: 200,
+                    height: 150
                 )
             
-            
             // MARK: Sombra abaixo do país
-            
             Ellipse()
                 .fill(
                     Color.gray.opacity(0.20)
@@ -147,19 +136,14 @@ struct LucaciaView: View {
                     height: 22
                 )
             
-            
             // MARK: Parte inferior
             
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
-                
                 // Botão do Conselheiro
-                
                 counselorButton
-                
-                
                 // Texto do requisito
                 
                 Text(
@@ -167,7 +151,7 @@ struct LucaciaView: View {
                 )
                 .font(
                     .system(
-                        size: 14,
+                        size: 12,
                         weight: .bold,
                         design: .rounded
                     )
@@ -195,7 +179,7 @@ struct LucaciaView: View {
     
     private var statisticSection: some View {
         
-        VStack(spacing: 12) {
+        VStack(spacing: -5) {
             
             // MARK: Economia
             
@@ -296,32 +280,30 @@ struct LucaciaView: View {
     // MARK: - Botão Conselheiro
     
     private var counselorButton: some View {
-        
-        Button {
-            
-            // Abre APENAS o popup do Conselheiro
+        Button(action: {
             showingCounsil = true
-            
-        } label: {
-            
-            Image(systemName: "person.fill")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold
-                    )
-                )
-                .foregroundStyle(.white)
-                .frame(
-                    width: 52,
-                    height: 52
-                )
-                .background(.orange)
-                .clipShape(Circle())
-                .shadow(radius: 2)
+        }) {
+            ZStack {
+                Circle()
+                    .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
+                    .frame(width: 50, height: 50)
+                    .shadow(radius: 3)
+                
+                HStack(spacing: 2) {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .foregroundColor(.white)
+                    
+                    Image(systemName: "waveform")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 14)
+                        .foregroundColor(.white)
+                }
+            }
         }
-        .buttonStyle(.plain)
-        .contentShape(Circle())
     }
     
     

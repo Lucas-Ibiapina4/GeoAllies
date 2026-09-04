@@ -41,38 +41,38 @@ enum ProgressBarType {
 
 
 struct ProgressBar: View {
-
+    
     let name: String
     let icon: String
     let value: Int
     let maximumValue: Int
     let type: ProgressBarType
-
+    
     // Define se o botão + aparece
     var showImproveButton: Bool = true
-
+    
     let onImprove: () -> Void
-
-
+    
+    
     private var progress: CGFloat {
         guard maximumValue > 0 else {
             return 0
         }
-
+        
         return min(
             CGFloat(value) / CGFloat(maximumValue),
             1
         )
     }
-
-
+    
+    
     var body: some View {
-
+        
         VStack(
             alignment: .leading,
             spacing: 8
         ) {
-
+            
             Label(
                 name,
                 systemImage: icon
@@ -93,16 +93,16 @@ struct ProgressBar: View {
             
             // MARK: - Barra + botão
             HStack(spacing: 14) {
-
+                
                 VStack(
                     alignment: .trailing,
                     spacing: 4
                 ) {
-
+                    
                     GeometryReader { geometry in
-
+                        
                         ZStack(alignment: .leading) {
-
+                            
                             Capsule()
                                 .fill(
                                     Color.gray.opacity(0.12)
@@ -118,8 +118,8 @@ struct ProgressBar: View {
                         }
                     }
                     .frame(height: 24)
-
-
+                    
+                    
                     Text(
                         "\(value)/\(maximumValue)"
                     )
@@ -135,29 +135,29 @@ struct ProgressBar: View {
                 
                 // MARK: - Botão +
                 
-                Button {
-                    onImprove()
-                } label: {
-                    Image(systemName: "plus")
-                        .font(
-                            .system(
-                                size: 21,
-                                weight: .heavy
+                if showImproveButton && value < maximumValue {
+                    Button {
+                        onImprove()
+                    } label: {
+                        Image(systemName: "plus")
+                            .font(
+                                .system(
+                                    size: 21,
+                                    weight: .heavy
+                                )
                             )
-                        )
-                        .foregroundStyle(.white)
-                        .frame(
-                            width: 40,
-                            height: 40
-                        )
-                        .background(
-                            value >= maximumValue
-                            ? Color.gray.opacity(0.6)
-                            : Color(red: 137 / 255, green: 180 / 255, blue: 112 / 255)
-                        )
-                        .clipShape(Circle())
+                            .foregroundStyle(.white)
+                            .frame(
+                                width: 40,
+                                height: 40
+                            )
+                        // Fica sempre verde, pois se chegar no máximo ele some!
+                            .background(
+                                Color(red: 137 / 255, green: 180 / 255, blue: 112 / 255)
+                            )
+                            .clipShape(Circle())
+                    }
                 }
-                .disabled(value >= maximumValue)
             }
         }
     }

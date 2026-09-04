@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct AgnoliaView: View {
     
@@ -22,63 +23,54 @@ struct AgnoliaView: View {
     private var canAlly: Bool {
         gameManager.yourCountry.militarismo >= 4
     }
-    
-    
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
                 // MARK: - Fundo escurecido
-                
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
                     .onTapGesture {
-                        
                         // Só fecha Agnólia se
                         // o Conselheiro não estiver aberto
                         
                         if !showingCounsil {
                             isPresent = false
                         }
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 18)
-                        
-                        
-                        closeButton
                     }
-                    .frame(
-                        width: geometry.size.width * 0.84,
-                        height: geometry.size.height * 0.68
-                    )
-                }
-                .frame(
-                    width: geometry.size.width * 0.84,
-                    height: geometry.size.height * 0.68
-                )
+                // MARK: - Popup da Agnólia
                 
+                ZStack(alignment: .topTrailing) {
+                    
+                    RoundedRectangle(cornerRadius: 35)
+                        .fill(
+                            Color(.systemGray6)
+                        )
+                    HStack(spacing: 30) {
+                        countrySection
+                        statisticSection
+                    }
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 18)
+                    // Botão fechar Agnólia
+                    closeButton
+                }
+                .padding(.horizontal, 65)
+                .padding(.vertical, 30)
+                
+                .offset(y: 15)
                 // Não permite clicar na Agnólia
                 // enquanto o Conselheiro estiver aberto
                 .allowsHitTesting(!showingCounsil)
-                
-                
                 // MARK: - Popup do Conselheiro
                 
                 if showingCounsil {
-                    
                     ZStack {
-                        
                         // Escurece novamente a tela
-                        
                         Color.black
                             .opacity(0.35)
                             .ignoresSafeArea()
-                        
-                        
                         // Conselheiro
-                        
                         CounsilView(
                             isPresent: $showingCounsil
                         )
@@ -95,7 +87,8 @@ struct AgnoliaView: View {
     // MARK: - País
     
     private var countrySection: some View {
-        VStack(spacing: 8) {
+        
+        VStack(spacing: 7) {
             
             // MARK: Nome
             
@@ -114,18 +107,13 @@ struct AgnoliaView: View {
                     Color.green.opacity(0.65)
                 )
                 .clipShape(Capsule())
-            
-            
+                .padding(10)
             // MARK: Imagem
             
             Image("País1")
                 .resizable()
                 .scaledToFit()
-                .frame(
-                    width: 210,
-                    height: 170
-                )
-            
+                .frame(width: 200, height: 130)
             
             // MARK: Sombra
             
@@ -138,27 +126,22 @@ struct AgnoliaView: View {
                     height: 22
                 )
             
-            
             // MARK: Parte inferior
             
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
-                
                 // Botão do Conselheiro
-                
                 counselorButton
                 
-                
                 // Texto de requisito
-                
                 Text(
                     "Você precisa de 4 pontos de Militarismo para se aliar com esse país"
                 )
                 .font(
                     .system(
-                        size: 14,
+                        size: 13,
                         weight: .bold,
                         design: .rounded
                     )
@@ -186,10 +169,9 @@ struct AgnoliaView: View {
     
     private var statisticSection: some View {
         
-        VStack(spacing: 12) {
+        VStack(spacing: -5) {
             
             // MARK: Economia da Agnólia
-            
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
@@ -202,9 +184,7 @@ struct AgnoliaView: View {
                 // Sem ação
             }
             
-            
             // MARK: Militarismo da Agnólia
-            
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -217,9 +197,7 @@ struct AgnoliaView: View {
                 // Sem ação
             }
             
-            
             // MARK: Tecnologia da Agnólia
-            
             ProgressBar(
                 name: "Tecnologia",
                 icon: "desktopcomputer",
@@ -231,19 +209,14 @@ struct AgnoliaView: View {
                 
                 // Sem ação
             }
-            
-            
             Spacer()
-            
             
             // MARK: - Botão Aliar-se
             
             Button {
-                
                 allyWithAgnolia()
                 
             } label: {
-                
                 Text("Aliar-se")
                     .font(
                         .system(
@@ -254,7 +227,7 @@ struct AgnoliaView: View {
                     )
                     .foregroundStyle(.white)
                     .padding(.horizontal, 30)
-                    .padding(.vertical, 10)
+                    .padding(.vertical, 9)
                     .background(
                         canAlly
                         ? Color.green
@@ -287,46 +260,38 @@ struct AgnoliaView: View {
     // MARK: - Conselheiro
     
     private var counselorButton: some View {
-        
-        Button {
-            
-            // Abre o popup do Conselheiro
-            
+        Button(action: {
             showingCounsil = true
-            
-        } label: {
-            
-            Image(systemName: "person.fill")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold
-                    )
-                )
-                .foregroundStyle(.white)
-                .frame(
-                    width: 52,
-                    height: 52
-                )
-                .background(.orange)
-                .clipShape(Circle())
-                .shadow(radius: 2)
+        }) {
+            ZStack {
+                Circle()
+                    .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
+                    .frame(width: 50, height: 50)
+                    .shadow(radius: 3)
+                
+                HStack(spacing: 2) {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .foregroundColor(.white)
+                    
+                    Image(systemName: "waveform")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 14)
+                        .foregroundColor(.white)
+                }
+            }
         }
-        .buttonStyle(.plain)
-        .contentShape(Circle())
     }
-    
     
     // MARK: - Fechar Agnólia
     
     private var closeButton: some View {
-        
         Button {
-            
             // Fecha somente Agnólia
-            
             isPresent = false
-            
         } label: {
             
             Image(systemName: "xmark")
@@ -353,60 +318,38 @@ struct AgnoliaView: View {
         )
     }
     
-    
     // MARK: - Fazer aliança
     
     private func allyWithAgnolia() {
-        
         // Verifica se o jogador
         // possui Militarismo suficiente
-        
         guard canAlly else {
             return
         }
-        
-        
         // Adiciona Agnólia aos aliados
-        
         gameManager.aliados.append(
             gameManager.agnolia
         )
-        
-        
         print("Aliança realizada com Agnólia")
-        
-        
         // Fecha o popup da Agnólia
-        
         isPresent = false
     }
 }
-
-
 // MARK: - Preview
 
 #Preview {
-    
     AgnoliaPreview()
 }
 
 
 private struct AgnoliaPreview: View {
-    
     @State private var gameManager = GameManager()
-    
-    
+
     var body: some View {
         
         ZStack {
-            
-            Color(
-                red: 30 / 255,
-                green: 42 / 255,
-                blue: 130 / 255
-            )
+            Color.blueSea
             .ignoresSafeArea()
-            
             
             AgnoliaView(
                 isPresent: .constant(true)

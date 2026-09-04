@@ -22,8 +22,8 @@ class GameManager {
     //setamento dos valores do pilares de cada país
     init() {
         self.yourCountry = Country(economia: 0, militarismo: 0, tecnologia: 0)
-        self.agnolia = Country(economia: 5, militarismo: 1, tecnologia: 1)
-        self.cuastria = Country(economia: 1, militarismo: 5, tecnologia: 1)
-        self.lucacia = Country(economia: 1, militarismo: 1, tecnologia: 5)
+        self.agnolia = Country(economia: 8, militarismo: 2, tecnologia: 3)
+        self.cuastria = Country(economia: 3, militarismo: 9, tecnologia: 1)
+        self.lucacia = Country(economia: 1, militarismo: 4, tecnologia: 10)
     }
 }

@@ -23,13 +23,9 @@ struct CaustriaView: View {
         gameManager.yourCountry.militarismo >= 8
     }
     
-    
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
                 // MARK: - Fundo escurecido da tela
                 
                 Color.black
@@ -41,25 +37,19 @@ struct CaustriaView: View {
                             isPresent = false
                         }
                     }
-                
-                
+        
                 // MARK: - Popup da Cáustria
                 
                 ZStack(alignment: .topTrailing) {
-                    
                     RoundedRectangle(cornerRadius: 35)
                         .fill(Color(.systemGray6))
                     
-                    
                     HStack(spacing: 30) {
-                        
                         countrySection
-                        
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
-                    
                     
                     closeButton
                 }
@@ -67,21 +57,17 @@ struct CaustriaView: View {
                     width: geometry.size.width * 0.84,
                     height: geometry.size.height * 0.68
                 )
+                .offset(y: 15)
                 .allowsHitTesting(!showingCounsil)
-                
                 
                 // MARK: - POPUP DO CONSELHEIRO
                 
                 if showingCounsil {
-                    
                     ZStack {
-                        
                         // Escurece a Cáustria atrás
                         Color.black
                             .opacity(0.35)
                             .ignoresSafeArea()
-                        
-                        
                         // Conselheiro
                         CounsilView(
                             isPresent: $showingCounsil
@@ -97,17 +83,14 @@ struct CaustriaView: View {
         }
     }
     
-    
     // MARK: - Lado esquerdo
     
     private var countrySection: some View {
-        
         VStack(spacing: 8) {
-            
             Text("CÁUSTRIA")
                 .font(
                     .system(
-                        size: 22,
+                        size: 20,
                         weight: .bold,
                         design: .rounded
                     )
@@ -120,15 +103,13 @@ struct CaustriaView: View {
                 )
                 .clipShape(Capsule())
             
-            
             Image("País2")
                 .resizable()
                 .scaledToFit()
                 .frame(
-                    width: 210,
-                    height: 170
+                    width: 200,
+                    height: 160
                 )
-            
             
             Ellipse()
                 .fill(
@@ -139,22 +120,19 @@ struct CaustriaView: View {
                     height: 22
                 )
             
-            
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
-                
                 // Botão do Conselheiro
                 counselorButton
-                
                 
                 Text(
                     "Você precisa de 8 pontos de Militarismo para se aliar com esse país"
                 )
                 .font(
                     .system(
-                        size: 14,
+                        size: 12,
                         weight: .bold,
                         design: .rounded
                     )
@@ -182,7 +160,7 @@ struct CaustriaView: View {
     
     private var statisticSection: some View {
         
-        VStack(spacing: 12) {
+        VStack(spacing: -5) {
             
             ProgressBar(
                 name: "Economia",
@@ -226,11 +204,8 @@ struct CaustriaView: View {
             // MARK: - Botão Aliar-se
             
             Button {
-                
                 allyWithCaustria()
-                
             } label: {
-                
                 Text("Aliar-se")
                     .font(
                         .system(
@@ -274,45 +249,37 @@ struct CaustriaView: View {
     // MARK: - Botão Conselheiro
     
     private var counselorButton: some View {
-        
-        Button {
-            
-            // Abre o Conselheiro em formato de popup
+        Button(action: {
             showingCounsil = true
-            
-        } label: {
-            
-            Image(systemName: "person.fill")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold
-                    )
-                )
-                .foregroundStyle(.white)
-                .frame(
-                    width: 52,
-                    height: 52
-                )
-                .background(.orange)
-                .clipShape(Circle())
-                .shadow(radius: 2)
+        }) {
+            ZStack {
+                Circle()
+                    .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
+                    .frame(width: 50, height: 50)
+                    .shadow(radius: 3)
+                
+                HStack(spacing: 2) {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .foregroundColor(.white)
+                    
+                    Image(systemName: "waveform")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 14)
+                        .foregroundColor(.white)
+                }
+            }
         }
-        .buttonStyle(.plain)
-        .contentShape(Circle())
     }
     
-    
     // MARK: - Botão Fechar Cáustria
-    
     private var closeButton: some View {
-        
         Button {
-            
             isPresent = false
-            
         } label: {
-            
             Image(systemName: "xmark")
                 .font(
                     .system(
@@ -337,7 +304,6 @@ struct CaustriaView: View {
         )
     }
     
-    
     // MARK: - Função de aliança
     
     private func allyWithCaustria() {
@@ -356,5 +322,26 @@ struct CaustriaView: View {
         
         
         isPresent = false
+    }
+}
+
+#Preview {
+    CaustriaViewPreview()
+}
+
+private struct CaustriaViewPreview: View {
+    @State private var gameManager = GameManager()
+
+    var body: some View {
+        
+        ZStack {
+            Color.blueSea
+            .ignoresSafeArea()
+            
+            CaustriaView(
+                isPresent: .constant(true)
+            )
+        }
+        .environment(gameManager)
     }
 }
