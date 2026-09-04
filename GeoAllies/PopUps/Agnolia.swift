@@ -22,9 +22,7 @@ struct AgnoliaView: View {
     var body: some View {
         NavigationStack {
             GeometryReader { geometry in
-                
                 ZStack {
-                    
                     ZStack(alignment: .topTrailing) {
                         
                         RoundedRectangle(cornerRadius: 35)
@@ -47,16 +45,6 @@ struct AgnoliaView: View {
                         width: geometry.size.width * 0.84,
                         height: geometry.size.height * 0.68
                     )
-                    
-                    
-                    // Popup Conselheiro
-                    //                if showingCounsil {
-                    //
-                    //                    CounsilView(
-                    //                        isPresent: $showingCounsil
-                    //                    )
-                    //                    .zIndex(10)
-                    //                }
                 }
                 .frame(
                     width: geometry.size.width,
@@ -66,14 +54,10 @@ struct AgnoliaView: View {
         }
         .navigationBarHidden(true)
     }
-    
-    
     // MARK: - País
     
     private var countrySection: some View {
-        
         VStack(spacing: 8) {
-            
             Text("AGNÓLIA")
                 .font(
                     .system(

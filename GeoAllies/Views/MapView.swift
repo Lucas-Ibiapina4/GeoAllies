@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EstiloIlha3D: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
@@ -26,6 +27,10 @@ struct EstiloIlha3D: ButtonStyle {
 }
 
 struct MapView: View {
+    
+    @Environment(\.modelContext) private var context
+    @Query private var savedCountries: [Country]
+    
     @State private var gameManager = GameManager()
     
     @State private var isPresentedSeuPais: Bool = false
@@ -72,10 +77,6 @@ struct MapView: View {
                 }
                 .buttonStyle(EstiloIlha3D())
                 .offset(x: -180, y: 100)
-                
-//                .navigationDestination(isPresented: $isPresentedSeuPais){
-//                    PlayerCountryView(isPresent: $isPresentedSeuPais)
-//                }
                 
                 Button(action: {
                     isPresentedCaustria = true
@@ -128,6 +129,16 @@ struct MapView: View {
         }
         .navigationBarHidden(true)
         .environment(gameManager)
+        
+        .onAppear {
+            if let savedData = savedCountries.first {
+                gameManager.yourCountry = savedData
+            } else {
+                let newData = Country(economia: 0, militarismo: 0, tecnologia: 0)
+                context.insert(newData)
+                gameManager.yourCountry = newData
+            }
+        }
     }
 }
 

@@ -10,30 +10,21 @@ import SwiftUI
 struct LucaciaView: View {
     
     @Environment(GameManager.self) private var gameManager
-    
-    
     @Binding var isPresent: Bool
     
     // Controla o popup do Conselheiro
     @State private var showingCounsil = false
     
-    
     // Verifica se o usuário pode se aliar à Lucácia
     private var canAlly: Bool {
         gameManager.yourCountry.militarismo >= 9
     }
-    
-    
+
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
                 // MARK: - Popup da Lucácia
-                
                 ZStack(alignment: .topTrailing) {
-                    
                     // Fundo do popup
                     RoundedRectangle(cornerRadius: 35)
                         .fill(
@@ -43,19 +34,13 @@ struct LucaciaView: View {
                                 blue: 245 / 255
                             )
                         )
-                    
-                    
                     // Conteúdo principal
                     HStack(spacing: 30) {
-                        
                         countrySection
-                        
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
-                    
-                    
                     // Botão fechar
                     closeButton
                 }
@@ -63,10 +48,7 @@ struct LucaciaView: View {
                     width: geometry.size.width * 0.84,
                     height: geometry.size.height * 0.68
                 )
-                
-                
                 // MARK: - Popup do Conselheiro
-                
 //                if showingCounsil {
 //                    
 //                    CounsilView(
@@ -119,8 +101,6 @@ struct LucaciaView: View {
                     width: 210,
                     height: 170
                 )
-            
-            
             // Sombra abaixo do país
             Ellipse()
                 .fill(

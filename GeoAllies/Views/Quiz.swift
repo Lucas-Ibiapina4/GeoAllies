@@ -30,8 +30,6 @@ struct Quiz: View {
         self.questions = allQuestions
             .filter { $0.pilar == pilar.rawValue}
     }
-    
-
     var currentQuestion: QuestionsModel? {
         guard currentQuestionIndex < questions.count else { return nil }
         

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct GeoAlliesApp: App {
@@ -19,5 +20,6 @@ struct GeoAlliesApp: App {
                     .environment(gamemanager) //disponibiliza essa instancia para todo mundo
                     .preferredColorScheme(.light)
             }
+            .modelContainer(for: Country.self)
         }
 }
