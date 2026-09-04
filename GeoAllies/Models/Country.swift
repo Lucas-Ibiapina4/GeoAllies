@@ -14,6 +14,8 @@ class Country {
     var militarismo: Int = 0
     var tecnologia: Int = 0
     
+    var id: UUID = UUID()
+
     init(economia: Int, militarismo: Int, tecnologia: Int){
         self.economia = economia
         self.militarismo = militarismo

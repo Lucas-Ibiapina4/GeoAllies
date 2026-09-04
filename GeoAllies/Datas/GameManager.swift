@@ -26,4 +26,11 @@ class GameManager {
         self.cuastria = Country(economia: 3, militarismo: 9, tecnologia: 1)
         self.lucacia = Country(economia: 1, militarismo: 4, tecnologia: 10)
     }
+    
+    func aliar(_ country: Country) {
+
+        if !aliados.contains(where: { $0.id == country.id }) {
+            aliados.append(country)
+        }
+    }
 }

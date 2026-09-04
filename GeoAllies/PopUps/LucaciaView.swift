@@ -9,25 +9,36 @@ import SwiftUI
 
 
 struct LucaciaView: View {
-    
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
-    
     
     // MARK: - Controla o popup do Conselheiro
     
     @State private var showingCounsil = false
     
-    // Verifica se o usuário pode se aliar à Lucácia
+    
+    // MARK: - Verifica se o usuário pode se aliar
+    
     private var canAlly: Bool {
+        
         gameManager.yourCountry.militarismo >= 9
     }
-
+    
+    private var lucaciaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.lucacia.id
+        }
+    }
+    
+    
     var body: some View {
+        
         GeometryReader { geometry in
+            
             ZStack {
+                
                 // MARK: - Fundo escurecido da Lucácia
+                
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
@@ -43,7 +54,9 @@ struct LucaciaView: View {
                 
                 
                 // MARK: - Popup da Lucácia
+                
                 ZStack(alignment: .topTrailing) {
+                    
                     // Fundo do popup
                     
                     RoundedRectangle(cornerRadius: 35)
@@ -54,22 +67,29 @@ struct LucaciaView: View {
                                 blue: 245 / 255
                             )
                         )
+                    
+                    
                     // Conteúdo principal
                     
                     HStack(spacing: 30) {
+                        
                         countrySection
+                        
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
-                    // Botão fechar
+                    
+                    
+                    // Botão fechar Lucácia
+                    
                     closeButton
                 }
                 .frame(
                     width: geometry.size.width * 0.84,
                     height: geometry.size.height * 0.68
                 )
-                .offset(y: 15)
+                
                 // Quando o Conselheiro estiver aberto,
                 // não permite clicar no popup da Lucácia
                 .allowsHitTesting(!showingCounsil)
@@ -92,11 +112,15 @@ struct LucaciaView: View {
         }
     }
     
+    
     // MARK: - Lado esquerdo
     
     private var countrySection: some View {
+        
         VStack(spacing: 8) {
+            
             // MARK: Nome do país
+            
             Text("LUCÁCIA")
                 .font(
                     .system(
@@ -106,7 +130,7 @@ struct LucaciaView: View {
                     )
                 )
                 .foregroundStyle(.white)
-                .padding(.horizontal, 20)
+                .padding(.horizontal, 24)
                 .padding(.vertical, 6)
                 .background(
                     Color(
@@ -117,24 +141,53 @@ struct LucaciaView: View {
                 )
                 .clipShape(Capsule())
             
-            // MARK: Imagem da Lucácia
-            Image("País3")
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: 200,
-                    height: 150
-                )
             
-            // MARK: Sombra abaixo do país
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
+            // MARK: Imagem da Lucácia
+            
+            
+            if lucaciaAliada {
+                Image("País3")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            } else {
+                Image("LucaciaImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            }
+            
+            
             
             // MARK: Parte inferior
             
@@ -142,8 +195,12 @@ struct LucaciaView: View {
                 alignment: .bottom,
                 spacing: 12
             ) {
+                
                 // Botão do Conselheiro
+                
                 counselorButton
+                
+                
                 // Texto do requisito
                 
                 Text(
@@ -151,7 +208,7 @@ struct LucaciaView: View {
                 )
                 .font(
                     .system(
-                        size: 12,
+                        size: 14,
                         weight: .bold,
                         design: .rounded
                     )
@@ -179,7 +236,7 @@ struct LucaciaView: View {
     
     private var statisticSection: some View {
         
-        VStack(spacing: -5) {
+        VStack(spacing: 12) {
             
             // MARK: Economia
             
@@ -224,7 +281,6 @@ struct LucaciaView: View {
                 
                 // Sem ação
             }
-            
             
             Spacer()
             
@@ -280,30 +336,32 @@ struct LucaciaView: View {
     // MARK: - Botão Conselheiro
     
     private var counselorButton: some View {
-        Button(action: {
+        
+        Button {
+            
+            // Abre APENAS o popup do Conselheiro
             showingCounsil = true
-        }) {
-            ZStack {
-                Circle()
-                    .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
-                    .frame(width: 50, height: 50)
-                    .shadow(radius: 3)
-                
-                HStack(spacing: 2) {
-                    Image(systemName: "person.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                        .foregroundColor(.white)
-                    
-                    Image(systemName: "waveform")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 14)
-                        .foregroundColor(.white)
-                }
-            }
+            
+        } label: {
+            
+            Image(systemName: "person.fill")
+                .font(
+                    .system(
+                        size: 22,
+                        weight: .bold
+                    )
+                )
+                .foregroundStyle(.white)
+                .frame(
+                    width: 52,
+                    height: 52
+                )
+                .background(.orange)
+                .clipShape(Circle())
+                .shadow(radius: 2)
         }
+        .buttonStyle(.plain)
+        .contentShape(Circle())
     }
     
     
@@ -357,9 +415,7 @@ struct LucaciaView: View {
         
         // Adiciona Lucácia aos aliados
         
-        gameManager.aliados.append(
-            gameManager.lucacia
-        )
+        gameManager.aliar(gameManager.lucacia)
         
         
         print("Aliança realizada com Lucácia")
