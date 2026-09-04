@@ -56,12 +56,6 @@ struct PlayerCountryView: View {
                 }
                 .padding(.horizontal, 65)
                 .padding(.vertical, 25)
-//                .frame(
-//                    width: geometry.size.width * 0.84,
-//                    height: geometry.size.height * 0.72
-//                )
-//
-//                .position (x: geometry.size.width / 2, y: geometry.size.height / 2)
             }
         }
         .fullScreenCover(item: $pilarQuizselected) { pilar in
@@ -169,21 +163,15 @@ struct PlayerCountryView: View {
     
     // MARK: - Funções dos quizzes
     private func openEconomyQuiz() {
-        
         pilarQuizselected = .economia
-
         print("Abrir quiz de Economia")
     }
     private func openMilitarismQuiz() {
-        
         pilarQuizselected = .militarismo
-        
         print("Abrir quiz de Militarismo")
     }
     private func openTechnologyQuiz() {
-        
         pilarQuizselected = .tecnologia
-        
         print("Abrir quiz de Tecnologia")
     }
 }
