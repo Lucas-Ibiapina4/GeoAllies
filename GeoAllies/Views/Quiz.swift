@@ -8,8 +8,6 @@
 import SwiftUI
 
 struct Quiz: View {
-    
-    
     let pilar: QuizPilar
     let questions: [QuestionsModel]
     
@@ -22,9 +20,7 @@ struct Quiz: View {
     @State private var wrongOptions: Set<Int> = []
     @State private var quizFinished = false
     @State private var points: Int = 0
-    
-  //  @Binding var quizFinished: Bool
-    
+        
     init(pilar: QuizPilar) {
         self.pilar = pilar
         
@@ -43,9 +39,7 @@ struct Quiz: View {
     }
     
     var body: some View {
-        
         if quizFinished {
-            
             VStack(spacing: 20) {
                 
                 Text ("Quiz concluido")
@@ -53,19 +47,14 @@ struct Quiz: View {
                     .bold()
                 
                 Text("Você respondeu todas as perguntas")
-                
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
-            
         } else if let question = currentQuestion {
-            
             HStack(spacing: 10) {
                 ZStack{
-                    
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color("QuizTextBox"))
-                    
                     Text(question.question)
                         .multilineTextAlignment(.center)
                         .padding()
@@ -74,7 +63,6 @@ struct Quiz: View {
                 
                 VStack(spacing: 15) {
                     ForEach(question.options.indices, id: \.self) { index in
-                        
                         Button {
                             checkAnswer(
                                 option: question.options[index],
@@ -113,7 +101,6 @@ struct Quiz: View {
         guard let question = currentQuestion else {
             return
         }
-        
         if option == question.answer {
             correctOption = index
             points = points + 1
@@ -128,13 +115,10 @@ struct Quiz: View {
     }
     
     func nextQuestion() {
-        
         if currentQuestionIndex + 1 < questions.count {
-            
             currentQuestionIndex += 1
             wrongOptions.removeAll()
             correctOption = nil
-            
         } else {
             quizFinished = true
             addPointInpilar()
@@ -147,20 +131,14 @@ struct Quiz: View {
     func addPointInpilar(){
         switch pilar {
         case .economia:
-            if gameManager.yourCountry.economia <= 10 {
-                gameManager.yourCountry.economia += points
-            }
+            gameManager.yourCountry.economia = min(gameManager.yourCountry.economia + points, 10)
         case .militarismo:
-            if gameManager.yourCountry.militarismo <= 10 {
-                gameManager.yourCountry.militarismo += points
-            }
+            gameManager.yourCountry.militarismo = min(gameManager.yourCountry.militarismo + points, 10)
         case .tecnologia:
-            
-            if gameManager.yourCountry.tecnologia <= 10 {
-                gameManager.yourCountry.tecnologia += points            }
-        }
+            gameManager.yourCountry.tecnologia = min(gameManager.yourCountry.tecnologia + points, 10)
         }
     }
+}
 
 
 #Preview {

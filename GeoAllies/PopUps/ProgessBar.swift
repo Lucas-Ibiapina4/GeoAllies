@@ -92,14 +92,12 @@ struct ProgressBar: View {
             
             
             // MARK: - Barra + botão
-            
             HStack(spacing: 14) {
                 
                 VStack(
                     alignment: .trailing,
                     spacing: 4
                 ) {
-                    
                     GeometryReader { geometry in
                         
                         ZStack(alignment: .leading) {
@@ -109,15 +107,13 @@ struct ProgressBar: View {
                                 .fill(
                                     Color.gray.opacity(0.12)
                                 )
-                            
-                            
                             // Progresso
                             Capsule()
                                 .fill(type.color)
                                 .frame(
                                     width:
                                         geometry.size.width
-                                        * progress
+                                    * progress
                                 )
                         }
                     }
@@ -142,11 +138,8 @@ struct ProgressBar: View {
                 // MARK: - Botão +
                 
                 Button {
-                    
                     onImprove()
-                    
                 } label: {
-                    
                     Image(systemName: "plus")
                         .font(
                             .system(
@@ -160,14 +153,13 @@ struct ProgressBar: View {
                             height: 40
                         )
                         .background(
-                            Color(
-                                red: 137 / 255,
-                                green: 180 / 255,
-                                blue: 112 / 255
-                            )
+                            value >= maximumValue
+                            ? Color.gray.opacity(0.6)
+                            : Color(red: 137 / 255, green: 180 / 255, blue: 112 / 255)
                         )
                         .clipShape(Circle())
                 }
+                .disabled(value >= maximumValue)
             }
         }
     }
