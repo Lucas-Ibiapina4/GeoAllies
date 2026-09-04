@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct PlayerCountryView: View {
-    
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
     
     // Controla o popup do conselheiro
     @State private var showingCounsil = false
     
+    @State private var pilarQuizselected: QuizPilar?
     
     var body: some View {
+
         GeometryReader { geometry in
             ZStack {
                 Color.black.opacity(0.3)
@@ -60,10 +60,13 @@ struct PlayerCountryView: View {
 //                    width: geometry.size.width * 0.84,
 //                    height: geometry.size.height * 0.72
 //                )
-//                
+//
 //                .position (x: geometry.size.width / 2, y: geometry.size.height / 2)
             }
         }
+        .fullScreenCover(item: $pilarQuizselected) { pilar in
+                Quiz(pilar: pilar)
+            }
     }
     // MARK: - Lado esquerdo
     private var countrySection: some View {
@@ -107,18 +110,7 @@ struct PlayerCountryView: View {
                 )
             // MARK: Conselheiro
             HStack {
-                
-                // Conselheiro
-                Button {
-                    print("Abrir Conselheiro")
-                } label: {
-                    Image(systemName: "person.fill")
-                        .font(.system(size: 22, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: 52, height: 52)
-                        .background(.orange)
-                        .clipShape(Circle())
-                }
+                CounsilButtonView()
                 Spacer()
             }
         }
@@ -139,7 +131,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .economia
             ) {
-                print("Abrir quiz de Economia")
+                openEconomyQuiz()
             }
             // MARK: Militarismo
             ProgressBar(
@@ -149,7 +141,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .militarismo
             ) {
-                print("Abrir quiz de Militarismo")
+                openMilitarismQuiz()
             }
             // MARK: Tecnologia
             
@@ -160,7 +152,7 @@ struct PlayerCountryView: View {
                 maximumValue: 10,
                 type: .tecnologia
             ) {
-                print("Abrir quiz de Tecnologia")
+                openTechnologyQuiz()
             }
         }
         .padding(.horizontal, 22)
@@ -175,17 +167,22 @@ struct PlayerCountryView: View {
         )
     }
     
-    
     // MARK: - Funções dos quizzes
     private func openEconomyQuiz() {
         
+        pilarQuizselected = .economia
+
         print("Abrir quiz de Economia")
     }
     private func openMilitarismQuiz() {
         
+        pilarQuizselected = .militarismo
+        
         print("Abrir quiz de Militarismo")
     }
     private func openTechnologyQuiz() {
+        
+        pilarQuizselected = .tecnologia
         
         print("Abrir quiz de Tecnologia")
     }

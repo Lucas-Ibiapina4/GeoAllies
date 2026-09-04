@@ -13,10 +13,17 @@ struct Quiz: View {
     let pilar: QuizPilar
     let questions: [QuestionsModel]
     
+    @Environment(GameManager.self) private var gameManager
+    
+    @Environment(\.dismiss) private var dismiss
+    
     @State private var correctOption: Int? = nil
     @State private var currentQuestionIndex = 0
     @State private var wrongOptions: Set<Int> = []
     @State private var quizFinished = false
+    @State private var points: Int = 0
+    
+  //  @Binding var quizFinished: Bool
     
     init(pilar: QuizPilar) {
         self.pilar = pilar
@@ -49,6 +56,7 @@ struct Quiz: View {
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
             
         } else if let question = currentQuestion {
             
@@ -108,6 +116,8 @@ struct Quiz: View {
         
         if option == question.answer {
             correctOption = index
+            points = points + 1
+            print("pontos: \(points)")
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 nextQuestion()
@@ -127,11 +137,33 @@ struct Quiz: View {
             
         } else {
             quizFinished = true
+            addPointInpilar()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                dismiss()
+            }
         }
     }
-}
+    
+    func addPointInpilar(){
+        switch pilar {
+        case .economia:
+            if gameManager.yourCountry.economia <= 10 {
+                gameManager.yourCountry.economia += points
+            }
+        case .militarismo:
+            if gameManager.yourCountry.militarismo <= 10 {
+                gameManager.yourCountry.militarismo += points
+            }
+        case .tecnologia:
+            
+            if gameManager.yourCountry.tecnologia <= 10 {
+                gameManager.yourCountry.tecnologia += points            }
+        }
+        }
+    }
 
 
 #Preview {
     Quiz(pilar: .economia)
+        .environment(GameManager())
 }

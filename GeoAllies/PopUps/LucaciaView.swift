@@ -11,6 +11,7 @@ struct LucaciaView: View {
     
     @Environment(GameManager.self) private var gameManager
     
+    
     @Binding var isPresent: Bool
     
     // Controla o popup do Conselheiro
@@ -220,6 +221,12 @@ struct LucaciaView: View {
             
             
             // MARK: - Botão Aliar-se
+            
+            Text("Militarismo: \(gameManager.yourCountry.militarismo)")
+                .foregroundStyle(.black)
+
+            Text("Pode aliar: \(canAlly ? "SIM" : "NÃO")")
+                .foregroundStyle(.black)
             
             Button {
                 
