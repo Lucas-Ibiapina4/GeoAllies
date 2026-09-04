@@ -11,6 +11,8 @@ import SwiftData
 @Model
 class Country {
     
+    var id: UUID = UUID()
+    
     var economia : Int = 0
     var militarismo : Int = 0
     var tecnologia : Int = 0

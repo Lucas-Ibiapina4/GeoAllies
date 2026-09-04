@@ -27,6 +27,12 @@ struct LucaciaView: View {
         gameManager.yourCountry.militarismo >= 9
     }
     
+    private var lucaciaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.lucacia.id
+        }
+    }
+    
     
     var body: some View {
         
@@ -141,25 +147,49 @@ struct LucaciaView: View {
             
             // MARK: Imagem da Lucácia
             
-            Image("País3")
-                .resizable()
-                .scaledToFit()
-                .frame(
-                    width: 210,
-                    height: 170
-                )
             
+            if lucaciaAliada {
+                Image("País3")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            } else {
+                Image("LucaciaImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            }
             
-            // MARK: Sombra abaixo do país
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
             
             
             // MARK: Parte inferior
@@ -254,7 +284,6 @@ struct LucaciaView: View {
                 
                 // Sem ação
             }
-            
             
             Spacer()
             
@@ -389,9 +418,7 @@ struct LucaciaView: View {
         
         // Adiciona Lucácia aos aliados
         
-        gameManager.aliados.append(
-            gameManager.lucacia
-        )
+        gameManager.aliar(gameManager.lucacia)
         
         
         print("Aliança realizada com Lucácia")
