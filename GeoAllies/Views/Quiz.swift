@@ -151,12 +151,16 @@ struct Quiz: View {
                 gameManager.yourCountry.economia += points
             }
         case .militarismo:
-            gameManager.yourCountry.militarismo += points
+            if gameManager.yourCountry.militarismo <= 10 {
+                gameManager.yourCountry.militarismo += points
+            }
         case .tecnologia:
-            gameManager.yourCountry.tecnologia += points
+            
+            if gameManager.yourCountry.tecnologia <= 10 {
+                gameManager.yourCountry.tecnologia += points            }
+        }
         }
     }
-}
 
 
 #Preview {
