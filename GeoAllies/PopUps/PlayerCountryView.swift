@@ -300,7 +300,6 @@ struct PlayerCountryView: View {
     // MARK: - Funções dos quizzes
     
     private func openEconomyQuiz() {
-        
         pilarQuizselected = .economia
         
         print("Abrir quiz de Economia")
@@ -308,17 +307,13 @@ struct PlayerCountryView: View {
     
     
     private func openMilitarismQuiz() {
-        
         pilarQuizselected = .militarismo
-        
         print("Abrir quiz de Militarismo")
     }
     
     
     private func openTechnologyQuiz() {
-        
         pilarQuizselected = .tecnologia
-        
         print("Abrir quiz de Tecnologia")
     }
 }

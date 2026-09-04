@@ -89,8 +89,9 @@ struct ProgressBar: View {
             .padding(.vertical, 5)
             .background(type.color)
             .clipShape(Capsule())
-
-
+            
+            
+            // MARK: - Barra + botão
             HStack(spacing: 14) {
 
                 VStack(
@@ -106,13 +107,13 @@ struct ProgressBar: View {
                                 .fill(
                                     Color.gray.opacity(0.12)
                                 )
-
+                            // Progresso
                             Capsule()
                                 .fill(type.color)
                                 .frame(
                                     width:
                                         geometry.size.width
-                                        * progress
+                                    * progress
                                 )
                         }
                     }
@@ -130,37 +131,33 @@ struct ProgressBar: View {
                     )
                     .foregroundStyle(.black)
                 }
-
-
-                // O botão só aparece no próprio país
-                if showImproveButton {
-
-                    Button {
-                        onImprove()
-                    } label: {
-
-                        Image(systemName: "plus")
-                            .font(
-                                .system(
-                                    size: 21,
-                                    weight: .heavy
-                                )
+                
+                
+                // MARK: - Botão +
+                
+                Button {
+                    onImprove()
+                } label: {
+                    Image(systemName: "plus")
+                        .font(
+                            .system(
+                                size: 21,
+                                weight: .heavy
                             )
-                            .foregroundStyle(.white)
-                            .frame(
-                                width: 40,
-                                height: 40
-                            )
-                            .background(
-                                Color(
-                                    red: 137 / 255,
-                                    green: 180 / 255,
-                                    blue: 112 / 255
-                                )
-                            )
-                            .clipShape(Circle())
-                    }
+                        )
+                        .foregroundStyle(.white)
+                        .frame(
+                            width: 40,
+                            height: 40
+                        )
+                        .background(
+                            value >= maximumValue
+                            ? Color.gray.opacity(0.6)
+                            : Color(red: 137 / 255, green: 180 / 255, blue: 112 / 255)
+                        )
+                        .clipShape(Circle())
                 }
+                .disabled(value >= maximumValue)
             }
         }
     }
