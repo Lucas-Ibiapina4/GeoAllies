@@ -1,69 +1,180 @@
 //
-//  CounsilViewModel.swift
+//  FoundationModelServices.swift
 //  GeoAllies
-//
-//  Created by Bianca Moura on 01/09/26.
 //
 
 import Foundation
 import FoundationModels
-import PDFKit
 import Observation
 
-// Limite do Foundation Models
-// Limite do Cloud
 
 @MainActor
 @Observable
 class FoundationModelServices {
-    var responseModel: String = ""
+    
+    // MARK: - Texto digitado pelo jogador
+    
     var answerUser: String = ""
+    
+    
+    // MARK: - Resposta do modelo
+    
+    var responseModel: String = ""
+    
+    
+    // MARK: - Mensagem de erro
+    
     var messageError: String = ""
-
-    func loadModel() async {
+    
+    
+    // MARK: - Estado de carregamento
+    
+    var isLoading: Bool = false
+    
+    
+    // MARK: - Enviar pergunta para o Foundation Model
+    
+    func loadModel(question: String) async -> String? {
+        
+        // Limpa qualquer erro anterior
+        messageError = ""
+        
+        
+        let userQuestion = question
+            .trimmingCharacters(
+                in: .whitespacesAndNewlines
+            )
+        
+        
+        // Impede pergunta vazia
+        guard !userQuestion.isEmpty else {
+            
+            messageError = "Digite uma pergunta."
+            
+            return nil
+        }
+        
+        
+        // Impede vários envios simultâneos
+        guard !isLoading else {
+            return nil
+        }
+        
+        
+        isLoading = true
+        
+        
+        // Carrega o Questions.json
         let questionsGame = loadThemes()
         
+        
+        // MARK: - Cria a sessão
+        
         let session = LanguageModelSession(
+            
             instructions: """
-                Você é um tutor educacional acadêmico de um jogo de geopolítica. Seu objetivo é explicar conceitos de economia e geografia de forma segura, didática e construtiva.
-                
-                BASE DE CONHECIMENTO DO JOGO:
-                \(questionsGame)
-                
-                INSTRUÇÕES OBRIGATÓRIAS:
-                1. O usuário enviará uma pergunta. Procure essa pergunta na BASE DE CONHECIMENTO DO JOGO acima.
-                2. Escreva um parágrafo curto (máximo 15 linhas) explicando o contexto histórico ou econômico ou político do tema.
-                3. Você DEVE incluir a exata frase da resposta correta da BASE DE CONHECIMENTO dentro do seu texto explicativo de preferência no meio do texto ou para o final.
-                4. Se a pergunta do usuário NÃO estiver na BASE DE CONHECIMENTO, ignore as regras anteriores e responda EXATAMENTE com a frase: "Não estou apto a responder."
-                """
+            Você é Cleiton, o conselheiro educacional de um jogo de geopolítica.
+
+            Sua função é ajudar o jogador a entender as perguntas,
+            os países e as regras do jogo.
+
+            BASE DE CONHECIMENTO:
+
+            \(questionsGame)
+
+            REGRAS:
+
+            1. Leia a pergunta do jogador.
+
+            2. Procure informações relacionadas dentro da base de conhecimento.
+
+            3. Explique de forma simples, curta e didática.
+
+            4. Não invente regras ou informações sobre o jogo.
+
+            5. Caso não exista informação suficiente na base,
+            responda exatamente:
+
+            "Não estou apto a responder."
+
+            6. Sua resposta deve ser adequada para aparecer
+            dentro de um chat de jogo.
+            """
         )
-        do{
-            let response = try await session.respond() {
-                "\(answerUser)"
+        
+        
+        do {
+            
+            let response = try await session.respond {
+                
+                userQuestion
             }
             
-            self.responseModel = response.content
-        } catch LanguageModelSession.GenerationError.exceededContextWindowSize {
-            self.messageError = "O texto é muito grande para o modelo. Tente reduzir."
-        } catch{
-            self.messageError = "Erro: \(error.localizedDescription)"
+            
+            responseModel = response.content
+            
+            
+            isLoading = false
+            
+            
+            return response.content
+            
+        }
+        
+        catch LanguageModelSession.GenerationError.exceededContextWindowSize {
+            
+            messageError = "A base de perguntas está grande demais para o modelo."
+            
+            isLoading = false
+            
+            return nil
+        }
+        
+        catch {
+            
+            messageError = "Erro: \(error.localizedDescription)"
+            
+            isLoading = false
+            
+            return nil
         }
     }
+    
+    
+    // MARK: - Buscar perguntas no JSON
     
     private func getThemesFromJson() -> [QuestionsModel] {
-        return Bundle.main.decode(file: "Questions.json")
+        
+        return Bundle.main.decode(
+            file: "Questions.json"
+        )
     }
     
+    
+    // MARK: - Transformar JSON em texto
+    
     func loadThemes() -> String {
+        
         let questions = getThemesFromJson()
-        var contextString: String = "Gabarito:\n"
+        
+        
+        var contextString = """
+        Gabarito do jogo:
+
+        """
+        
         
         for item in questions {
-            contextString += "Pergunta: \(item.question) - Resposta: \(item.answer)\n"
+            
+            contextString += """
+            
+            Pergunta: \(item.question)
+            Resposta: \(item.answer)
+            
+            """
         }
+        
         
         return contextString
     }
 }
-
-
