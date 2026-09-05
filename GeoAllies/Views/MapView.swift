@@ -70,27 +70,59 @@ struct MapView: View {
         isPresentedLucasia ||
         showingCounsil
     }
+    
+    private var lucaciaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.lucacia.id
+        }
+    }
+    
+    private var agnoliaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.agnolia.id
+        }
+    }
+    
+    private var caustriaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.cuastria.id
+        }
+    }
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
-                // MARK: - Conteúdo do mapa
-                ZStack {
+                
+                // MARK: Fundo
+                
+                Group {
                     
-                    // MARK: Fundo
-                    Group {
-                        Color.blueSea
-                        Image("fundo")
+                    Color.blueSea
+                    
+                    
+                    Image("fundo")
+                        .resizable()
+                }
+                .ignoresSafeArea()
+                
+                
+                // MARK: - Agnólia
+                
+                Button {
+                    
+                    isPresentedAgnolia = true
+                    
+                } label: {
+                    
+                    if agnoliaAliada {
+                        Image("AgnoliaGreen")
+                            .renderingMode(.original)
                             .resizable()
-                    }
-                    .ignoresSafeArea()
-                    // MARK: - Agnólia
-                    
-                    Button {
-                        
-                        isPresentedAgnolia = true
-                        
-                    } label: {
-                        
+                            .scaledToFit()
+                            .frame(width: 220)
+                            .contentShape(Circle())
+                    } else {
                         Image("AgnoliaImage")
                             .renderingMode(.original)
                             .resizable()
@@ -98,38 +130,56 @@ struct MapView: View {
                             .frame(width: 220)
                             .contentShape(Circle())
                     }
-                    .buttonStyle(
-                        EstiloIlha3D()
-                    )
-                    .offset(
-                        x: -180,
-                        y: -80
-                    )
+                }
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: -180,
+                    y: -80
+                )
+                
+                
+                // MARK: - Seu País
+                
+                Button {
                     
+                    isPresentedSeuPais = true
                     
-                    // MARK: - Seu País
+                } label: {
                     
-                    Button {
-                        
-                        isPresentedSeuPais = true
-                        
-                    } label: {
-                        
-                        Image("PaísSeu")
+                    Image("PaísSeu")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 190)
+                        .contentShape(Circle())
+                }
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: -180,
+                    y: 100
+                )
+                
+                
+                // MARK: - Cáustria
+                
+                Button {
+                    
+                    isPresentedCaustria = true
+                    
+                } label: {
+                    
+                    if caustriaAliada {
+                        Image("CaustriaGreen")
                             .renderingMode(.original)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 190)
+                            .frame(width: 210)
                             .contentShape(Circle())
-                    }
-                    .buttonStyle(EstiloIlha3D())
-                    .offset(x: -180, y: 100)
-                    
-                    Button(action: {
-                        isPresentedCaustria = true
-                        
-                    }) {
-                        
+                    } else {
                         Image("CaustriaImage")
                             .renderingMode(.original)
                             .resizable()
@@ -137,22 +187,33 @@ struct MapView: View {
                             .frame(width: 210)
                             .contentShape(Circle())
                     }
-                    .buttonStyle(
-                        EstiloIlha3D()
-                    )
-                    .offset(
-                        x: 20,
-                        y: 30
-                    )
                     
-                    // MARK: - Lucácia
+                }
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: 20,
+                    y: 30
+                )
+                
+                
+                // MARK: - Lucácia
+                
+                Button {
                     
-                    Button {
-                        
-                        isPresentedLucasia = true
-                        
-                    } label: {
-                        
+                    isPresentedLucasia = true
+                    
+                } label: {
+                    
+                    if lucaciaAliada {
+                        Image("País3")
+                            .renderingMode(.original)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 210)
+                            .contentShape(Circle())
+                    } else {
                         Image("LucaciaImage")
                             .renderingMode(.original)
                             .resizable()
@@ -160,24 +221,23 @@ struct MapView: View {
                             .frame(width: 190)
                             .contentShape(Capsule())
                     }
-                    .buttonStyle(
-                        EstiloIlha3D()
-                    )
-                    .offset(
-                        x: 230,
-                        y: 0
-                    )
                     
+                }
+                .buttonStyle(
+                    EstiloIlha3D()
+                )
+                .offset(
+                    x: 230,
+                    y: 0
+                )
+                
+                
+                // MARK: - Conselheiro do mapa
+                
+                VStack {
                     
-                    // MARK: - Conselheiro do mapa
-                    
-                    VStack {
-                        HStack {
-                            Spacer()
-                            counselorButton
-                                .padding(.top, 32)
-                                .padding(.trailing, 48)
-                        }
+                    HStack {
+                        
                         Spacer()
                     }
                 }

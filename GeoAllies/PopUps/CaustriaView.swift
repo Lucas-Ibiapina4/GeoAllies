@@ -23,6 +23,13 @@ struct CaustriaView: View {
         gameManager.yourCountry.militarismo >= 8
     }
     
+    private var caustriaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.cuastria.id
+        }
+    }
+    
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -111,14 +118,47 @@ struct CaustriaView: View {
                     height: 160
                 )
             
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
+            if caustriaAliada {
+                Image("CaustriaGreen")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            } else {
+                Image("CaustriaImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            }
             
             HStack(
                 alignment: .bottom,

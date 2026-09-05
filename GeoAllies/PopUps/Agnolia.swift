@@ -23,6 +23,14 @@ struct AgnoliaView: View {
     private var canAlly: Bool {
         gameManager.yourCountry.militarismo >= 4
     }
+    
+    private var agnoliaAliada: Bool {
+        gameManager.aliados.contains {
+            $0.id == gameManager.agnolia.id
+        }
+    }
+    
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -110,21 +118,47 @@ struct AgnoliaView: View {
                 .padding(10)
             // MARK: Imagem
             
-            Image("País1")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 130)
-            
-            // MARK: Sombra
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
+            if agnoliaAliada {
+                Image("AgnoliaGreen")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            } else {
+                Image("AgnoliaImage")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(
+                        width: 210,
+                        height: 170
+                    )
+                
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                    )
+            }
             
             // MARK: Parte inferior
             
