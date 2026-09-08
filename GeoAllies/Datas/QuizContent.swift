@@ -35,6 +35,7 @@ struct QuizContent: View {
     QuizContent(
         quiz: QuestionsModel(
             pilar: "pilar",
+            difficulty: .facil,
             question: "question",
             options: ["option1", "option 2", "option 3", "option 4"],
             answer: "option 1"
