@@ -17,9 +17,10 @@ struct Quiz: View {
     
     @State private var correctOption: Int? = nil
     @State private var currentQuestionIndex = 0
-    @State private var wrongOptions: Set<Int> = []
     @State private var quizFinished = false
     @State private var points: Int = 0
+    @State private var questionIsAnswered: Bool = false
+    @State private var selectedOption: Int? = nil
     
     @State private var showingGeoCounsil = false
         
@@ -139,7 +140,7 @@ struct Quiz: View {
                         .background(getButtonColor(for: index))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
-                .disabled(wrongOptions.contains(index) || correctOption != nil)
+                .disabled(questionIsAnswered)
             }
         }
         .padding(.top, 45)
@@ -191,9 +192,9 @@ struct Quiz: View {
     }
     
     private func getButtonColor(for index: Int) -> Color {
-        if correctOption == index {
+        if (index == correctOption && correctOption == selectedOption) {
             return Color.green
-        } else if wrongOptions.contains(index) {
+        } else if index == selectedOption {
             return Color.red
         }
         return Color(red: 0.85, green: 0.85, blue: 0.85)
@@ -203,7 +204,7 @@ struct Quiz: View {
         let allQuestions: [QuestionsModel] = Bundle.main.decode(file: "Questions.json")
         
         self.questions = allQuestions.filter { question in
-            question.pilar == pilar.rawValue && !gameManager.answeredQuestions.contains(question.question)
+            question.pilar == pilar.rawValue
         }.shuffled()
         
         if self.questions.isEmpty {
@@ -214,25 +215,28 @@ struct Quiz: View {
     func checkAnswer(option: String, index: Int) {
         guard let question = currentQuestion else { return }
         
+        correctOption = question.options.firstIndex(of: question.answer)
+        
         if option == question.answer {
-            correctOption = index
             points += 1
-            
-            gameManager.answeredQuestions.insert(question.question)
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                nextQuestion()
-            }
-        } else {
-            wrongOptions.insert(index)
+        }
+        selectedOption = index
+        
+        //gameManager.answeredQuestions.insert(question.question)
+        
+        questionIsAnswered = true
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            nextQuestion()
         }
     }
     
     func nextQuestion() {
         if currentQuestionIndex + 1 < questions.count {
             currentQuestionIndex += 1
-            wrongOptions.removeAll()
             correctOption = nil
+            questionIsAnswered = false
+            selectedOption = nil
         } else {
             quizFinished = true
             addPointInpilar()
