@@ -202,16 +202,10 @@ struct MapView: View {
                     .shadow(radius: 3)
                 
                 HStack(spacing: 2) {
-                    Image(systemName: "person.fill")
+                    Image(systemName: "person.wave.2.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 20)
-                        .foregroundColor(.white)
-                    
-                    Image(systemName: "waveform")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 14)
                         .foregroundColor(.white)
                 }
             }

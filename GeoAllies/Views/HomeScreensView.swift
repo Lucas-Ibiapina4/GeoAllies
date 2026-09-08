@@ -47,7 +47,6 @@ struct HomeScreensView: View {
                             .frame(width: 285, height: 102)
                         // Conteúdo do botão
                         HStack(spacing: 14) {
-                            
                             Image(systemName: "play.fill")
                                 .font(.system(size: 48))
                                 .foregroundStyle(.white)

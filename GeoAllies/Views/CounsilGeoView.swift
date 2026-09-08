@@ -24,55 +24,56 @@ struct CounsilView: View {
     @FocusState private var keyboardIsActive: Bool
     
     var body: some View {
-        GeometryReader { geometry in
-            let popupWidth = geometry.size.width * 0.90
-            let normalHeight = geometry.size.height * 0.78
-            let activeHeight = geometry.size.height * 0.45
-            
-            let popupHeight = keyboardIsActive ? activeHeight : normalHeight
-            let yOffset = keyboardIsActive ? -(geometry.size.height * 0.165) : 0.0
-            
-            ZStack {
-                Color.black
-                    .opacity(0.30)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        keyboardIsActive = false
-                    }
+            GeometryReader { geometry in
+                let popupWidth = geometry.size.width * 0.82
+                let normalHeight = geometry.size.height * 0.80
+                let activeHeight = geometry.size.height * 0.50
+                
+                let popupHeight = keyboardIsActive ? activeHeight : normalHeight
+                let yOffset = keyboardIsActive ? -(geometry.size.height * 0.25) : 0.0
                 
                 ZStack {
-                    RoundedRectangle(cornerRadius: 40)
-                        .fill(
-                            Color(
-                                red: 245 / 255,
-                                green: 245 / 255,
-                                blue: 245 / 255
-                            )
-                        )
+                    Color.black
+                        .opacity(0.30)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            keyboardIsActive = false
+                        }
                     
-                    HStack(spacing: 25) {
-                        counselorSection
-                            .frame(width: popupWidth * 0.38)
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 35)
+                            .fill(
+                                Color(
+                                    red: 245 / 255,
+                                    green: 245 / 255,
+                                    blue: 245 / 255
+                                )
+                            )
                         
-                        chatSection
-                            .frame(width: popupWidth * 0.52)
+                        HStack(spacing: 25) {
+                            counselorSection
+                                .frame(width: popupWidth * 0.38)
+                            
+                            chatSection
+                                .frame(width: popupWidth * 0.52)
+                        }
+                        .padding(.horizontal, 30)
+                        .padding(.vertical, 24)
                     }
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 24)
+                    .frame(width: popupWidth, height: popupHeight)
+                    .clipShape(RoundedRectangle(cornerRadius: 35))
+                    .overlay(alignment: .topTrailing) {
+                        closeButton
+                            .offset(x: 10, y: -10)
+                    }
+                    .offset(y: yOffset)
+                    .animation(.easeOut(duration: 0.25), value: keyboardIsActive)
                 }
-                .frame(width: popupWidth, height: popupHeight)
-                .clipShape(RoundedRectangle(cornerRadius: 40))
-                .overlay(alignment: .topTrailing) {
-                    closeButton
-                        .offset(x: 16, y: -16)
-                }
-                .offset(y: yOffset)
-                .animation(.easeOut(duration: 0.25), value: keyboardIsActive)
+                .frame(width: geometry.size.width, height: geometry.size.height)
             }
-            .frame(width: geometry.size.width, height: geometry.size.height)
+            .ignoresSafeArea(edges: .all)
             .ignoresSafeArea(.keyboard)
         }
-    }
     
     private var counselorSection: some View {
         VStack {
