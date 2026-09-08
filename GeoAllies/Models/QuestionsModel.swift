@@ -7,19 +7,27 @@
 import Foundation
 import SwiftUI
 
-struct QuestionsModel: Codable, Hashable {
+struct QuestionsModel: Codable, Identifiable {
     var id: UUID = UUID()
     
     let pilar: String
+    let difficulty: QuestionDifficulty
     let question: String
     let options: [String]
     let answer: String
     
     enum CodingKeys: String, CodingKey {
         case pilar
+        case difficulty
         case question
         case options
         case answer
+    }
+    
+    enum QuestionDifficulty: String, Codable {
+        case facil
+        case medio
+        case dificil
     }
 }
 
