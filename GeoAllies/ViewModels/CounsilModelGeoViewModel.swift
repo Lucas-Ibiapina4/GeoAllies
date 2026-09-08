@@ -10,7 +10,7 @@ import Observation
 
 @MainActor
 @Observable
-class FoundationModelServices {
+class FoundationModelGeoServices {
 
     var answerUser: String = ""
     var responseModel: String = ""
@@ -52,7 +52,6 @@ class FoundationModelServices {
             os países e as regras do jogo.
 
             BASE DE CONHECIMENTO:
-
             \(questionsGame)
 
             REGRAS:

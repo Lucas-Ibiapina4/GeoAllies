@@ -9,19 +9,12 @@ import SwiftUI
 import SwiftData
 
 struct AgnoliaView: View {
-    
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
-    
-    // MARK: - Controla o popup do Conselheiro
     @State private var showingCounsil = false
     
-    
-    // MARK: - Verifica se pode fazer aliança
-    
     private var canAlly: Bool {
-        gameManager.yourCountry.militarismo >= 4
+        gameManager.yourCountry.economia >= 7
     }
     
     private var agnoliaAliada: Bool {
@@ -30,55 +23,42 @@ struct AgnoliaView: View {
         }
     }
     
-    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                // MARK: - Fundo escurecido
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
                     .onTapGesture {
-                        // Só fecha Agnólia se
-                        // o Conselheiro não estiver aberto
-                        
                         if !showingCounsil {
                             isPresent = false
                         }
                     }
-                // MARK: - Popup da Agnólia
                 
                 ZStack(alignment: .topTrailing) {
-                    
                     RoundedRectangle(cornerRadius: 35)
-                        .fill(
-                            Color(.systemGray6)
-                        )
+                        .fill(Color(.systemGray6))
+                    
                     HStack(spacing: 30) {
                         countrySection
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
-                    // Botão fechar Agnólia
+                    
                     closeButton
                 }
                 .padding(.horizontal, 65)
                 .padding(.vertical, 30)
-                
                 .offset(y: 15)
-                // Não permite clicar na Agnólia
-                // enquanto o Conselheiro estiver aberto
                 .allowsHitTesting(!showingCounsil)
-                // MARK: - Popup do Conselheiro
                 
                 if showingCounsil {
                     ZStack {
-                        // Escurece novamente a tela
                         Color.black
                             .opacity(0.35)
                             .ignoresSafeArea()
-                        // Conselheiro
+                        
                         CounsilView(
                             isPresent: $showingCounsil
                         )
@@ -92,14 +72,9 @@ struct AgnoliaView: View {
             )
         }
     }
-    // MARK: - País
     
     private var countrySection: some View {
-        
         VStack(spacing: 7) {
-            
-            // MARK: Nome
-            
             Text("AGNÓLIA")
                 .font(
                     .system(
@@ -111,12 +86,9 @@ struct AgnoliaView: View {
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
-                .background(
-                    Color.green.opacity(0.65)
-                )
+                .background(Color.green.opacity(0.65))
                 .clipShape(Capsule())
                 .padding(10)
-            // MARK: Imagem
             
             if agnoliaAliada {
                 Image("AgnoliaGreen")
@@ -127,13 +99,8 @@ struct AgnoliaView: View {
                         height: 170
                     )
                 
-                
-                // MARK: Sombra abaixo do país
-                
                 Ellipse()
-                    .fill(
-                        Color.gray.opacity(0.20)
-                    )
+                    .fill(Color.gray.opacity(0.20))
                     .frame(
                         width: 170,
                         height: 22
@@ -147,49 +114,34 @@ struct AgnoliaView: View {
                         height: 170
                     )
                 
-                
-                // MARK: Sombra abaixo do país
-                
                 Ellipse()
-                    .fill(
-                        Color.gray.opacity(0.20)
-                    )
+                    .fill(Color.gray.opacity(0.20))
                     .frame(
                         width: 170,
                         height: 22
                     )
             }
             
-            // MARK: Parte inferior
-            
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
-                // Botão do Conselheiro
                 counselorButton
                 
-                // Texto de requisito
-                Text(
-                    "Você precisa de 4 pontos de Militarismo para se aliar com esse país"
-                )
-                .font(
-                    .system(
-                        size: 13,
-                        weight: .bold,
-                        design: .rounded
+                Text("Você precisa de 7 pontos de Econômia para se aliar com esse país")
+                    .font(
+                        .system(
+                            size: 12,
+                            weight: .bold,
+                            design: .rounded
+                        )
                     )
-                )
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.black)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 10)
-                .background(.white)
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 16
-                    )
-                )
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.black)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 1)
+                    .background(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
         }
         .frame(
@@ -198,14 +150,8 @@ struct AgnoliaView: View {
         )
     }
     
-    
-    // MARK: - Estatísticas
-    
     private var statisticSection: some View {
-        
-        VStack(spacing: -5) {
-            
-            // MARK: Economia da Agnólia
+        VStack(spacing: -10) {
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
@@ -213,12 +159,8 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .economia,
                 showImproveButton: false
-            ) {
-                
-                // Sem ação
-            }
+            ) {}
             
-            // MARK: Militarismo da Agnólia
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -226,12 +168,8 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .militarismo,
                 showImproveButton: false
-            ) {
-                
-                // Sem ação
-            }
+            ) {}
             
-            // MARK: Tecnologia da Agnólia
             ProgressBar(
                 name: "Tecnologia",
                 icon: "desktopcomputer",
@@ -239,42 +177,45 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .tecnologia,
                 showImproveButton: false
-            ) {
-                
-                // Sem ação
-            }
+            ) {}
+            
             Spacer()
             
-            // MARK: - Botão Aliar-se
-            
-            Button {
-                allyWithAgnolia()
-                
-            } label: {
-                Text("Aliar-se")
-                    .font(
-                        .system(
-                            size: 22,
-                            weight: .bold,
-                            design: .rounded
+            if agnoliaAliada {
+                Text("Você já é aliado desse país")
+                    .font(.subheadline)
+                    .bold()
+                    .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+                    .padding(.bottom, 15)
+            } else {
+                Button {
+                    allyWithAgnolia()
+                } label: {
+                    Text("Aliar-se")
+                        .font(
+                            .system(
+                                size: 22,
+                                weight: .bold,
+                                design: .rounded
+                            )
                         )
-                    )
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 9)
-                    .background(
-                        canAlly
-                        ? Color.green
-                        : Color.gray
-                    )
-                    .clipShape(
-                        RoundedRectangle(
-                            cornerRadius: 20
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 30)
+                        .padding(.vertical, 9)
+                        .background(
+                            canAlly
+                            ? Color.green
+                            : Color.gray
                         )
-                    )
+                        .clipShape(
+                            RoundedRectangle(
+                                cornerRadius: 20
+                            )
+                        )
+                }
+                .buttonStyle(.plain)
+                .disabled(!canAlly)
             }
-            .buttonStyle(.plain)
-            .disabled(!canAlly)
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 16)
@@ -289,9 +230,6 @@ struct AgnoliaView: View {
             )
         )
     }
-    
-    
-    // MARK: - Conselheiro
     
     private var counselorButton: some View {
         Button(action: {
@@ -320,14 +258,10 @@ struct AgnoliaView: View {
         }
     }
     
-    // MARK: - Fechar Agnólia
-    
     private var closeButton: some View {
         Button {
-            // Fecha somente Agnólia
             isPresent = false
         } label: {
-            
             Image(systemName: "xmark")
                 .font(
                     .system(
@@ -352,35 +286,24 @@ struct AgnoliaView: View {
         )
     }
     
-    // MARK: - Fazer aliança
-    
     private func allyWithAgnolia() {
-        // Verifica se o jogador
-        // possui Militarismo suficiente
-        guard canAlly else {
-            return
-        }
-        // Adiciona Agnólia aos aliados
-        gameManager.aliados.append(
-            gameManager.agnolia
-        )
-        print("Aliança realizada com Agnólia")
-        // Fecha o popup da Agnólia
+        guard canAlly else { return }
+        
+        gameManager.aliados.append(gameManager.agnolia)
+        gameManager.yourCountry.aliouAgnolia = true
+        
         isPresent = false
     }
 }
-// MARK: - Preview
 
 #Preview {
     AgnoliaPreview()
 }
 
-
 private struct AgnoliaPreview: View {
     @State private var gameManager = GameManager()
 
     var body: some View {
-        
         ZStack {
             Color.blueSea
             .ignoresSafeArea()

@@ -11,10 +11,9 @@ struct PlayerCountryView: View {
     @Environment(GameManager.self) private var gameManager
     @Binding var isPresent: Bool
     
-    // Controla o popup do conselheiro
     @State private var showingCounsil = false
-    
     @State private var pilarQuizselected: QuizPilar?
+    @State private var isQuizOpen = false
     
     var body: some View {
         NavigationStack {
@@ -27,12 +26,9 @@ struct PlayerCountryView: View {
                         }
                     
                     ZStack(alignment: .topTrailing) {
-                        
-                        // MARK: - 1. Fundo do popup
                         RoundedRectangle(cornerRadius: 35)
                             .fill(Color(red: 245 / 255, green: 245 / 255, blue: 245 / 255))
                         
-                        // MARK: - 2. Conteúdo principal
                         HStack(spacing: 30) {
                             countrySection
                             statisticSection
@@ -40,7 +36,6 @@ struct PlayerCountryView: View {
                         .padding(.horizontal, 32)
                         .padding(.vertical, 18)
                         
-                        // MARK: - 3. Botão fechar (X)
                         Button {
                             isPresent = false
                         } label: {
@@ -56,18 +51,25 @@ struct PlayerCountryView: View {
                     }
                     .padding(.horizontal, 65)
                     .padding(.vertical, 25)
+                    
+                    if isQuizOpen, let pilar = pilarQuizselected {
+                        Quiz(pilar: pilar, isPresent: $isQuizOpen)
+                            .zIndex(1000)
+                    }
+                    
+                    // MARK: - Adicionado a chamada do Conselheiro aqui!
+                    if showingCounsil {
+                        CounsilView(isPresent: $showingCounsil)
+                            .zIndex(1000)
+                    }
                 }
             }
         }
         .navigationBarBackButtonHidden(true)
-        .fullScreenCover(item: $pilarQuizselected) { pilar in
-                Quiz(pilar: pilar)
-            }
     }
-    // MARK: - Lado esquerdo
+    
     private var countrySection: some View {
         VStack(spacing: 10) {
-            // MARK: Nome do país
             Text("SEU PAÍS")
                 .font(
                     .system(
@@ -87,7 +89,7 @@ struct PlayerCountryView: View {
                     )
                 )
                 .clipShape(Capsule())
-            // MARK: Imagem do país
+            
             Image("PaísSeu")
                 .resizable()
                 .scaledToFit()
@@ -95,7 +97,7 @@ struct PlayerCountryView: View {
                     width: 210,
                     height: 180
                 )
-            // MARK: Sombra abaixo do país
+            
             Ellipse()
                 .fill(
                     Color.gray.opacity(0.20)
@@ -104,9 +106,10 @@ struct PlayerCountryView: View {
                     width: 170,
                     height: 22
                 )
-            // MARK: Conselheiro
+            
             HStack {
-                CounsilButtonView()
+                // MARK: - Atualizado o botão do conselheiro para funcionar a ação
+                counselorButton
                 Spacer()
             }
         }
@@ -115,11 +118,37 @@ struct PlayerCountryView: View {
             maxHeight: .infinity
         )
     }
-    // MARK: - Lado direito
+    
+    // MARK: - Botão do Conselheiro
+    private var counselorButton: some View {
+        Button(action: {
+            showingCounsil = true
+        }) {
+            ZStack {
+                Circle()
+                    .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
+                    .frame(width: 50, height: 50)
+                    .shadow(radius: 3)
+                
+                HStack(spacing: 2) {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 20)
+                        .foregroundColor(.white)
+                    
+                    Image(systemName: "waveform")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 14)
+                        .foregroundColor(.white)
+                }
+            }
+        }
+    }
+    
     private var statisticSection: some View {
         VStack(spacing: 12) {
-            // MARK: Economia
-            
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
@@ -129,7 +158,7 @@ struct PlayerCountryView: View {
             ) {
                 openEconomyQuiz()
             }
-            // MARK: Militarismo
+            
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -139,7 +168,6 @@ struct PlayerCountryView: View {
             ) {
                 openMilitarismQuiz()
             }
-            // MARK: Tecnologia
             
             ProgressBar(
                 name: "Tecnologia",
@@ -163,37 +191,32 @@ struct PlayerCountryView: View {
         )
     }
     
-    // MARK: - Funções dos quizzes
     private func openEconomyQuiz() {
         pilarQuizselected = .economia
-        print("Abrir quiz de Economia")
+        isQuizOpen = true
     }
+    
     private func openMilitarismQuiz() {
         pilarQuizselected = .militarismo
-        print("Abrir quiz de Militarismo")
+        isQuizOpen = true
     }
+    
     private func openTechnologyQuiz() {
         pilarQuizselected = .tecnologia
-        print("Abrir quiz de Tecnologia")
+        isQuizOpen = true
     }
 }
-// MARK: - Preview
+
 #Preview {
     PlayerCountryPreview()
 }
 
-// MARK: - Preview auxiliar
 private struct PlayerCountryPreview: View {
     @State private var gameManager = GameManager()
     var body: some View {
         ZStack {
-            // Fundo azul do jogo
-            Color(
-                red: 30 / 255,
-                green: 42 / 255,
-                blue: 130 / 255
-            )
-            .ignoresSafeArea()
+            Color.blue // Mudado temporariamente para não dar erro sem o Color.blueSea
+                .ignoresSafeArea()
             PlayerCountryView(
                 isPresent: .constant(true)
             )

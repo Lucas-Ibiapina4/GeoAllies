@@ -18,12 +18,14 @@ class GameManager {
     var lucacia: Country
     var aliados : Array<Country> = []
     
+    var answeredQuestions: Set<String> = []
+    
     //setamento dos valores do pilares de cada país
     init() {
         self.yourCountry = Country(economia: 0, militarismo: 0, tecnologia: 0)
-        self.agnolia = Country(economia: 5, militarismo: 1, tecnologia: 1)
-        self.cuastria = Country(economia: 1, militarismo: 5, tecnologia: 1)
-        self.lucacia = Country(economia: 1, militarismo: 1, tecnologia: 5)
+        self.agnolia = Country(economia: 6, militarismo: 2, tecnologia: 3)
+        self.cuastria = Country(economia: 2, militarismo: 8, tecnologia: 3)
+        self.lucacia = Country(economia: 4, militarismo: 3, tecnologia: 9)
     }
     
     func aliar(_ country: Country) {

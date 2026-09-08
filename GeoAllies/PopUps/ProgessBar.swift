@@ -1,4 +1,3 @@
-
 //
 //  ProgessBar.swift
 //  GeoAllies
@@ -16,147 +15,89 @@ enum ProgressBarType {
     var color: Color {
         switch self {
         case .economia:
-            return Color(
-                red: 65 / 255,
-                green: 67 / 255,
-                blue: 170 / 255
-            )
-
+            return Color(red: 65 / 255, green: 67 / 255, blue: 170 / 255)
         case .militarismo:
-            return Color(
-                red: 30 / 255,
-                green: 67 / 255,
-                blue: 67 / 255
-            )
-
+            return Color(red: 30 / 255, green: 67 / 255, blue: 67 / 255)
         case .tecnologia:
-            return Color(
-                red: 237 / 255,
-                green: 157 / 255,
-                blue: 60 / 255
-            )
+            return Color(red: 237 / 255, green: 157 / 255, blue: 60 / 255)
         }
     }
 }
 
+struct EstiloBotaoMais3D: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ZStack {
+            Circle()
+                .fill(Color(red: 100 / 255, green: 140 / 255, blue: 80 / 255))
+                .frame(width: 40, height: 40)
+                .offset(y: 4)
+            
+            ZStack {
+                Circle()
+                    .fill(Color(red: 140 / 255, green: 180 / 255, blue: 115 / 255))
+                    .frame(width: 40, height: 40)
+                
+                configuration.label
+            }
+            .offset(y: configuration.isPressed ? 4 : 0)
+        }
+        .animation(.spring(response: 0.3, dampingFraction: 0.6), value: configuration.isPressed)
+    }
+}
 
 struct ProgressBar: View {
-    
     let name: String
     let icon: String
     let value: Int
     let maximumValue: Int
     let type: ProgressBarType
     
-    // Define se o botão + aparece
     var showImproveButton: Bool = true
-    
     let onImprove: () -> Void
     
-    
     private var progress: CGFloat {
-        guard maximumValue > 0 else {
-            return 0
-        }
-        
-        return min(
-            CGFloat(value) / CGFloat(maximumValue),
-            1
-        )
+        guard maximumValue > 0 else { return 0 }
+        return min(CGFloat(value) / CGFloat(maximumValue), 1)
     }
     
-    
     var body: some View {
-        
-        VStack(
-            alignment: .leading,
-            spacing: 8
-        ) {
+        VStack(alignment: .leading, spacing: 8) {
+            Label(name, systemImage: icon)
+                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .foregroundStyle(.white)
+                .padding(.horizontal, 12)
+                .padding(.vertical, 5)
+                .background(type.color)
+                .clipShape(Capsule())
             
-            Label(
-                name,
-                systemImage: icon
-            )
-            .font(
-                .system(
-                    size: 17,
-                    weight: .bold,
-                    design: .rounded
-                )
-            )
-            .foregroundStyle(.white)
-            .padding(.horizontal, 12)
-            .padding(.vertical, 5)
-            .background(type.color)
-            .clipShape(Capsule())
-            
-            
-            // MARK: - Barra + botão
             HStack(spacing: 14) {
-                
-                VStack(
-                    alignment: .trailing,
-                    spacing: 4
-                ) {
-                    
+                VStack(alignment: .trailing, spacing: 4) {
                     GeometryReader { geometry in
-                        
                         ZStack(alignment: .leading) {
+                            Capsule()
+                                .fill(Color.gray.opacity(0.12))
                             
                             Capsule()
-                                .fill(
-                                    Color.gray.opacity(0.12)
-                                )
-                            // Progresso
-                            Capsule()
                                 .fill(type.color)
-                                .frame(
-                                    width:
-                                        geometry.size.width
-                                    * progress
-                                )
+                                .frame(width: geometry.size.width * progress)
                         }
                     }
                     .frame(height: 24)
                     
-                    
-                    Text(
-                        "\(value)/\(maximumValue)"
-                    )
-                    .font(
-                        .system(
-                            size: 14,
-                            weight: .bold
-                        )
-                    )
-                    .foregroundStyle(.black)
+                    Text("\(value)/\(maximumValue)")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundStyle(.black)
                 }
-                
-                
-                // MARK: - Botão +
                 
                 if showImproveButton && value < maximumValue {
                     Button {
                         onImprove()
                     } label: {
                         Image(systemName: "plus")
-                            .font(
-                                .system(
-                                    size: 21,
-                                    weight: .heavy
-                                )
-                            )
+                            .font(.system(size: 24, weight: .heavy))
                             .foregroundStyle(.white)
-                            .frame(
-                                width: 40,
-                                height: 40
-                            )
-                        // Fica sempre verde, pois se chegar no máximo ele some!
-                            .background(
-                                Color(red: 137 / 255, green: 180 / 255, blue: 112 / 255)
-                            )
-                            .clipShape(Circle())
                     }
+                    .buttonStyle(EstiloBotaoMais3D())
                 }
             }
         }

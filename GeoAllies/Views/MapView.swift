@@ -8,27 +8,16 @@
 import SwiftUI
 import SwiftData
 
-
-// MARK: - Estilo das ilhas
-
 struct EstiloIlha3D: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         ZStack {
-            // Sombra da ilha
             configuration.label
                 .overlay(
-                    Color(
-                        red: 0.6,
-                        green: 0.35,
-                        blue: 0.1
-                    )
+                    Color(red: 0.6, green: 0.35, blue: 0.1)
                 )
                 .mask(configuration.label)
-                .offset(
-                    x: 4,
-                    y: 7
-                )
-            // Ilha
+                .offset(x: 4, y: 7)
+            
             configuration.label
                 .offset(
                     x: configuration.isPressed ? 4 : 0,
@@ -36,33 +25,24 @@ struct EstiloIlha3D: ButtonStyle {
                 )
         }
         .animation(
-            .spring(
-                response: 0.3,
-                dampingFraction: 0.6
-            ),
+            .spring(response: 0.3, dampingFraction: 0.6),
             value: configuration.isPressed
         )
     }
 }
-
-// MARK: - Mapa
 
 struct MapView: View {
     @Environment(\.modelContext) private var context
     @Query private var savedCountries: [Country]
     @State private var gameManager = GameManager()
     
-    
-    // MARK: - Popups dos países
     @State private var isPresentedSeuPais = false
     @State private var isPresentedAgnolia = false
     @State private var isPresentedCaustria = false
     @State private var isPresentedLucasia = false
     
-    // MARK: - Popup do Conselheiro
-    
     @State private var showingCounsil = false
-    // Verifica se existe algum popup aberto
+    
     private var hasCountryPopupOpen: Bool {
         isPresentedSeuPais ||
         isPresentedAgnolia ||
@@ -72,82 +52,43 @@ struct MapView: View {
     }
     
     private var lucaciaAliada: Bool {
-        gameManager.aliados.contains {
-            $0.id == gameManager.lucacia.id
-        }
+        gameManager.aliados.contains { $0.id == gameManager.lucacia.id }
     }
     
     private var agnoliaAliada: Bool {
-        gameManager.aliados.contains {
-            $0.id == gameManager.agnolia.id
-        }
+        gameManager.aliados.contains { $0.id == gameManager.agnolia.id }
     }
     
     private var caustriaAliada: Bool {
-        gameManager.aliados.contains {
-            $0.id == gameManager.cuastria.id
-        }
+        gameManager.aliados.contains { $0.id == gameManager.cuastria.id }
     }
-    
     
     var body: some View {
         NavigationStack {
             ZStack {
-                
-                // MARK: Fundo
-                
                 Group {
-                    
                     Color.blueSea
-                    
-                    
                     Image("fundo")
                         .resizable()
                 }
                 .ignoresSafeArea()
                 
-                
-                // MARK: - Agnólia
-                
                 Button {
-                    
                     isPresentedAgnolia = true
-                    
                 } label: {
-                    
-                    if agnoliaAliada {
-                        Image("AgnoliaGreen")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 220)
-                            .contentShape(Circle())
-                    } else {
-                        Image("AgnoliaImage")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 220)
-                            .contentShape(Circle())
-                    }
+                    Image(agnoliaAliada ? "AgnoliaGreen" : "AgnoliaImage")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 220)
+                        .contentShape(Circle())
                 }
-                .buttonStyle(
-                    EstiloIlha3D()
-                )
-                .offset(
-                    x: -180,
-                    y: -80
-                )
-                
-                
-                // MARK: - Seu País
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: -180, y: -80)
                 
                 Button {
-                    
                     isPresentedSeuPais = true
-                    
                 } label: {
-                    
                     Image("PaísSeu")
                         .renderingMode(.original)
                         .resizable()
@@ -155,152 +96,93 @@ struct MapView: View {
                         .frame(width: 190)
                         .contentShape(Circle())
                 }
-                .buttonStyle(
-                    EstiloIlha3D()
-                )
-                .offset(
-                    x: -180,
-                    y: 100
-                )
-                
-                
-                // MARK: - Cáustria
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: -180, y: 100)
                 
                 Button {
-                    
                     isPresentedCaustria = true
-                    
                 } label: {
-                    
-                    if caustriaAliada {
-                        Image("CaustriaGreen")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 210)
-                            .contentShape(Circle())
-                    } else {
-                        Image("CaustriaImage")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 210)
-                            .contentShape(Circle())
-                    }
-                    
+                    Image(caustriaAliada ? "CaustriaGreen" : "CaustriaImage")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 210)
+                        .contentShape(Circle())
                 }
-                .buttonStyle(
-                    EstiloIlha3D()
-                )
-                .offset(
-                    x: 20,
-                    y: 30
-                )
-                
-                
-                // MARK: - Lucácia
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: 20, y: 30)
                 
                 Button {
-                    
                     isPresentedLucasia = true
-                    
                 } label: {
-                    
-                    if lucaciaAliada {
-                        Image("País3")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 210)
-                            .contentShape(Circle())
-                    } else {
-                        Image("LucaciaImage")
-                            .renderingMode(.original)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 190)
-                            .contentShape(Capsule())
-                    }
-                    
+                    Image(lucaciaAliada ? "País3" : "LucaciaImage")
+                        .renderingMode(.original)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: lucaciaAliada ? 210 : 190)
+                        .contentShape(Capsule())
                 }
-                .buttonStyle(
-                    EstiloIlha3D()
-                )
-                .offset(
-                    x: 230,
-                    y: 0
-                )
-                
-                
-                // MARK: - Conselheiro do mapa
+                .buttonStyle(EstiloIlha3D())
+                .offset(x: 230, y: 0)
                 
                 VStack {
-                    
                     HStack {
-                        
                         Spacer()
+                        counselorButton
+                            .padding(.top, 32)
+                            .padding(.trailing, 48)
                     }
+                    Spacer()
                 }
                 .allowsHitTesting(!hasCountryPopupOpen)
-                // MARK: - Popup Seu País
-                
+
                 if isPresentedSeuPais {
-                    
-                    PlayerCountryView(
-                        isPresent: $isPresentedSeuPais
-                    )
-                    .zIndex(100)
+                    PlayerCountryView(isPresent: $isPresentedSeuPais)
+                        .zIndex(100)
                 }
-                // MARK: - Popup Agnólia
                 
                 if isPresentedAgnolia {
-                    
-                    AgnoliaView(
-                        isPresent: $isPresentedAgnolia
-                    )
-                    .zIndex(100)
+                    AgnoliaView(isPresent: $isPresentedAgnolia)
+                        .zIndex(100)
                 }
-                
-                
-                // MARK: - Popup Cáustria
                 
                 if isPresentedCaustria {
-                    
-                    CaustriaView(
-                        isPresent: $isPresentedCaustria
-                    )
-                    .zIndex(100)
+                    CaustriaView(isPresent: $isPresentedCaustria)
+                        .zIndex(100)
                 }
-                
-                
-                // MARK: - Popup Lucácia
                 
                 if isPresentedLucasia {
-                    
-                    LucaciaView(
-                        isPresent: $isPresentedLucasia
-                    )
-                    .zIndex(100)
+                    LucaciaView(isPresent: $isPresentedLucasia)
+                        .zIndex(100)
                 }
                 
-                
-                // MARK: - Popup Conselheiro
-                
                 if showingCounsil {
-                    
-                    CounsilView(
-                        isPresent: $showingCounsil
-                    )
-                    .zIndex(1000)
+                    CounsilView(isPresent: $showingCounsil)
+                        .zIndex(1000)
                 }
             }
         }
+
         .navigationBarBackButtonHidden(true)
+        .toolbar(.hidden, for: .navigationBar)
         .environment(gameManager)
         
         .onAppear {
             if let savedData = savedCountries.first {
                 gameManager.yourCountry = savedData
+                
+                gameManager.aliados.removeAll()
+                
+                if savedData.aliouAgnolia {
+                    gameManager.aliados.append(gameManager.agnolia)
+                }
+                if savedData.aliouCaustria {
+                    gameManager.aliados.append(gameManager.cuastria)
+                }
+                if savedData.aliouLucacia {
+                    gameManager.aliados.append(gameManager.lucacia)
+                }
+                
             } else {
                 let newData = Country(economia: 0, militarismo: 0, tecnologia: 0)
                 context.insert(newData)
@@ -308,7 +190,7 @@ struct MapView: View {
             }
         }
     }
-    // MARK: - Botão Conselheiro
+
     private var counselorButton: some View {
         Button(action: {
             showingCounsil = true
@@ -337,11 +219,6 @@ struct MapView: View {
     }
 }
 
-
-
-// MARK: - Preview
-
 #Preview {
-    
     MapView()
 }
