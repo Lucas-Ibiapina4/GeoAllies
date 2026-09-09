@@ -1,9 +1,6 @@
 [
-    //MARK: economia
-    //MARK: FACIL
     {
         "pilar": "Economia",
-        "difficulty": "facil",
         "question": "O que é uma tarifa de importação??",
         "options": [
             "Um imposto aplicado sobre produtos que entram em um país.",
@@ -15,7 +12,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "facil",
         "question": "Qual é uma das principais funções de um bloco econômico?",
         "options": [
             "Impedir qualquer comércio entre seus membros.",
@@ -27,7 +23,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "facil",
         "question": "Por que o petróleo possui grande importância geopolítica?",
         "options": [
             "Porque é utilizado apenas na produção de alimentos.",
@@ -39,7 +34,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "facil",
         "question": "O que define o conceito econômico e geopolítico de protecionismo?",
         "options": [
             "Incentivo irrestrito à entrada de produtos importados sem taxas.",
@@ -49,10 +43,8 @@
         ],
         "answer": "Barreiras e tarifas para proteger a indústria nacional da concorrência externa."
     },
-    //MARK: MEDIO
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "O que pode acontecer quando um país depende muito da importação de um produto estratégico?",
         "options": [
             "Torna-se menos vulnerável às crises internacionais.",
@@ -64,7 +56,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "O que significa diversificar parceiros comerciais?",
         "options": [
             "Concentrar todas as importações em um único país.",
@@ -76,7 +67,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "Por que canais como Suez e Panamá possuem importância geoeconômica?",
         "options": [
             "Porque concentram a maior parte das reservas mundiais de petróleo.",
@@ -88,7 +78,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "O que é dependência energética no contexto geopolítico?",
         "options": [
             "A necessidade de importar parte significativa da energia consumida por um país.",
@@ -100,7 +89,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "O que caracteriza o fenômeno geopolítico e econômico conhecido como Nearshoring?",
         "options": [
             "Transferência da produção para países distantes de custo muito baixo.",
@@ -112,7 +100,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "Como os bloqueios e conflitos no Estreito de Ormuz impactam a economia global?",
         "options": [
             "Afetam o fornecimento e provocam a alta do preço do petróleo.",
@@ -124,7 +111,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "Qual é o foco geopolítico da iniciativa chinesa conhecida como Belt and Road (Nova Rota da Seda)?",
         "options": [
             "Criar uma moeda única para todo o continente asiático.",
@@ -136,7 +122,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "Por que os semicondutores (chips) se tornaram centrais nas disputas geopolíticas atuais?",
         "options": [
             "São os principais componentes usados na fabricação de fertilizantes.",
@@ -148,7 +133,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "Qual é o principal risco econômico global do conflito geopolítico no Mar Vermelho?",
         "options": [
             "Escassez imediata de reservas de ouro nos bancos centrais.",
@@ -162,7 +146,6 @@
     
     {
         "pilar": "Economia",
-        "difficulty": "medio",
         "question": "De que forma o domínio de reservas de terras raras confere poder geopolítico a um país?",
         "options": [
             "Permite controlar o preço dos combustíveis fósseis no mercado.",
@@ -173,10 +156,8 @@
         "answer": "Assegura a hegemonia sobre minerais essenciais para tecnologia de ponta."
     },
     
-    //MARK: DIFICIL
     {
         "pilar": "Economia",
-        "difficulty": "dificil",
         "question": "Por que um país pode criar reservas estratégicas de petróleo, alimentos ou minerais?",
         "options": [
             "Para eliminar permanentemente as importações.",
@@ -188,7 +169,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "dificil",
         "question": "O que melhor descreve o conceito de interdependência econômica?",
         "options": [
             "Países mantêm relações econômicas em que decisões de um podem afetar os demais.",
@@ -200,7 +180,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "dificil",
         "question": "Como subsídios governamentais podem se tornar uma questão geopolítica?",
         "options": [
             "Podem fortalecer setores estratégicos nacionais e alterar a competição internacional.",
@@ -212,7 +191,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "dificil",
         "question": "Qual é o principal objetivo geopolítico dos países do bloco BRICS ao debaterem a de-dolarização?",
         "options": [
             "Eliminar a circulação de moedas físicas globalmente.",
@@ -224,7 +202,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "dificil",
         "question": "O que representa o conceito de Friendship-shoring nas relações econômicas globais?",
         "options": [
             "Restrição de comércio apenas entre países do mesmo continente.",
@@ -236,7 +213,6 @@
     },
     {
         "pilar": "Economia",
-        "difficulty": "dificil",
         "question": "Qual é a função geopolítica e econômica de sanções financeiras como o bloqueio ao sistema SWIFT?",
         "options": [
             "Impedir transações bancárias e isolar um país do comércio mundial.",
@@ -247,11 +223,8 @@
         "answer": "Impedir transações bancárias e isolar um país do comércio mundial."
     },
     
-    //MARK: militarismo
-    //MARK: FACIL
     {
         "pilar": "Militarismo",
-        "difficulty": "facil",
         "question": "O que é uma aliança militar?",
         "options": [
             "Um acordo de cooperação em defesa entre países.",
@@ -263,7 +236,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "facil",
         "question": "Qual é uma das principais funções das forças armadas de um Estado?",
         "options": [
             "Administrar exclusivamente empresas privadas.",
@@ -275,7 +247,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "facil",
         "question": "O que significa defesa coletiva em uma aliança militar?",
         "options": [
             "Um ataque contra um membro pode provocar uma resposta conjunta dos aliados, conforme o tratado.",
@@ -287,7 +258,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "facil",
         "question": "Como o aumento dos gastos militares globais impacta o equilíbrio geopolítico?",
         "options": [
             "Estimula corridas armamentistas e eleva tensões regionais.",
@@ -299,7 +269,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "facil",
         "question": "Qual é a função estratégica das bases militares mantidas por potências em países estrangeiros?",
         "options": [
             "Gerenciar postos de fiscalização alfandegária e cobrança de impostos.",
@@ -309,10 +278,8 @@
         ],
         "answer": "Projetar poder militar e proteger interesses geopolíticos regionais."
     },
-    //MARK: MEDIO
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "Por que fronteiras marítimas podem gerar disputas geopolíticas?",
         "options": [
             "Podem envolver controle de recursos naturais, rotas e áreas marítimas estratégicas.",
@@ -324,7 +291,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "O que significa equilíbrio de poder nas relações internacionais?",
         "options": [
             "Uma situação em que a distribuição de poder dificulta a dominação completa por um único ator.",
@@ -336,7 +302,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "O que é uma zona tampão no contexto geopolítico?",
         "options": [
             "Uma área situada entre potências ou forças rivais que ajuda a criar separação estratégica.",
@@ -348,7 +313,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "Por que submarinos têm importância estratégica na geopolítica naval?",
         "options": [
             "Podem contribuir para vigilância, dissuasão e presença militar marítima.",
@@ -360,7 +324,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "Qual é o principal objetivo geopolítico da expansão da OTAN no leste europeu?",
         "options": [
             "Criar um bloco comercial livre de tarifas alfandegárias.",
@@ -372,7 +335,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "O que caracteriza a estratégia de dissuasão nuclear na geopolítica mundial?",
         "options": [
             "Utilizar ogivas atômicas em conflitos territoriais de baixa intensidade.",
@@ -386,7 +348,6 @@
     
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "O que define o conceito geopolítico de Guerra Híbrida?",
         "options": [
             "Conflito restrito exclusivamente ao combate naval e aéreo.",
@@ -398,7 +359,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "O que significa a doutrina da 'Projeção de Poder' na geopolítica militar?",
         "options": [
             "A capacidade de um estado de aplicar força militar longe de seu território.",
@@ -410,7 +370,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "medio",
         "question": "De que forma o domínio do espaço sideral afeta a geopolítica militar moderna?",
         "options": [
             "Substitui a infantaria terrestre pelo combate orbital direto.",
@@ -421,10 +380,8 @@
         "answer": "Garante vantagens cruciais em inteligência, navegação e comunicações."
     },
     
-    //MARK: DIFICIL
     {
         "pilar": "Militarismo",
-        "difficulty": "dificil",
         "question": "O que caracteriza um dilema de segurança?",
         "options": [
             "Medidas defensivas adotadas por um país podem ser vistas como ameaça por outros, aumentando tensões.",
@@ -436,7 +393,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "dificil",
         "question": "Qual é a função de uma força de manutenção da paz da ONU?",
         "options": [
             "Ajudar a manter condições de segurança e apoiar processos de paz conforme seu mandato.",
@@ -448,7 +404,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "dificil",
         "question": "O que significa profundidade estratégica na geopolítica?",
         "options": [
             "A existência de espaço, recursos ou posições que aumentam a capacidade de um Estado resistir a pressões e ameaças.",
@@ -460,7 +415,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "dificil",
         "question": "Por que o Estreito de Malaca é uma área de extrema relevância militar e estratégica?",
         "options": [
             "Concentra a maior produção mundial de fertilizantes sintéticos.",
@@ -472,7 +426,6 @@
     },
     {
         "pilar": "Militarismo",
-        "difficulty": "dificil",
         "question": "Qual é a principal implicação geopolítica do avanço das armas hipersônicas?",
         "options": [
             "Redução radical no custo financeiro da manutenção de tropas terrestres.",
@@ -485,7 +438,6 @@
     
     {
         "pilar": "Militarismo",
-        "difficulty": "dificil",
         "question": "Qual é a relevância militar e geopolítica do Mar da China Meridional?",
         "options": [
             "É a única rota de suprimento de água potável no Sudeste Asiático.",
@@ -495,11 +447,8 @@
         ],
         "answer": "Trata-se de uma zona disputada rica em recursos e rotas estratégicas."
     },
-    //MARK: tecnologia
-    //MARK: FACIL
     {
         "pilar": "Tecnologia",
-        "difficulty": "facil",
         "question": "Por que satélites são importantes para o poder tecnológico de um país?",
         "options": [
             "Servem apenas para transmitir programas de televisão.",
@@ -511,7 +460,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "facil",
         "question": "O que é infraestrutura digital crítica?",
         "options": [
             "Sistemas tecnológicos essenciais para o funcionamento de serviços e instituições.",
@@ -523,7 +471,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "facil",
         "question": "Por que países investem em pesquisa científica e tecnológica?",
         "options": [
             "Para reduzir sua capacidade industrial.",
@@ -532,9 +479,9 @@
             "Para aumentar inovação, competitividade e autonomia tecnológica."
         ],
         "answer": "Para aumentar inovação, competitividade e autonomia tecnológica."
+    },
         {
             "pilar": "Tecnologia",
-            "difficulty": "facil",
             "question": "Qual é o papel da Inteligência Artificial (IA) na nova corrida tecnológica entre superpotências?",
             "options": [
                 "Eliminar a necessidade de satélites de observação.",
@@ -546,7 +493,6 @@
         },
         {
             "pilar": "Tecnologia",
-            "difficulty": "facil",
             "question": "O que caracteriza a prática de Ciberespionagem promovida por governos no cenário global?",
             "options": [
                 "Invasão de sistemas para roubo de segredos de Estado e propriedade intelectual.",
@@ -556,11 +502,9 @@
             ],
             "answer": "Invasão de sistemas para roubo de segredos de Estado e propriedade intelectual."
         },
-    },
-    //MARK: MEDIO
+
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "O que é dependência tecnológica?",
         "options": [
             "Quando não existe comércio internacional de equipamentos eletrônicos.",
@@ -572,7 +516,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "Por que centros de dados podem ter importância geopolítica?",
         "options": [
             "Porque controlam diretamente as fronteiras territoriais.",
@@ -584,7 +527,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "Qual é a importância geopolítica dos sistemas de navegação por satélite?",
         "options": [
             "Permitem posicionamento e sincronização utilizados em atividades civis e estratégicas.",
@@ -596,7 +538,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "O que significa autonomia tecnológica?",
         "options": [
             "Abandono da cooperação científica internacional.",
@@ -607,8 +548,7 @@
         "answer": "Capacidade de desenvolver ou controlar tecnologias consideradas estratégicas."
     },
     {
-        "pilar": "Tecnologia"
-        "difficulty": "medio",,
+        "pilar": "Tecnologia",
         "question": "O que é o conceito geopolítico de 'Soberania Digital'?",
         "options": [
             "Garantia de acesso ilimitado à internet pública global.",
@@ -620,7 +560,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "Como a tecnologia de rede 5G se tornou um ponto central de disputa geopolítica mundial?",
         "options": [
             "Substituiu o uso de satélites na navegação militar marítima.",
@@ -632,7 +571,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "Qual é o principal risco geopolítico associado ao controle de cabos submarinos de fibra óptica?",
         "options": [
             "Monopólio da venda de computadores pessoais.",
@@ -644,7 +582,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "Qual país concentra a produção dos chips de computador mais avançados do mundo (através da empresa TSMC)?",
         "options": [
             "Alemanha",
@@ -656,7 +593,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "medio",
         "question": "Por que a tecnologia Starlink (internet via satélite de órbita baixa) ganhou relevância em conflitos geopolíticos?",
         "options": [
             "Consegue substituir os cabos de transmissão de energia elétrica.",
@@ -666,10 +602,8 @@
         ],
         "answer": "Permite conectividade em zonas de guerra sem depender da infraestrutura terrestre local."
     },
-    //MARK: DIFICIL
     {
         "pilar": "Tecnologia",
-        "difficulty": "dificil",
         "question": "Por que a computação quântica pode adquirir importância geopolítica?",
         "options": [
             "Substitui imediatamente todos os computadores convencionais.",
@@ -681,7 +615,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "dificil",
         "question": "O que são controles de exportação tecnológica?",
         "options": [
             "Restrições à venda internacional de determinadas tecnologias ou componentes estratégicos.",
@@ -693,7 +626,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "dificil",
         "question": "Por que a definição de padrões tecnológicos internacionais pode gerar influência geopolítica?",
         "options": [
             "Porque padrões tecnológicos determinam automaticamente as fronteiras de um país.",
@@ -705,7 +637,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "dificil",
         "question": "Qual é o foco principal das sanções tecnológicas impostas pelos EUA à China no setor de semicondutores?",
         "options": [
             "Restringir a venda de microchips avançados e equipamentos de fabricação.",
@@ -717,7 +648,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "dificil",
         "question": "O que define o fenômeno geopolítico chamado de 'Splinternet'?",
         "options": [
             "Expansão de redes públicas de Wi-Fi gratuito em zonas de fronteira.",
@@ -729,7 +659,6 @@
     },
     {
         "pilar": "Tecnologia",
-        "difficulty": "dificil",
         "question": "Qual é o objetivo central de regulamentações como o EU AI Act da União Europeia frente a outras potências?",
         "options": [
             "Estabelecer padrões éticos e legais globais para o uso seguro da Inteligência Artificial.",
