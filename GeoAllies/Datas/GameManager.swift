@@ -8,12 +8,8 @@
 import Observation
 import SwiftUI
 
-
-// MARK: - GameManager
-
 @Observable
 class GameManager {
-    
     var yourCountry: Country
     
     var agnolia: Country
@@ -23,9 +19,6 @@ class GameManager {
     var aliados: [Country] = []
     
     var answeredQuestions: Set<String> = []
-    
-    
-    // MARK: - Verifica se o jogador venceu
     
     var venceuJogo: Bool {
         
@@ -41,9 +34,6 @@ class GameManager {
             $0.id == lucacia.id
         })
     }
-    
-    
-    // MARK: - Valores iniciais
     
     init() {
         
@@ -72,8 +62,6 @@ class GameManager {
         )
     }
     
-    
-    // MARK: - Aliança
     
     func aliar(_ country: Country) {
         
