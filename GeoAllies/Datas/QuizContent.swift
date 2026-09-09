@@ -21,9 +21,7 @@ struct QuizContent: View {
                     VStack {
                         ForEach(quiz.options, id: \.self) { index in
                             Text(index)
-                            
                         }
-                        
                     }
                     Text(quiz.answer)
                 }
