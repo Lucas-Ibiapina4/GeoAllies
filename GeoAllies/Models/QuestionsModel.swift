@@ -7,7 +7,7 @@
 import Foundation
 import SwiftUI
 
-struct QuestionsModel: Codable, Hashable {
+struct QuestionsModel: Codable, Identifiable {
     var id: UUID = UUID()
     
     let pilar: String
