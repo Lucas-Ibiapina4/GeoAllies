@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+//teste
 struct LucaciaView: View {
     @Environment(GameManager.self) private var gameManager
     
