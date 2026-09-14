@@ -10,21 +10,16 @@ import SwiftData
 
 
 struct AgnoliaView: View {
-    
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
-    
     
     // MARK: - Conselheiro
     
     @State private var showingCounsil = false
-    
-    
+
     // MARK: - Pode se aliar?
     
     private var canAlly: Bool {
-        
         gameManager.yourCountry.economia >= 7
     }
     
@@ -32,21 +27,15 @@ struct AgnoliaView: View {
     // MARK: - Já é aliado?
     
     private var agnoliaAliada: Bool {
-        
         gameManager.aliados.contains {
             $0.id == gameManager.agnolia.id
         }
     }
     
-    
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
                 // MARK: - Fundo escurecido
-                
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
@@ -57,26 +46,20 @@ struct AgnoliaView: View {
                         }
                     }
                 
-                
                 // MARK: - Popup do país
                 
                 ZStack(alignment: .topTrailing) {
-                    
                     RoundedRectangle(cornerRadius: 35)
                         .fill(
                             Color(.systemGray6)
                         )
                     
-                    
                     HStack(spacing: 30) {
-                        
                         countrySection
-                        
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
-                    
                     
                     closeButton
                 }
@@ -89,7 +72,6 @@ struct AgnoliaView: View {
                 // MARK: - Conselheiro
                 
                 if showingCounsil {
-                    
                     CounsilView(
                         isPresent: $showingCounsil
                     )
@@ -168,11 +150,9 @@ struct AgnoliaView: View {
             
             HStack(
                 alignment: .bottom,
-                spacing: 12
+                spacing: 11
             ) {
-                
                 counselorButton
-                
                 
                 Text(
                     "Você precisa de 7 pontos de Economia para se aliar com esse país"
@@ -187,7 +167,7 @@ struct AgnoliaView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 12)
-                .padding(.vertical, 6)
+                .padding(.vertical, 1)
                 .background(.white)
                 .clipShape(
                     RoundedRectangle(
@@ -249,9 +229,8 @@ struct AgnoliaView: View {
             
             
             // MARK: - Estado da aliança
-            
+        
             if agnoliaAliada {
-                
                 Text("Você já é aliado desse país")
                     .font(.subheadline)
                     .bold()
@@ -263,15 +242,10 @@ struct AgnoliaView: View {
                         )
                     )
                     .padding(.bottom, 15)
-                
             } else {
-                
                 Button {
-                    
                     allyWithAgnolia()
-                    
                 } label: {
-                    
                     Text("Aliar-se")
                         .font(
                             .system(
@@ -316,15 +290,10 @@ struct AgnoliaView: View {
     // MARK: - Conselheiro
     
     private var counselorButton: some View {
-        
         Button {
-            
             showingCounsil = true
-            
         } label: {
-            
             ZStack {
-                
                 Circle()
                     .fill(
                         Color(
@@ -341,7 +310,7 @@ struct AgnoliaView: View {
                 
                 
                 Image(
-                    systemName: "person.wave.2.fill"
+                    systemName: "questionmark.bubble.fill"
                 )
                 .resizable()
                 .scaledToFit()
@@ -356,13 +325,9 @@ struct AgnoliaView: View {
     // MARK: - Fechar
     
     private var closeButton: some View {
-        
         Button {
-            
             isPresent = false
-            
         } label: {
-            
             Image(systemName: "xmark")
                 .font(
                     .system(
@@ -391,21 +356,15 @@ struct AgnoliaView: View {
     // MARK: - Fazer aliança
     
     private func allyWithAgnolia() {
-        
         guard canAlly else {
             return
         }
-        
-        
         gameManager.aliar(
             gameManager.agnolia
         )
-        
-        
         isPresent = false
     }
 }
-
 
 // MARK: - Preview
 

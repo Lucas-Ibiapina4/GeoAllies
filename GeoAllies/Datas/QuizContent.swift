@@ -13,7 +13,6 @@ struct QuizContent: View {
     var body: some View {
         HStack(spacing: 10) {
             VStack {
-                
                 Text(quiz.question)
             }
             VStack {

@@ -12,9 +12,7 @@ import SwiftData
 struct EstiloIlha3D: ButtonStyle {
     
     func makeBody(configuration: Configuration) -> some View {
-        
         ZStack {
-            
             configuration.label
                 .overlay(
                     Color(
@@ -28,8 +26,7 @@ struct EstiloIlha3D: ButtonStyle {
                     x: 4,
                     y: 7
                 )
-            
-            
+
             configuration.label
                 .offset(
                     x: configuration.isPressed ? 4 : 0,
@@ -125,24 +122,16 @@ struct MapView: View {
                 // MARK: - Fundo
                 
                 Group {
-                    
                     Color.blueSea
-                    
-                    
                     Image("fundo")
                         .resizable()
                 }
                 .ignoresSafeArea()
-                
-                
                 // MARK: - Agnólia
                 
                 Button {
-                    
                     isPresentedAgnolia = true
-                    
                 } label: {
-                    
                     Image(
                         agnoliaAliada
                         ? "AgnoliaGreen"
@@ -161,7 +150,6 @@ struct MapView: View {
                     x: -180,
                     y: -80
                 )
-                
                 
                 // MARK: - Seu país
                 
@@ -250,73 +238,57 @@ struct MapView: View {
                 // MARK: - Botão Conselheiro
                 
                 VStack {
-                    
                     HStack {
-                        
                         Spacer()
-                        
-                        
                         counselorButton
                             .padding(.top, 32)
                             .padding(.trailing, 48)
                     }
-                    
-                    
                     Spacer()
                 }
                 .allowsHitTesting(
                     !hasCountryPopupOpen
                 )
                 
-                
                 // MARK: - Popup Seu País
                 
                 if isPresentedSeuPais {
-                    
                     PlayerCountryView(
                         isPresent: $isPresentedSeuPais
                     )
                     .zIndex(100)
                 }
                 
-                
                 // MARK: - Popup Agnólia
                 
                 if isPresentedAgnolia {
-                    
                     AgnoliaView(
                         isPresent: $isPresentedAgnolia
                     )
                     .zIndex(100)
                 }
                 
-                
                 // MARK: - Popup Cáustria
                 
                 if isPresentedCaustria {
-                    
                     CaustriaView(
                         isPresent: $isPresentedCaustria
                     )
                     .zIndex(100)
                 }
-                
-                
+            
                 // MARK: - Popup Lucácia
                 
                 if isPresentedLucasia {
-                    
                     LucaciaView(
                         isPresent: $isPresentedLucasia
                     )
                     .zIndex(100)
                 }
                 
-                
                 // MARK: - Popup Conselheiro
                 
                 if showingCounsil {
-                    
                     CounsilView(
                         isPresent: $showingCounsil
                     )
@@ -327,7 +299,6 @@ struct MapView: View {
                 // MARK: - POPUP FINAL
                 
                 if showingFinalGame {
-                    
                     FinalGameView(
                         isPresent: $showingFinalGame
                     )
@@ -346,47 +317,35 @@ struct MapView: View {
         // MARK: - Carregar dados
         
         .onAppear {
-            
             if let savedData = savedCountries.first {
-                
                 gameManager.yourCountry = savedData
-                
                 gameManager.aliados.removeAll()
                 
-                
                 if savedData.aliouAgnolia {
-                    
                     gameManager.aliados.append(
                         gameManager.agnolia
                     )
                 }
                 
-                
                 if savedData.aliouCaustria {
-                    
                     gameManager.aliados.append(
                         gameManager.cuastria
                     )
                 }
                 
-                
                 if savedData.aliouLucacia {
-                    
                     gameManager.aliados.append(
                         gameManager.lucacia
                     )
                 }
                 
             } else {
-                
                 let newData = Country(
                     economia: 0,
                     militarismo: 0,
                     tecnologia: 0
                 )
-                
                 context.insert(newData)
-                
                 gameManager.yourCountry = newData
             }
         }
@@ -399,27 +358,20 @@ struct MapView: View {
         ) {
             
             if gameManager.aliados.count == 3 {
-                
                 // Fecha o popup do último país
-                
                 isPresentedSeuPais = false
                 isPresentedAgnolia = false
                 isPresentedCaustria = false
                 isPresentedLucasia = false
                 
-                
                 // Fecha o conselheiro
-                
                 showingCounsil = false
                 
-                
                 // Abre o popup final
-                
                 showingFinalGame = true
             }
         }
     }
-    
     
     // MARK: - Botão Conselheiro
     
@@ -449,7 +401,7 @@ struct MapView: View {
                 
                 
                 Image(
-                    systemName: "person.wave.2.fill"
+                    systemName: "questionmark.bubble.fill"
                 )
                 .resizable()
                 .scaledToFit()

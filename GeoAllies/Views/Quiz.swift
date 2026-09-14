@@ -61,7 +61,13 @@ struct Quiz: View {
                 counselorButton
                     .offset(x: 600, y: -280)
             }
-            
+            .overlay(alignment: .top) {
+                if !quizFinished && !questions.isEmpty {
+                    scoreBadge
+                        .offset(y: 25)
+                }
+            }
+            // 600 e -280
             if showingGeoCounsil {
                 ZStack {
                     Color.black.opacity(0.35)
@@ -120,11 +126,11 @@ struct Quiz: View {
                 .background(Color(red: 0.85, green: 0.85, blue: 0.85))
                 .clipShape(RoundedRectangle(cornerRadius: 20))
         }
-        .frame(width: 320)
+        .frame(width: 230)
     }
     
     private func rightSideOptions(question: QuestionsModel) -> some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 9) {
             ForEach(question.options.indices, id: \.self) { index in
                 Button {
                     checkAnswer(option: question.options[index], index: index)
@@ -136,7 +142,7 @@ struct Quiz: View {
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 5)
-                        .padding(.vertical, 6)
+                        .padding(.vertical, 7)
                         .background(getButtonColor(for: index))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
@@ -175,7 +181,7 @@ struct Quiz: View {
                     .shadow(radius: 3)
                 
                 HStack(spacing: 2) {
-                    Image(systemName: "person.wave.2.fill")
+                    Image(systemName: "questionmark.bubble.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 20)
@@ -183,6 +189,32 @@ struct Quiz: View {
                 }
             }
         }
+    }
+    
+    private var scoreBadge: some View {
+            Text("\(totalPoints)/10")
+                .font(.title3)
+                .bold()
+                .foregroundColor(.white)
+                .padding(.horizontal, 20)
+                .padding(.vertical, 8)
+                .background(Color(red: 0.53, green: 0.72, blue: 0.49))
+                .clipShape(Capsule())
+    }
+    
+    private var totalPoints: Int {
+        let savedPoints: Int
+        
+        switch pilar {
+        case .economia:
+            savedPoints = gameManager.yourCountry.economia
+        case .militarismo:
+            savedPoints = gameManager.yourCountry.militarismo
+        case .tecnologia:
+            savedPoints = gameManager.yourCountry.tecnologia
+        }
+        
+        return min(savedPoints + points, 10)
     }
     
     private func getButtonColor(for index: Int) -> Color {
@@ -215,9 +247,6 @@ struct Quiz: View {
             points += 1
         }
         selectedOption = index
-        
-        //gameManager.answeredQuestions.insert(question.question)
-        
         questionIsAnswered = true
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -226,6 +255,12 @@ struct Quiz: View {
     }
     
     func nextQuestion() {
+        if totalPoints >= 10 {
+            addPointInpilar()
+            isPresent = false
+            return
+        }
+        
         if currentQuestionIndex + 1 < questions.count {
             currentQuestionIndex += 1
             correctOption = nil
