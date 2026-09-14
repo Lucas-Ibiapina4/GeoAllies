@@ -135,7 +135,7 @@ struct Quiz: View {
                     checkAnswer(option: question.options[index], index: index)
                 } label: {
                     Text(question.options[index])
-                        .font(.custom("Fredoka-Bold", size: 17))
+                        .font(.custom("Fredoka-SemiBold", size: 17))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
