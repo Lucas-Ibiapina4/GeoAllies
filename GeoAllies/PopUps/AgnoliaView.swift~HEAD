@@ -231,7 +231,7 @@ struct AgnoliaView: View {
                         .bold()
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
-                        .padding(.vertical, 15)
+                        .padding(.vertical, 9)
                         .background(
                             canAlly
                             ? Color.green
