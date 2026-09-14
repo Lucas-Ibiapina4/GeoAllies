@@ -238,8 +238,7 @@ struct LucaciaView: View {
             if lucaciaAliada {
                 
                 Text("Você já é aliado desse país")
-                    .font(.subheadline)
-                    .bold()
+                    .font(.custom("Fredoka-Bold", size: 17))
                     .foregroundStyle(
                         Color(
                             red: 0.4,
