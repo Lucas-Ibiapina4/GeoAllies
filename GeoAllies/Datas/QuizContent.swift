@@ -8,26 +8,20 @@
 import SwiftUI
 
 struct QuizContent: View {
-    
     var quiz : QuestionsModel
     
     var body: some View {
-        
-                HStack(spacing: 10) {
-                    VStack {
-                     
-                        Text(quiz.question)
-                    }
-                    VStack {
-                        ForEach(quiz.options, id: \.self) { index in
-                            Text(index)
-                            
-                        }
-                        
-                    }
-                    Text(quiz.answer)
+        HStack(spacing: 10) {
+            VStack {
+                Text(quiz.question)
+            }
+            VStack {
+                ForEach(quiz.options, id: \.self) { index in
+                    Text(index)
                 }
-        
+            }
+            Text(quiz.answer)
+        }
     }
 }
 

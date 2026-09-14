@@ -126,7 +126,7 @@ struct PlayerCountryView: View {
                     .shadow(radius: 3)
                 
                 HStack(spacing: 2) {
-                    Image(systemName: "person.wave.2.fill")
+                    Image(systemName: "questionmark.bubble.fill")
                         .resizable()
                         .scaledToFit()
                         .frame(height: 20)

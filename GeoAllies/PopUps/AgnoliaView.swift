@@ -8,15 +8,24 @@
 import SwiftUI
 import SwiftData
 
+
 struct AgnoliaView: View {
     @Environment(GameManager.self) private var gameManager
     @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Binding var isPresent: Bool
+    
+    // MARK: - Conselheiro
+    
     @State private var showingCounsil = false
+
+    // MARK: - Pode se aliar?
     
     private var canAlly: Bool {
         gameManager.yourCountry.economia >= 7
     }
+    
+    
+    // MARK: - Já é aliado?
     
     private var agnoliaAliada: Bool {
         gameManager.aliados.contains {
@@ -27,18 +36,24 @@ struct AgnoliaView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
+                // MARK: - Fundo escurecido
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
                     .onTapGesture {
+                        
                         if !showingCounsil {
                             isPresent = false
                         }
                     }
                 
+                // MARK: - Popup do país
+                
                 ZStack(alignment: .topTrailing) {
                     RoundedRectangle(cornerRadius: 35)
-                        .fill(Color(.systemGray6))
+                        .fill(
+                            Color(.systemGray6)
+                        )
                     
                     HStack(spacing: 30) {
                         countrySection
@@ -54,16 +69,13 @@ struct AgnoliaView: View {
                 .offset(y: 15)
                 .allowsHitTesting(!showingCounsil)
                 
+                
+                // MARK: - Conselheiro
+                
                 if showingCounsil {
-                    ZStack {
-                        Color.black
-                            .opacity(0.35)
-                            .ignoresSafeArea()
-                        
-                        CounsilView(
-                            isPresent: $showingCounsil
-                        )
-                    }
+                    CounsilView(
+                        isPresent: $showingCounsil
+                    )
                     .zIndex(1000)
                 }
             }
@@ -74,24 +86,34 @@ struct AgnoliaView: View {
         }
     }
     
+    
+    // MARK: - Lado esquerdo
+    
     private var countrySection: some View {
+        
         VStack(spacing: 7) {
+            
             Text("AGNÓLIA")
                 .font(.body)
                 .bold()
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
-                .background(Color.green.opacity(0.65))
+                .background(
+                    Color.green.opacity(0.65)
+                )
                 .clipShape(Capsule())
                 .padding(10)
             
+            
+            // MARK: - Imagem muda depois da aliança
+            
             if agnoliaAliada {
+                
                 Image("AgnoliaGreen")
                     .resizable()
                     .scaledToFit()
                     .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
-
                 
                 Ellipse()
                     .fill(Color.gray.opacity(0.20))
@@ -99,7 +121,10 @@ struct AgnoliaView: View {
                         width: 170,
                         height: 22
                     )
+
+                
             } else {
+                
                 Image("AgnoliaImage")
                     .resizable()
                     .scaledToFit()
@@ -114,9 +139,11 @@ struct AgnoliaView: View {
                     )
             }
             
+            // MARK: - Conselheiro + requisito
+            
             HStack(
                 alignment: .bottom,
-                spacing: 12
+                spacing: 11
             ) {
                 counselorButton
                 
@@ -139,8 +166,13 @@ struct AgnoliaView: View {
         )
     }
     
+    
+    // MARK: - Lado direito
+    
     private var statisticSection: some View {
+        
         VStack(spacing: -10) {
+            
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
@@ -150,7 +182,6 @@ struct AgnoliaView: View {
                 showImproveButton: false
             ) {}
                 .font(.caption2)
-
             
             ProgressBar(
                 name: "Militarismo",
@@ -161,7 +192,6 @@ struct AgnoliaView: View {
                 showImproveButton: false
             ) {}
                 .font(.caption2)
-
             
             ProgressBar(
                 name: "Tecnologia",
@@ -173,15 +203,25 @@ struct AgnoliaView: View {
             ) {}
                 .font(.caption2)
 
-            
             Spacer()
             
+            
+            // MARK: - Estado da aliança
+        
             if agnoliaAliada {
                 Text("Você já é aliado desse país")
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
                     .padding(.vertical, 15)
+                    .foregroundStyle(
+                        Color(
+                            red: 0.4,
+                            green: 0.4,
+                            blue: 0.4
+                        )
+                    )
+                    .padding(.bottom, 15)
             } else {
                 Button {
                     allyWithAgnolia()
@@ -221,26 +261,43 @@ struct AgnoliaView: View {
         )
     }
     
+    
+    // MARK: - Conselheiro
+    
     private var counselorButton: some View {
-        Button(action: {
+        Button {
             showingCounsil = true
-        }) {
+        } label: {
             ZStack {
                 Circle()
-                    .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
-                    .frame(width: 50, height: 50)
+                    .fill(
+                        Color(
+                            red: 241 / 255,
+                            green: 157 / 255,
+                            blue: 59 / 255
+                        )
+                    )
+                    .frame(
+                        width: 50,
+                        height: 50
+                    )
                     .shadow(radius: 3)
                 
-                HStack(spacing: 2) {
-                    Image(systemName: "person.wave.2.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                        .foregroundColor(.white)
-                }
+                
+                Image(
+                    systemName: "questionmark.bubble.fill"
+                )
+                .resizable()
+                .scaledToFit()
+                .frame(height: 20)
+                .foregroundStyle(.white)
             }
         }
+        .buttonStyle(.plain)
     }
+    
+    
+    // MARK: - Fechar
     
     private var closeButton: some View {
         Button {
@@ -270,27 +327,40 @@ struct AgnoliaView: View {
         )
     }
     
+    
+    // MARK: - Fazer aliança
+    
     private func allyWithAgnolia() {
-        guard canAlly else { return }
-        
-        gameManager.aliados.append(gameManager.agnolia)
-        gameManager.yourCountry.aliouAgnolia = true
-        
+        guard canAlly else {
+            return
+        }
+        gameManager.aliar(
+            gameManager.agnolia
+        )
         isPresent = false
     }
 }
 
+// MARK: - Preview
+
 #Preview {
+    
     AgnoliaPreview()
 }
 
-private struct AgnoliaPreview: View {
-    @State private var gameManager = GameManager()
 
+private struct AgnoliaPreview: View {
+    
+    @State private var gameManager = GameManager()
+    
+    
     var body: some View {
+        
         ZStack {
+            
             Color.blueSea
-            .ignoresSafeArea()
+                .ignoresSafeArea()
+            
             
             AgnoliaView(
                 isPresent: .constant(true)
