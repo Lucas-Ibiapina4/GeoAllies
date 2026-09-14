@@ -11,24 +11,19 @@ import SwiftUI
 struct LucaciaView: View {
     
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
-    
     @State private var showingCounsil = false
     
     
     // MARK: - Pode se aliar?
     
     private var canAlly: Bool {
-        
         gameManager.yourCountry.tecnologia >= 10
     }
-    
     
     // MARK: - Verifica se Lucácia já é aliada
     
     private var lucaciaAliada: Bool {
-        
         gameManager.aliados.contains {
             $0.id == gameManager.lucacia.id
         }
@@ -36,13 +31,9 @@ struct LucaciaView: View {
     
     
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
                 // MARK: - Fundo escurecido
-                
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
@@ -60,9 +51,7 @@ struct LucaciaView: View {
                 // MARK: - Popup da Lucácia
                 
                 ZStack(alignment: .topTrailing) {
-                    
                     // Fundo
-                    
                     RoundedRectangle(cornerRadius: 35)
                         .fill(
                             Color(
@@ -72,21 +61,15 @@ struct LucaciaView: View {
                             )
                         )
                     
-                    
                     // Conteúdo
                     
                     HStack(spacing: 30) {
-                        
                         countrySection
-                        
                         statisticSection
                     }
                     .padding(.horizontal, 32)
                     .padding(.vertical, 18)
-                    
-                    
                     // Botão fechar
-                    
                     closeButton
                 }
                 .padding(.horizontal, 65)
@@ -94,11 +77,9 @@ struct LucaciaView: View {
                 .offset(y: 15)
                 .allowsHitTesting(!showingCounsil)
                 
-                
                 // MARK: - Popup do Conselheiro
                 
                 if showingCounsil {
-                    
                     CounsilView(
                         isPresent: $showingCounsil
                     )
@@ -116,11 +97,8 @@ struct LucaciaView: View {
     // MARK: - Lado esquerdo
     
     private var countrySection: some View {
-        
         VStack(spacing: 8) {
-            
             // MARK: Nome do país
-            
             Text("LUCÁCIA")
                 .font(
                     .system(
@@ -365,7 +343,7 @@ struct LucaciaView: View {
                 
                 
                 Image(
-                    systemName: "person.wave.2.fill"
+                    systemName: "questionmark.bubble.fill"
                 )
                 .resizable()
                 .scaledToFit()

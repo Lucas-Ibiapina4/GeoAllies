@@ -9,18 +9,14 @@ import SwiftUI
 
 
 struct CaustriaView: View {
-    
     @Environment(GameManager.self) private var gameManager
-    
     @Binding var isPresent: Bool
-    
     @State private var showingCounsil = false
     
     
     // MARK: - Pode se aliar?
     
     private var canAlly: Bool {
-        
         gameManager.yourCountry.militarismo >= 8
     }
     
@@ -174,8 +170,6 @@ struct CaustriaView: View {
             ) {
                 
                 counselorButton
-                
-                
                 Text(
                     "Você precisa de 8 pontos de Militarismo para se aliar com esse país"
                 )
@@ -349,7 +343,7 @@ struct CaustriaView: View {
                 
                 
                 Image(
-                    systemName: "person.wave.2.fill"
+                    systemName: "questionmark.bubble.fill"
                 )
                 .resizable()
                 .scaledToFit()

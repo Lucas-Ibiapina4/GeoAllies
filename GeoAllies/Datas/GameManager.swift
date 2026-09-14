@@ -62,17 +62,20 @@ class GameManager {
         )
     }
     
-    
     func aliar(_ country: Country) {
-        
         if !aliados.contains(where: {
             $0.id == country.id
         }) {
             
             aliados.append(country)
             
-            print("País aliado!")
-            print("Total de aliados: \(aliados.count)")
+            if country.id == agnolia.id {
+                yourCountry.aliouAgnolia = true
+            } else if country.id == cuastria.id {
+                yourCountry.aliouCaustria = true
+            } else if country.id == lucacia.id {
+                yourCountry.aliouLucacia = true
+            }
         }
     }
 }
