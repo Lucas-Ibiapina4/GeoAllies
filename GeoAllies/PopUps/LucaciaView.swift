@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-
+//teste
 struct LucaciaView: View {
     
     @Environment(GameManager.self) private var gameManager
+    
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    
     @Binding var isPresent: Bool
     @State private var showingCounsil = false
     
@@ -100,13 +103,8 @@ struct LucaciaView: View {
         VStack(spacing: 8) {
             // MARK: Nome do país
             Text("LUCÁCIA")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.body)
+                .bold()
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
@@ -127,34 +125,26 @@ struct LucaciaView: View {
                 Image("País3")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
                 
             } else {
                 
                 Image("LucaciaImage")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+                        
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
                     )
+                    .frame(
+                        width: 170,
+                        height: 22
+                        )
             }
-            
-            
-            // MARK: - Sombra
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
-            
             
             // MARK: - Parte inferior
             
@@ -173,13 +163,9 @@ struct LucaciaView: View {
                 Text(
                     "Você precisa de 10 pontos de Tecnologia para se aliar com esse país"
                 )
-                .font(
-                    .system(
-                        size: 12,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.caption2)
+                .bold()
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 12)
@@ -191,6 +177,7 @@ struct LucaciaView: View {
                     )
                 )
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -217,6 +204,7 @@ struct LucaciaView: View {
             ) {
                 // Sem ação
             }
+            .font(.caption2)
             
             
             // MARK: - Militarismo
@@ -231,6 +219,7 @@ struct LucaciaView: View {
             ) {
                 // Sem ação
             }
+            .font(.caption2)
             
             
             // MARK: - Tecnologia
@@ -245,6 +234,9 @@ struct LucaciaView: View {
             ) {
                 // Sem ação
             }
+            .font(.caption2)
+
+            
             
             
             Spacer()
@@ -257,6 +249,8 @@ struct LucaciaView: View {
                 Text("Você já é aliado desse país")
                     .font(.subheadline)
                     .bold()
+                    .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+                    .padding(.vertical, 15)
                     .foregroundStyle(
                         Color(
                             red: 0.4,
@@ -275,13 +269,8 @@ struct LucaciaView: View {
                 } label: {
                     
                     Text("Aliar-se")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold,
-                                design: .rounded
-                            )
-                        )
+                        .font(.body)
+                        .bold()
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 10)

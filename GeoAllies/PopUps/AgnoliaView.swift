@@ -11,6 +11,7 @@ import SwiftData
 
 struct AgnoliaView: View {
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Binding var isPresent: Bool
     
     // MARK: - Conselheiro
@@ -93,13 +94,8 @@ struct AgnoliaView: View {
         VStack(spacing: 7) {
             
             Text("AGNÓLIA")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.body)
+                .bold()
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
@@ -117,34 +113,31 @@ struct AgnoliaView: View {
                 Image("AgnoliaGreen")
                     .resizable()
                     .scaledToFit()
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+                
+                Ellipse()
+                    .fill(Color.gray.opacity(0.20))
                     .frame(
-                        width: 210,
-                        height: 170
+                        width: 170,
+                        height: 22
                     )
+
                 
             } else {
                 
                 Image("AgnoliaImage")
                     .resizable()
                     .scaledToFit()
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
+                
+                Ellipse()
+                    .fill(Color.gray.opacity(0.20))
                     .frame(
-                        width: 210,
-                        height: 170
+                        width: 170,
+                        height: 22
                     )
             }
-            
-            
-            // MARK: - Sombra
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
-            
             
             // MARK: - Conselheiro + requisito
             
@@ -154,27 +147,18 @@ struct AgnoliaView: View {
             ) {
                 counselorButton
                 
-                Text(
-                    "Você precisa de 7 pontos de Economia para se aliar com esse país"
-                )
-                .font(
-                    .system(
-                        size: 12,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
-                .multilineTextAlignment(.center)
-                .foregroundStyle(.black)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 1)
-                .background(.white)
-                .clipShape(
-                    RoundedRectangle(
-                        cornerRadius: 16
-                    )
-                )
+                Text("Você precisa de 7 pontos de Econômia para se aliar com esse país")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.caption2)
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .foregroundStyle(.black)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 1)
+                    .background(.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 16))
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -196,10 +180,8 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .economia,
                 showImproveButton: false
-            ) {
-                
-            }
-            
+            ) {}
+                .font(.caption2)
             
             ProgressBar(
                 name: "Militarismo",
@@ -208,10 +190,8 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .militarismo,
                 showImproveButton: false
-            ) {
-                
-            }
-            
+            ) {}
+                .font(.caption2)
             
             ProgressBar(
                 name: "Tecnologia",
@@ -220,11 +200,9 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .tecnologia,
                 showImproveButton: false
-            ) {
-                
-            }
-            
-            
+            ) {}
+                .font(.caption2)
+
             Spacer()
             
             
@@ -234,6 +212,8 @@ struct AgnoliaView: View {
                 Text("Você já é aliado desse país")
                     .font(.subheadline)
                     .bold()
+                    .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
+                    .padding(.vertical, 15)
                     .foregroundStyle(
                         Color(
                             red: 0.4,
@@ -247,16 +227,11 @@ struct AgnoliaView: View {
                     allyWithAgnolia()
                 } label: {
                     Text("Aliar-se")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold,
-                                design: .rounded
-                            )
-                        )
+                        .font(.body)
+                        .bold()
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
-                        .padding(.vertical, 9)
+                        .padding(.vertical, 15)
                         .background(
                             canAlly
                             ? Color.green
