@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CaustriaView: View {
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     @Binding var isPresent: Bool
     @State private var showingCounsil = false
 
@@ -84,13 +86,8 @@ struct CaustriaView: View {
     private var countrySection: some View {
         VStack(spacing: 8) {
             Text("CÁUSTRIA")
-                .font(
-                    .system(
-                        size: 20,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.body)
+                .bold()
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
@@ -103,10 +100,8 @@ struct CaustriaView: View {
                 Image("CaustriaGreen")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
                 
                 // MARK: Sombra abaixo do país
                 
@@ -122,10 +117,8 @@ struct CaustriaView: View {
                 Image("CaustriaImage")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
                 
                 // MARK: Sombra abaixo do país
                 
@@ -148,13 +141,9 @@ struct CaustriaView: View {
                 Text(
                     "Você precisa de 8 pontos de Militarismo para se aliar com esse país"
                 )
-                .font(
-                    .system(
-                        size: 12,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .font(.caption2)
+                .bold()
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 12)
@@ -166,6 +155,7 @@ struct CaustriaView: View {
                     )
                 )
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -190,6 +180,8 @@ struct CaustriaView: View {
             ) {
                 
             }
+            .font(.caption2)
+
             
             ProgressBar(
                 name: "Militarismo",
@@ -201,6 +193,8 @@ struct CaustriaView: View {
             ) {
                 
             }
+            .font(.caption2)
+
             
             ProgressBar(
                 name: "Tecnologia",
@@ -220,7 +214,7 @@ struct CaustriaView: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
-                    .padding(.bottom, 10)
+                    .padding(.vertical, 15)
             } else {
                 Button {
                     allyWithCaustria()

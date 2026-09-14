@@ -10,6 +10,7 @@ import SwiftData
 
 struct AgnoliaView: View {
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Binding var isPresent: Bool
     @State private var showingCounsil = false
     
@@ -76,13 +77,8 @@ struct AgnoliaView: View {
     private var countrySection: some View {
         VStack(spacing: 7) {
             Text("AGNÓLIA")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.body)
+                .bold()
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
@@ -94,10 +90,8 @@ struct AgnoliaView: View {
                 Image("AgnoliaGreen")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
                 
                 Ellipse()
                     .fill(Color.gray.opacity(0.20))
@@ -109,10 +103,8 @@ struct AgnoliaView: View {
                 Image("AgnoliaImage")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
                 
                 Ellipse()
                     .fill(Color.gray.opacity(0.20))
@@ -129,13 +121,9 @@ struct AgnoliaView: View {
                 counselorButton
                 
                 Text("Você precisa de 7 pontos de Econômia para se aliar com esse país")
-                    .font(
-                        .system(
-                            size: 12,
-                            weight: .bold,
-                            design: .rounded
-                        )
-                    )
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .font(.caption2)
+                    .bold()
                     .multilineTextAlignment(.center)
                     .foregroundStyle(.black)
                     .padding(.horizontal, 12)
@@ -143,6 +131,7 @@ struct AgnoliaView: View {
                     .background(.white)
                     .clipShape(RoundedRectangle(cornerRadius: 16))
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -160,6 +149,8 @@ struct AgnoliaView: View {
                 type: .economia,
                 showImproveButton: false
             ) {}
+                .font(.caption2)
+
             
             ProgressBar(
                 name: "Militarismo",
@@ -169,6 +160,8 @@ struct AgnoliaView: View {
                 type: .militarismo,
                 showImproveButton: false
             ) {}
+                .font(.caption2)
+
             
             ProgressBar(
                 name: "Tecnologia",
@@ -178,6 +171,8 @@ struct AgnoliaView: View {
                 type: .tecnologia,
                 showImproveButton: false
             ) {}
+                .font(.caption2)
+
             
             Spacer()
             
@@ -186,19 +181,14 @@ struct AgnoliaView: View {
                     .font(.subheadline)
                     .bold()
                     .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
-                    .padding(.bottom, 15)
+                    .padding(.vertical, 15)
             } else {
                 Button {
                     allyWithAgnolia()
                 } label: {
                     Text("Aliar-se")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold,
-                                design: .rounded
-                            )
-                        )
+                        .font(.body)
+                        .bold()
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 9)
