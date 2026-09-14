@@ -212,6 +212,9 @@ struct CaustriaView: View {
             
             // MARK: - Militarismo
             
+            
+            // MARK: - Militarismo
+            
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -224,6 +227,9 @@ struct CaustriaView: View {
             }
             .font(.caption2)
 
+            
+            
+            // MARK: - Tecnologia
             
             
             // MARK: - Tecnologia
