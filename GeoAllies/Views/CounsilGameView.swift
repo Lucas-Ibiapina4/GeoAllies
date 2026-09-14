@@ -25,7 +25,9 @@ struct CounsilGameView: View {
             
             VStack(alignment: .leading){
                 Text("Qual a sua dúvida?")
+                    .font(.custom("Fredoka-Bold", size: 17))
                 TextField("Digite aqui", text: $viewModelGame.answerUserGame, axis: .vertical)
+                    .font(.custom("Fredoka-Bold", size: 17))
                     .frame(maxWidth: 250)
                     .border(Color.black)
                     .focused($isKeyboard)
@@ -41,6 +43,7 @@ struct CounsilGameView: View {
                     isKeyboard = false
                 }) {
                     Text("Gerar Resposta")
+                        .font(.custom("Fredoka-Bold", size: 17))
                         .bold()
                 }
                 .buttonStyle(.borderedProminent)

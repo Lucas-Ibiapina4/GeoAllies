@@ -72,7 +72,6 @@ struct Quiz: View {
                 ZStack {
                     Color.black.opacity(0.35)
                         .ignoresSafeArea()
-                    
                     CounsilView(isPresent: $showingGeoCounsil)
                 }
                 .zIndex(1000)
@@ -86,12 +85,13 @@ struct Quiz: View {
     private var endQuizScreen: some View {
         VStack(spacing: 20) {
             Text("Quiz Concluído!")
-                .font(.largeTitle)
+                .font(.custom("Fredoka", size: 20))
                 .bold()
                 .foregroundColor(.black)
             
             Text("Você respondeu todas as perguntas e ganhou \(points) pontos de \(pilar.rawValue).")
-                .font(.title3)
+                .font(.custom("Fredoka", size: 20))
+                .bold()
                 .foregroundColor(.gray)
         }
         .padding()
@@ -108,7 +108,7 @@ struct Quiz: View {
     private func leftSideQuestion(question: QuestionsModel) -> some View {
         VStack(alignment: .leading, spacing: 15) {
             Text("GeoQuiz")
-                .font(.headline)
+                .font(.custom("Fredoka", size: 20))
                 .bold()
                 .foregroundColor(.white)
                 .padding(.horizontal, 16)
@@ -117,8 +117,7 @@ struct Quiz: View {
                 .clipShape(Capsule())
             
             Text(question.question)
-                .font(.body)
-                .bold()
+                .font(.custom("Fredoka-Bold", size: 19))
                 .foregroundColor(.black)
                 .multilineTextAlignment(.leading)
                 .padding(20)
@@ -136,13 +135,12 @@ struct Quiz: View {
                     checkAnswer(option: question.options[index], index: index)
                 } label: {
                     Text(question.options[index])
-                        .font(.subheadline)
-                        .bold()
+                        .font(.custom("Fredoka-Bold", size: 17))
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 5)
-                        .padding(.vertical, 7)
+                        .padding(.vertical, 3)
                         .background(getButtonColor(for: index))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
@@ -193,8 +191,7 @@ struct Quiz: View {
     
     private var scoreBadge: some View {
             Text("\(totalPoints)/10")
-                .font(.title3)
-                .bold()
+                .font(.custom("Fredoka-Bold", size: 20))
                 .foregroundColor(.white)
                 .padding(.horizontal, 20)
                 .padding(.vertical, 8)

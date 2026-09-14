@@ -93,22 +93,19 @@ struct AgnoliaView: View {
         VStack(spacing: 7) {
             
             Text("AGNÓLIA")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 23))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
                 .background(
-                    Color.green.opacity(0.65)
+                    Color(
+                        red: 140 / 255,
+                        green: 180 / 255,
+                        blue: 115 / 255
+                    )
                 )
                 .clipShape(Capsule())
                 .padding(10)
-            
             
             // MARK: - Imagem muda depois da aliança
             
@@ -157,13 +154,7 @@ struct AgnoliaView: View {
                 Text(
                     "Você precisa de 7 pontos de Economia para se aliar com esse país"
                 )
-                .font(
-                    .system(
-                        size: 12,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 13))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 12)
@@ -232,8 +223,7 @@ struct AgnoliaView: View {
         
             if agnoliaAliada {
                 Text("Você já é aliado desse país")
-                    .font(.subheadline)
-                    .bold()
+                    .font(.custom("Fredoka-Bold", size: 17))
                     .foregroundStyle(
                         Color(
                             red: 0.4,
@@ -247,13 +237,7 @@ struct AgnoliaView: View {
                     allyWithAgnolia()
                 } label: {
                     Text("Aliar-se")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold,
-                                design: .rounded
-                            )
-                        )
+                        .font(.custom("Fredoka-Bold", size: 23))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 9)
@@ -329,12 +313,7 @@ struct AgnoliaView: View {
             isPresent = false
         } label: {
             Image(systemName: "xmark")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .heavy
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 23))
                 .foregroundStyle(.white)
                 .frame(
                     width: 50,

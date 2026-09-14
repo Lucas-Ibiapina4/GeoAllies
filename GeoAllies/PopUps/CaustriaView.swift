@@ -110,18 +110,16 @@ struct CaustriaView: View {
             // MARK: - Nome do país
             
             Text("CÁUSTRIA")
-                .font(
-                    .system(
-                        size: 20,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 23))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
                 .background(
-                    Color.green.opacity(0.65)
+                    Color(
+                        red: 140 / 255,
+                        green: 180 / 255,
+                        blue: 115 / 255
+                    )
                 )
                 .clipShape(Capsule())
             
@@ -173,13 +171,7 @@ struct CaustriaView: View {
                 Text(
                     "Você precisa de 8 pontos de Militarismo para se aliar com esse país"
                 )
-                .font(
-                    .system(
-                        size: 12,
-                        weight: .bold,
-                        design: .rounded
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 13))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 12)
@@ -275,13 +267,7 @@ struct CaustriaView: View {
                 } label: {
                     
                     Text("Aliar-se")
-                        .font(
-                            .system(
-                                size: 22,
-                                weight: .bold,
-                                design: .rounded
-                            )
-                        )
+                        .font(.custom("Fredoka-Bold", size: 23))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 10)
@@ -360,18 +346,11 @@ struct CaustriaView: View {
     private var closeButton: some View {
         
         Button {
-            
             isPresent = false
-            
         } label: {
             
             Image(systemName: "xmark")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .heavy
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 23))
                 .foregroundStyle(.white)
                 .frame(
                     width: 50,

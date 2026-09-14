@@ -90,7 +90,7 @@ struct CounsilView: View {
     private var chatSection: some View {
         VStack(spacing: 0) {
             messageScrollView
-            
+                .font(.custom("Fredoka-Bold", size: 17))
             inputSection
                 .padding(.horizontal, 20)
                 .padding(.bottom, 18)
@@ -119,13 +119,7 @@ struct CounsilView: View {
                         HStack(spacing: 10) {
                             ProgressView()
                             Text("Cleiton está pensando...")
-                                .font(
-                                    .system(
-                                        size: 14,
-                                        weight: .medium,
-                                        design: .rounded
-                                    )
-                                )
+                                .font(.custom("Fredoka-Bold", size: 17))
                                 .foregroundStyle(.black)
                             Spacer()
                         }
@@ -165,13 +159,7 @@ struct CounsilView: View {
     
     private func messageContent(_ message: ChatMessage) -> some View {
         Text(message.text)
-            .font(
-                .system(
-                    size: 16,
-                    weight: .bold,
-                    design: .rounded
-                )
-            )
+            .font(.custom("Fredoka-SemiBold", size: 16))
             .foregroundStyle(.black)
             .multilineTextAlignment(.leading)
             .padding(.horizontal, 20)
@@ -204,13 +192,7 @@ struct CounsilView: View {
                 text: $viewModel.answerUser,
                 axis: .vertical
             )
-            .font(
-                .system(
-                    size: 16,
-                    weight: .bold,
-                    design: .rounded
-                )
-            )
+            .font(.custom("Fredoka-SemiBold", size: 16))
             .foregroundStyle(.black)
             .lineLimit(1...3)
             .padding(.horizontal, 22)
