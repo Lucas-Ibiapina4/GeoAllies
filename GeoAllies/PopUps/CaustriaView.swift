@@ -6,94 +6,76 @@
 //
 
 import SwiftUI
-
+import UIKit
 
 struct CaustriaView: View {
-    
+
     @Environment(GameManager.self) private var gameManager
-    
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+
     @Binding var isPresent: Bool
-    
+
     @State private var showingCounsil = false
-    
-    
-    // MARK: - Pode se aliar?
-    
+
     private var canAlly: Bool {
-        
         gameManager.yourCountry.militarismo >= 8
     }
-    
-    
-    // MARK: - Verifica se Cáustria já é aliada
-    
+
     private var caustriaAliada: Bool {
-        
         gameManager.aliados.contains {
             $0.id == gameManager.cuastria.id
         }
     }
-    
-    
+
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
-                // MARK: - Fundo escurecido
-                
-                Color.black
-                    .opacity(0.30)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        
-                        if !showingCounsil {
-                            isPresent = false
+
+                // MARK: - Conteúdo de Cáustria
+
+                ZStack {
+                    Color.black
+                        .opacity(0.30)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            if !showingCounsil {
+                                isPresent = false
+                            }
                         }
+                        .accessibilityHidden(true)
+
+                    ZStack(alignment: .topTrailing) {
+                        RoundedRectangle(cornerRadius: 35)
+                            .fill(Color(.systemGray6))
+                            .accessibilityHidden(true)
+
+                        HStack(spacing: 30) {
+                            countrySection
+                                .accessibilitySortPriority(100)
+
+                            statisticSection
+                                .accessibilitySortPriority(50)
+                        }
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 18)
+
+                        closeButton
+                            .accessibilitySortPriority(10)
                     }
-                
-                
-                // MARK: - Popup da Cáustria
-                
-                ZStack(alignment: .topTrailing) {
-                    
-                    RoundedRectangle(cornerRadius: 35)
-                        .fill(
-                            Color(.systemGray6)
-                        )
-                    
-                    
-                    HStack(spacing: 30) {
-                        
-                        countrySection
-                        
-                        statisticSection
-                    }
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 18)
-                    
-                    
-                    // MARK: - Botão Fechar
-                    
-                    closeButton
+                    .padding(.horizontal, 65)
+                    .padding(.vertical, 30)
+                    .offset(y: 15)
                 }
-                
-                // Mesmo padrão do PlayerCountryView
-                
-                .padding(.horizontal, 65)
-                .padding(.vertical, 30)
-                .offset(y: 15)
+                .accessibilityHidden(showingCounsil)
                 .allowsHitTesting(!showingCounsil)
-                
-                
-                // MARK: - Popup do Conselheiro
-                
+
+                // MARK: - Conselheiro
+
                 if showingCounsil {
-                    
                     CounsilView(
                         isPresent: $showingCounsil
                     )
+                    .accessibilityAddTraits(.isModal)
                     .zIndex(1000)
                 }
             }
@@ -102,17 +84,16 @@ struct CaustriaView: View {
                 height: geometry.size.height
             )
         }
+        .onAppear {
+            announceScreen()
+        }
     }
-    
-    
+
     // MARK: - Lado esquerdo
-    
+
     private var countrySection: some View {
-        
         VStack(spacing: 8) {
-            
-            // MARK: - Nome do país
-            
+
             Text("CÁUSTRIA")
                 .font(
                     .system(
@@ -128,12 +109,10 @@ struct CaustriaView: View {
                     Color.green.opacity(0.65)
                 )
                 .clipShape(Capsule())
-            
-            
-            // MARK: - Imagem do país
-            
+                .accessibilityAddTraits(.isHeader)
+                .accessibilitySortPriority(100)
+
             if caustriaAliada {
-                
                 Image("CaustriaGreen")
                     .resizable()
                     .scaledToFit()
@@ -141,9 +120,8 @@ struct CaustriaView: View {
                         width: 210,
                         height: 170
                     )
-                
+                    .accessibilityHidden(true)
             } else {
-                
                 Image("CaustriaImage")
                     .resizable()
                     .scaledToFit()
@@ -151,11 +129,9 @@ struct CaustriaView: View {
                         width: 210,
                         height: 170
                     )
+                    .accessibilityHidden(true)
             }
-            
-            
-            // MARK: - Sombra
-            
+
             Ellipse()
                 .fill(
                     Color.gray.opacity(0.20)
@@ -164,18 +140,15 @@ struct CaustriaView: View {
                     width: 170,
                     height: 22
                 )
-            
-            
-            // MARK: - Conselheiro + requisito
-            
+                .accessibilityHidden(true)
+
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
-                
                 counselorButton
-                
-                
+                    .accessibilitySortPriority(80)
+
                 Text(
                     "Você precisa de 8 pontos de Militarismo para se aliar com esse país"
                 )
@@ -196,6 +169,10 @@ struct CaustriaView: View {
                         cornerRadius: 16
                     )
                 )
+                .accessibilityLabel(
+                    "Você precisa de 8 pontos de Militarismo para se aliar com Cáustria"
+                )
+                .accessibilitySortPriority(90)
             }
         }
         .frame(
@@ -203,16 +180,12 @@ struct CaustriaView: View {
             maxHeight: .infinity
         )
     }
-    
-    
+
     // MARK: - Lado direito
-    
+
     private var statisticSection: some View {
-        
         VStack(spacing: -5) {
-            
-            // MARK: - Economia
-            
+
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
@@ -221,12 +194,9 @@ struct CaustriaView: View {
                 type: .economia,
                 showImproveButton: false
             ) {
-                
             }
-            
-            
-            // MARK: - Militarismo
-            
+            .accessibilitySortPriority(60)
+
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -235,12 +205,9 @@ struct CaustriaView: View {
                 type: .militarismo,
                 showImproveButton: false
             ) {
-                
             }
-            
-            
-            // MARK: - Tecnologia
-            
+            .accessibilitySortPriority(50)
+
             ProgressBar(
                 name: "Tecnologia",
                 icon: "desktopcomputer",
@@ -249,37 +216,34 @@ struct CaustriaView: View {
                 type: .tecnologia,
                 showImproveButton: false
             ) {
-                
             }
-            
-            
+            .accessibilitySortPriority(40)
+
             Spacer()
-            
-            
-            // MARK: - Botão Aliar-se
-            
+
             if caustriaAliada {
-                
-                Text("Você já é aliado desse país")
-                    .font(.subheadline)
-                    .bold()
-                    .foregroundStyle(
-                        Color(
-                            red: 0.4,
-                            green: 0.4,
-                            blue: 0.4
-                        )
+                Text(
+                    "Você já é aliado desse país"
+                )
+                .font(.subheadline)
+                .bold()
+                .foregroundStyle(
+                    Color(
+                        red: 0.4,
+                        green: 0.4,
+                        blue: 0.4
                     )
-                    .padding(.bottom, 10)
-                
+                )
+                .padding(.bottom, 10)
+                .accessibilityLabel(
+                    "Você já é aliado de Cáustria"
+                )
+                .accessibilitySortPriority(30)
+
             } else {
-                
                 Button {
-                    
                     allyWithCaustria()
-                    
                 } label: {
-                    
                     Text("Aliar-se")
                         .font(
                             .system(
@@ -304,6 +268,20 @@ struct CaustriaView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(!canAlly)
+                .accessibilityLabel(
+                    "Aliar-se a Cáustria"
+                )
+                .accessibilityValue(
+                    canAlly
+                    ? "Disponível"
+                    : "Indisponível"
+                )
+                .accessibilityHint(
+                    canAlly
+                    ? "Forma uma aliança com Cáustria"
+                    : "Você precisa de 8 pontos de Militarismo para formar esta aliança"
+                )
+                .accessibilitySortPriority(30)
             }
         }
         .padding(.horizontal, 22)
@@ -319,20 +297,14 @@ struct CaustriaView: View {
             )
         )
     }
-    
-    
-    // MARK: - Botão Conselheiro
-    
+
+    // MARK: - Conselheiro
+
     private var counselorButton: some View {
-        
         Button {
-            
             showingCounsil = true
-            
         } label: {
-            
             ZStack {
-                
                 Circle()
                     .fill(
                         Color(
@@ -346,8 +318,7 @@ struct CaustriaView: View {
                         height: 50
                     )
                     .shadow(radius: 3)
-                
-                
+
                 Image(
                     systemName: "person.wave.2.fill"
                 )
@@ -355,37 +326,40 @@ struct CaustriaView: View {
                 .scaledToFit()
                 .frame(height: 20)
                 .foregroundStyle(.white)
+                .accessibilityHidden(true)
             }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Conselheiro")
+        .accessibilityHint(
+            "Toque duas vezes para conversar com o conselheiro"
+        )
     }
-    
-    
-    // MARK: - Botão Fechar Cáustria
-    
+
+    // MARK: - Fechar
+
     private var closeButton: some View {
-        
         Button {
-            
             isPresent = false
-            
         } label: {
-            
-            Image(systemName: "xmark")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .heavy
-                    )
+            Image(
+                systemName: "xmark"
+            )
+            .font(
+                .system(
+                    size: 22,
+                    weight: .heavy
                 )
-                .foregroundStyle(.white)
-                .frame(
-                    width: 50,
-                    height: 50
-                )
-                .background(.red)
-                .clipShape(Circle())
-                .shadow(radius: 3)
+            )
+            .foregroundStyle(.white)
+            .frame(
+                width: 50,
+                height: 50
+            )
+            .background(.red)
+            .clipShape(Circle())
+            .shadow(radius: 3)
+            .accessibilityHidden(true)
         }
         .buttonStyle(.plain)
         .contentShape(Circle())
@@ -393,55 +367,79 @@ struct CaustriaView: View {
             x: 12,
             y: -12
         )
+        .accessibilityLabel("Fechar")
+        .accessibilityHint(
+            "Fecha as informações de Cáustria"
+        )
     }
-    
-    
+
+    // MARK: - Leitura automática
+
+    private func announceScreen() {
+        guard voiceOverEnabled else {
+            return
+        }
+
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.5
+        ) {
+            let situacao: String
+
+            if caustriaAliada {
+                situacao =
+                    "Cáustria já é sua aliada."
+            } else if canAlly {
+                situacao =
+                    "Você já possui pontos suficientes para formar uma aliança."
+            } else {
+                situacao =
+                    "Você ainda não possui pontos suficientes para formar uma aliança."
+            }
+
+            UIAccessibility.post(
+                notification: .announcement,
+                argument:
+                    """
+                    Tela de Cáustria.
+                    Você precisa de 8 pontos de Militarismo para se aliar com este país.
+                    Economia \(gameManager.cuastria.economia) de 10 pontos.
+                    Militarismo \(gameManager.cuastria.militarismo) de 10 pontos.
+                    Tecnologia \(gameManager.cuastria.tecnologia) de 10 pontos.
+                    \(situacao)
+                    """
+            )
+        }
+    }
+
     // MARK: - Fazer aliança
-    
+
     private func allyWithCaustria() {
-        
         guard canAlly else {
             return
         }
-        
-        
-        // Usa a função central do GameManager
-        
+
         gameManager.aliar(
             gameManager.cuastria
         )
-        
-        
-        // Fecha o popup
-        
+
         isPresent = false
     }
 }
 
-
-// MARK: - Preview
-
 #Preview {
-    
     CaustriaViewPreview()
 }
 
-
-// MARK: - Preview auxiliar
-
 private struct CaustriaViewPreview: View {
-    
-    @State private var gameManager = GameManager()
-    
-    
+
+    @State private var gameManager =
+        GameManager()
+
     var body: some View {
-        
         ZStack {
-            
             Color.blueSea
                 .ignoresSafeArea()
-            
-            
+
             CaustriaView(
                 isPresent: .constant(true)
             )

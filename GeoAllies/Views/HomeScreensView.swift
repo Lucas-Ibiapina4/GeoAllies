@@ -8,23 +8,32 @@
 import SwiftUI
 
 struct HomeScreensView: View {
-    
+
+    @State private var showingMap = false
+
     var body: some View {
         NavigationStack {
             ZStack {
-                // Fundo da tela
-                Group {
+
+                // MARK: - Fundo
+
+                ZStack {
                     Color.blueSea
+                        .ignoresSafeArea()
+
                     Image("fundo")
                         .resizable()
+                        .ignoresSafeArea()
                 }
-                .ignoresSafeArea()
-                // Botão que leva para o mapa
-                NavigationLink {
-                    MapView()
+                .accessibilityHidden(true)
+
+                // MARK: - Play
+
+                Button {
+                    showingMap = true
                 } label: {
                     ZStack {
-                        // sombra do botão
+
                         RoundedRectangle(cornerRadius: 50)
                             .fill(
                                 Color(
@@ -33,9 +42,13 @@ struct HomeScreensView: View {
                                     blue: 12 / 255
                                 )
                             )
-                            .frame(width: 285, height: 108)
+                            .frame(
+                                width: 285,
+                                height: 108
+                            )
                             .offset(y: 6)
-                        // Botão
+                            .accessibilityHidden(true)
+
                         RoundedRectangle(cornerRadius: 50)
                             .fill(
                                 Color(
@@ -44,13 +57,19 @@ struct HomeScreensView: View {
                                     blue: 39 / 255
                                 )
                             )
-                            .frame(width: 285, height: 102)
-                        // Conteúdo do botão
+                            .frame(
+                                width: 285,
+                                height: 102
+                            )
+                            .accessibilityHidden(true)
+
                         HStack(spacing: 14) {
+
                             Image(systemName: "play.fill")
                                 .font(.system(size: 48))
                                 .foregroundStyle(.white)
-                            
+                                .accessibilityHidden(true)
+
                             Text("Play")
                                 .font(
                                     .system(
@@ -60,12 +79,28 @@ struct HomeScreensView: View {
                                     )
                                 )
                                 .foregroundStyle(.white)
+                                .accessibilityHidden(true)
                         }
                     }
                 }
+                .buttonStyle(.plain)
+
+                // VoiceOver enxerga somente este elemento.
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("Play")
+                .accessibilityHint(
+                    "Toque duas vezes para iniciar o jogo"
+                )
             }
-            // Esconde a barra de navegação
-            .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(
+                isPresented: $showingMap
+            ) {
+                MapView()
+            }
+            .toolbar(
+                .hidden,
+                for: .navigationBar
+            )
         }
     }
 }

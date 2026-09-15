@@ -6,102 +6,82 @@
 //
 
 import SwiftUI
-
+import UIKit
 
 struct LucaciaView: View {
-    
+
     @Environment(GameManager.self) private var gameManager
-    
+    @Environment(\.accessibilityVoiceOverEnabled) private var voiceOverEnabled
+
     @Binding var isPresent: Bool
-    
+
     @State private var showingCounsil = false
-    
-    
-    // MARK: - Pode se aliar?
-    
+
     private var canAlly: Bool {
-        
         gameManager.yourCountry.tecnologia >= 10
     }
-    
-    
-    // MARK: - Verifica se Lucácia já é aliada
-    
+
     private var lucaciaAliada: Bool {
-        
         gameManager.aliados.contains {
             $0.id == gameManager.lucacia.id
         }
     }
-    
-    
+
     var body: some View {
-        
         GeometryReader { geometry in
-            
             ZStack {
-                
-                // MARK: - Fundo escurecido
-                
-                Color.black
-                    .opacity(0.30)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        
-                        // Só fecha Lucácia se
-                        // o Conselheiro não estiver aberto
-                        
-                        if !showingCounsil {
-                            isPresent = false
+
+                // MARK: - Conteúdo de Lucácia
+
+                ZStack {
+                    Color.black
+                        .opacity(0.30)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            if !showingCounsil {
+                                isPresent = false
+                            }
                         }
-                    }
-                
-                
-                // MARK: - Popup da Lucácia
-                
-                ZStack(alignment: .topTrailing) {
-                    
-                    // Fundo
-                    
-                    RoundedRectangle(cornerRadius: 35)
-                        .fill(
-                            Color(
-                                red: 245 / 255,
-                                green: 245 / 255,
-                                blue: 245 / 255
+                        .accessibilityHidden(true)
+
+                    ZStack(alignment: .topTrailing) {
+                        RoundedRectangle(cornerRadius: 35)
+                            .fill(
+                                Color(
+                                    red: 245 / 255,
+                                    green: 245 / 255,
+                                    blue: 245 / 255
+                                )
                             )
-                        )
-                    
-                    
-                    // Conteúdo
-                    
-                    HStack(spacing: 30) {
-                        
-                        countrySection
-                        
-                        statisticSection
+                            .accessibilityHidden(true)
+
+                        HStack(spacing: 30) {
+                            countrySection
+                                .accessibilitySortPriority(100)
+
+                            statisticSection
+                                .accessibilitySortPriority(50)
+                        }
+                        .padding(.horizontal, 32)
+                        .padding(.vertical, 18)
+
+                        closeButton
+                            .accessibilitySortPriority(10)
                     }
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 18)
-                    
-                    
-                    // Botão fechar
-                    
-                    closeButton
+                    .padding(.horizontal, 65)
+                    .padding(.vertical, 30)
+                    .offset(y: 15)
                 }
-                .padding(.horizontal, 65)
-                .padding(.vertical, 30)
-                .offset(y: 15)
+                .accessibilityHidden(showingCounsil)
                 .allowsHitTesting(!showingCounsil)
-                
-                
-                // MARK: - Popup do Conselheiro
-                
+
+                // MARK: - Conselheiro
+
                 if showingCounsil {
-                    
                     CounsilView(
                         isPresent: $showingCounsil
                     )
+                    .accessibilityAddTraits(.isModal)
                     .zIndex(1000)
                 }
             }
@@ -110,17 +90,16 @@ struct LucaciaView: View {
                 height: geometry.size.height
             )
         }
+        .onAppear {
+            announceScreen()
+        }
     }
-    
-    
+
     // MARK: - Lado esquerdo
-    
+
     private var countrySection: some View {
-        
         VStack(spacing: 8) {
-            
-            // MARK: Nome do país
-            
+
             Text("LUCÁCIA")
                 .font(
                     .system(
@@ -140,12 +119,10 @@ struct LucaciaView: View {
                     )
                 )
                 .clipShape(Capsule())
-            
-            
-            // MARK: - Imagem
-            
+                .accessibilityAddTraits(.isHeader)
+                .accessibilitySortPriority(100)
+
             if lucaciaAliada {
-                
                 Image("País3")
                     .resizable()
                     .scaledToFit()
@@ -153,9 +130,8 @@ struct LucaciaView: View {
                         width: 210,
                         height: 170
                     )
-                
+                    .accessibilityHidden(true)
             } else {
-                
                 Image("LucaciaImage")
                     .resizable()
                     .scaledToFit()
@@ -163,11 +139,9 @@ struct LucaciaView: View {
                         width: 210,
                         height: 170
                     )
+                    .accessibilityHidden(true)
             }
-            
-            
-            // MARK: - Sombra
-            
+
             Ellipse()
                 .fill(
                     Color.gray.opacity(0.20)
@@ -176,22 +150,15 @@ struct LucaciaView: View {
                     width: 170,
                     height: 22
                 )
-            
-            
-            // MARK: - Parte inferior
-            
+                .accessibilityHidden(true)
+
             HStack(
                 alignment: .bottom,
                 spacing: 12
             ) {
-                
-                // Conselheiro
-                
                 counselorButton
-                
-                
-                // Requisito
-                
+                    .accessibilitySortPriority(80)
+
                 Text(
                     "Você precisa de 10 pontos de Tecnologia para se aliar com esse país"
                 )
@@ -212,6 +179,10 @@ struct LucaciaView: View {
                         cornerRadius: 16
                     )
                 )
+                .accessibilityLabel(
+                    "Você precisa de 10 pontos de Tecnologia para se aliar com Lucácia"
+                )
+                .accessibilitySortPriority(90)
             }
         }
         .frame(
@@ -219,16 +190,12 @@ struct LucaciaView: View {
             maxHeight: .infinity
         )
     }
-    
-    
+
     // MARK: - Lado direito
-    
+
     private var statisticSection: some View {
-        
         VStack(spacing: -10) {
-            
-            // MARK: - Economia
-            
+
             ProgressBar(
                 name: "Economia",
                 icon: "dollarsign.circle.fill",
@@ -237,12 +204,9 @@ struct LucaciaView: View {
                 type: .economia,
                 showImproveButton: false
             ) {
-                // Sem ação
             }
-            
-            
-            // MARK: - Militarismo
-            
+            .accessibilitySortPriority(60)
+
             ProgressBar(
                 name: "Militarismo",
                 icon: "shield.fill",
@@ -251,12 +215,9 @@ struct LucaciaView: View {
                 type: .militarismo,
                 showImproveButton: false
             ) {
-                // Sem ação
             }
-            
-            
-            // MARK: - Tecnologia
-            
+            .accessibilitySortPriority(50)
+
             ProgressBar(
                 name: "Tecnologia",
                 icon: "desktopcomputer",
@@ -265,17 +226,12 @@ struct LucaciaView: View {
                 type: .tecnologia,
                 showImproveButton: false
             ) {
-                // Sem ação
             }
-            
-            
+            .accessibilitySortPriority(40)
+
             Spacer()
-            
-            
-            // MARK: - Estado da aliança
-            
+
             if lucaciaAliada {
-                
                 Text("Você já é aliado desse país")
                     .font(.subheadline)
                     .bold()
@@ -287,15 +243,15 @@ struct LucaciaView: View {
                         )
                     )
                     .padding(.bottom, 10)
-                
+                    .accessibilityLabel(
+                        "Você já é aliado de Lucácia"
+                    )
+                    .accessibilitySortPriority(30)
+
             } else {
-                
                 Button {
-                    
                     allyWithLucacia()
-                    
                 } label: {
-                    
                     Text("Aliar-se")
                         .font(
                             .system(
@@ -320,6 +276,20 @@ struct LucaciaView: View {
                 }
                 .buttonStyle(.plain)
                 .disabled(!canAlly)
+                .accessibilityLabel(
+                    "Aliar-se a Lucácia"
+                )
+                .accessibilityValue(
+                    canAlly
+                    ? "Disponível"
+                    : "Indisponível"
+                )
+                .accessibilityHint(
+                    canAlly
+                    ? "Forma uma aliança com Lucácia"
+                    : "Você precisa de 10 pontos de Tecnologia para formar esta aliança"
+                )
+                .accessibilitySortPriority(30)
             }
         }
         .padding(.horizontal, 22)
@@ -335,20 +305,14 @@ struct LucaciaView: View {
             )
         )
     }
-    
-    
-    // MARK: - Botão Conselheiro
-    
+
+    // MARK: - Conselheiro
+
     private var counselorButton: some View {
-        
         Button {
-            
             showingCounsil = true
-            
         } label: {
-            
             ZStack {
-                
                 Circle()
                     .fill(
                         Color(
@@ -362,8 +326,7 @@ struct LucaciaView: View {
                         height: 50
                     )
                     .shadow(radius: 3)
-                
-                
+
                 Image(
                     systemName: "person.wave.2.fill"
                 )
@@ -371,22 +334,22 @@ struct LucaciaView: View {
                 .scaledToFit()
                 .frame(height: 20)
                 .foregroundStyle(.white)
+                .accessibilityHidden(true)
             }
         }
         .buttonStyle(.plain)
+        .accessibilityLabel("Conselheiro")
+        .accessibilityHint(
+            "Toque duas vezes para conversar com o conselheiro"
+        )
     }
-    
-    
-    // MARK: - Botão Fechar
-    
+
+    // MARK: - Fechar
+
     private var closeButton: some View {
-        
         Button {
-            
             isPresent = false
-            
         } label: {
-            
             Image(systemName: "xmark")
                 .font(
                     .system(
@@ -402,6 +365,7 @@ struct LucaciaView: View {
                 .background(.red)
                 .clipShape(Circle())
                 .shadow(radius: 3)
+                .accessibilityHidden(true)
         }
         .buttonStyle(.plain)
         .contentShape(Circle())
@@ -409,60 +373,83 @@ struct LucaciaView: View {
             x: 12,
             y: -12
         )
+        .accessibilityLabel("Fechar")
+        .accessibilityHint(
+            "Fecha as informações de Lucácia"
+        )
     }
-    
-    
+
+    // MARK: - Leitura automática
+
+    private func announceScreen() {
+        guard voiceOverEnabled else {
+            return
+        }
+
+        DispatchQueue.main.asyncAfter(
+            deadline: .now() + 0.5
+        ) {
+            let situacao: String
+
+            if lucaciaAliada {
+                situacao =
+                    "Lucácia já é sua aliada."
+            } else if canAlly {
+                situacao =
+                    "Você já possui pontos suficientes para formar uma aliança."
+            } else {
+                situacao =
+                    "Você ainda não possui pontos suficientes para formar uma aliança."
+            }
+
+            UIAccessibility.post(
+                notification: .announcement,
+                argument:
+                    """
+                    Tela de Lucácia.
+                    Você precisa de 10 pontos de Tecnologia para se aliar com este país.
+                    Economia \(gameManager.lucacia.economia) de 10 pontos.
+                    Militarismo \(gameManager.lucacia.militarismo) de 10 pontos.
+                    Tecnologia \(gameManager.lucacia.tecnologia) de 10 pontos.
+                    \(situacao)
+                    """
+            )
+        }
+    }
+
     // MARK: - Fazer aliança
-    
+
     private func allyWithLucacia() {
-        
-        // Só permite aliança se
-        // tiver Tecnologia suficiente
-        
         guard canAlly else {
             return
         }
-        
-        
-        // O GameManager adiciona Lucácia
-        // e impede duplicatas
-        
+
         gameManager.aliar(
             gameManager.lucacia
         )
-        
-        
-        print("Aliança realizada com Lucácia")
-        
-        
-        // Fecha o popup
-        
+
+        print(
+            "Aliança realizada com Lucácia"
+        )
+
         isPresent = false
     }
 }
 
-
-// MARK: - Preview
-
 #Preview {
-    
     LucaciaPreview()
 }
 
-
 private struct LucaciaPreview: View {
-    
-    @State private var gameManager = GameManager()
-    
-    
+
+    @State private var gameManager =
+        GameManager()
+
     var body: some View {
-        
         ZStack {
-            
             Color.blueSea
                 .ignoresSafeArea()
-            
-            
+
             LucaciaView(
                 isPresent: .constant(true)
             )

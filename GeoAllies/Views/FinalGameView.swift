@@ -4,77 +4,101 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct FinalGameView: View {
-    
+
     @Binding var isPresent: Bool
-    
+
     @State private var animateConfetti = false
-    
+
+    @Environment(\.accessibilityVoiceOverEnabled)
+    private var voiceOverEnabled
+
+    @Environment(\.accessibilityReduceMotion)
+    private var reduceMotion
+
     private let confettiCount = 45
-    
+
+
     var body: some View {
-        
+
         GeometryReader { geometry in
-            
+
             ZStack {
-                
-                // Fundo escurecido
+
+                // MARK: - Fundo escurecido
+
                 Color.black
                     .opacity(0.30)
                     .ignoresSafeArea()
-                
-                
+                    .accessibilityHidden(true)
+
+
                 // MARK: - Confetes
-                
-                ForEach(0..<confettiCount, id: \.self) { index in
-                    
-                    confettiPiece(
-                        index: index,
-                        size: geometry.size
-                    )
+
+                if !reduceMotion {
+
+                    ForEach(
+                        0..<confettiCount,
+                        id: \.self
+                    ) { index in
+
+                        confettiPiece(
+                            index: index,
+                            size: geometry.size
+                        )
+                    }
                 }
-                
-                
+
+
                 // MARK: - Popup
-                
-                ZStack(alignment: .topTrailing) {
-                    
-                    RoundedRectangle(cornerRadius: 35)
-                        .fill(
-                            Color(
-                                red: 245 / 255,
-                                green: 245 / 255,
-                                blue: 245 / 255
+
+                ZStack(
+                    alignment: .topTrailing
+                ) {
+
+                    RoundedRectangle(
+                        cornerRadius: 35
+                    )
+                    .fill(
+                        Color(
+                            red: 245 / 255,
+                            green: 245 / 255,
+                            blue: 245 / 255
+                        )
+                    )
+                    .accessibilityHidden(true)
+
+
+                    VStack(spacing: 8) {
+
+                        // MARK: - Texto
+
+                        Text(
+                            "Parabéns! Você conquistou o mundo!"
+                        )
+                        .font(
+                            .system(
+                                size: 30,
+                                weight: .heavy,
+                                design: .rounded
                             )
                         )
-                    
-                    
-                    VStack(spacing: 8) {
-                        
-                        // MARK: - Texto
-                        
-                        Text("Parabéns! Você conquistou o mundo!")
-                            .font(
-                                .system(
-                                    size: 30,
-                                    weight: .heavy,
-                                    design: .rounded
-                                )
-                            )
-                            .foregroundStyle(.black)
-                            .multilineTextAlignment(.center)
-                            .lineLimit(2)
-                            .minimumScaleFactor(0.7)
-                            .padding(.horizontal, 45)
-                            .padding(.top, 20)
-                        
-                        
+                        .foregroundStyle(.black)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(2)
+                        .minimumScaleFactor(0.7)
+                        .padding(.horizontal, 45)
+                        .padding(.top, 20)
+                        .accessibilityAddTraits(.isHeader)
+
+
                         Spacer()
-                        
-                        
+
+
                         // MARK: - Conselheiro
-                        
+
                         Image("counsil")
                             .resizable()
                             .scaledToFit()
@@ -83,51 +107,69 @@ struct FinalGameView: View {
                                 height: 210
                             )
                             .offset(y: 20)
+
+                            // A imagem é decorativa
+                            .accessibilityHidden(true)
                     }
                     .frame(
                         maxWidth: .infinity,
                         maxHeight: .infinity
                     )
                     .clipped()
-                    
-                    
+
+
                     // MARK: - Botão fechar
-                    
+
                     Button {
-                        
+
                         isPresent = false
-                        
+
                     } label: {
-                        
-                        Image(systemName: "xmark")
-                            .font(
-                                .system(
-                                    size: 22,
-                                    weight: .heavy
-                                )
+
+                        Image(
+                            systemName: "xmark"
+                        )
+                        .font(
+                            .system(
+                                size: 22,
+                                weight: .heavy
                             )
-                            .foregroundStyle(.white)
-                            .frame(
-                                width: 50,
-                                height: 50
-                            )
-                            .background(.red)
-                            .clipShape(Circle())
-                            .shadow(radius: 3)
+                        )
+                        .foregroundStyle(.white)
+                        .frame(
+                            width: 50,
+                            height: 50
+                        )
+                        .background(.red)
+                        .clipShape(Circle())
+                        .shadow(radius: 3)
                     }
                     .buttonStyle(.plain)
                     .offset(
                         x: 15,
                         y: -15
                     )
+
+                    // MARK: - Acessibilidade
+
+                    .accessibilityLabel(
+                        "Fechar"
+                    )
+                    .accessibilityHint(
+                        "Fecha a tela de vitória e volta para o mapa"
+                    )
                 }
                 .frame(
-                    width: geometry.size.width * 0.72,
-                    height: geometry.size.height * 0.72
+                    width:
+                        geometry.size.width * 0.72,
+                    height:
+                        geometry.size.height * 0.72
                 )
                 .position(
-                    x: geometry.size.width / 2,
-                    y: geometry.size.height / 2
+                    x:
+                        geometry.size.width / 2,
+                    y:
+                        geometry.size.height / 2
                 )
                 .zIndex(10)
             }
@@ -135,50 +177,90 @@ struct FinalGameView: View {
                 width: geometry.size.width,
                 height: geometry.size.height
             )
+
+            // MARK: - Ao abrir
+
             .onAppear {
-                
-                animateConfetti = true
+
+                // Só inicia os confetes
+                // se Reduzir Movimento estiver desligado
+
+                if !reduceMotion {
+
+                    animateConfetti = true
+                }
+
+
+                // VoiceOver anuncia a vitória
+
+                if voiceOverEnabled {
+
+                    DispatchQueue.main.asyncAfter(
+                        deadline: .now() + 0.5
+                    ) {
+
+                        UIAccessibility.post(
+                            notification: .announcement,
+                            argument:
+                                """
+                                Parabéns! Você conquistou o mundo!
+                                Você conseguiu formar uma aliança com todos os países.
+                                """
+                        )
+                    }
+                }
             }
         }
     }
-    
-    
+
+
     // MARK: - Um pedaço de confete
-    
+
     @ViewBuilder
     private func confettiPiece(
         index: Int,
         size: CGSize
     ) -> some View {
-        
-        let xPosition = CGFloat(
-            (index * 73) % 100
-        ) / 100
-        
-        let delay = Double(
-            (index * 13) % 20
-        ) / 20
-        
-        let duration = Double(
-            2.5 + Double((index * 7) % 10) / 10
-        )
-        
-        let rotation = Double(
-            (index * 41) % 360
-        )
-        
-        let width = CGFloat(
-            7 + (index % 8)
-        )
-        
-        let height = CGFloat(
-            12 + (index % 10)
-        )
-        
-        
+
+        let xPosition =
+            CGFloat(
+                (index * 73) % 100
+            ) / 100
+
+        let delay =
+            Double(
+                (index * 13) % 20
+            ) / 20
+
+        let duration =
+            Double(
+                2.5
+                + Double(
+                    (index * 7) % 10
+                ) / 10
+            )
+
+        let rotation =
+            Double(
+                (index * 41) % 360
+            )
+
+        let width =
+            CGFloat(
+                7 + (index % 8)
+            )
+
+        let height =
+            CGFloat(
+                12 + (index % 10)
+            )
+
+
         Rectangle()
             .fill(
-                confettiColor(index)
+                confettiColor(
+                    index
+                )
             )
             .frame(
                 width: width,
@@ -192,10 +274,12 @@ struct FinalGameView: View {
                 )
             )
             .position(
-                x: size.width * xPosition,
-                y: animateConfetti
-                ? size.height + 40
-                : -40
+                x:
+                    size.width * xPosition,
+                y:
+                    animateConfetti
+                    ? size.height + 40
+                    : -40
             )
             .animation(
                 .linear(
@@ -208,32 +292,35 @@ struct FinalGameView: View {
                 value: animateConfetti
             )
             .zIndex(20)
+
+            // Confetes não precisam ser lidos
+            .accessibilityHidden(true)
     }
-    
-    
+
+
     // MARK: - Cores dos confetes
-    
+
     private func confettiColor(
         _ index: Int
     ) -> Color {
-        
+
         switch index % 6 {
-            
+
         case 0:
             return .red
-            
+
         case 1:
             return .yellow
-            
+
         case 2:
             return .blue
-            
+
         case 3:
             return .green
-            
+
         case 4:
             return .pink
-            
+
         default:
             return .orange
         }
@@ -244,12 +331,13 @@ struct FinalGameView: View {
 // MARK: - Preview
 
 #Preview {
-    
+
     ZStack {
-        
+
         Color.blueSea
             .ignoresSafeArea()
-        
+
+
         FinalGameView(
             isPresent: .constant(true)
         )
