@@ -55,17 +55,30 @@ struct AgnoliaView: View {
                             Color(.systemGray6)
                         )
                     
-                    HStack(spacing: 30) {
-                        countrySection
-                        statisticSection
+                    ScrollView {
+                        if dynamicTypeSize.isAccessibilitySize {
+                            VStack(spacing: 30) {
+                                countrySection
+                                statisticSection
+                            }
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 16)
+                        } else {
+                            HStack(spacing: 30) {
+                                countrySection
+                                statisticSection
+                            }
+                            .padding(.horizontal, 32)
+                            .padding(.vertical, 16)
+                        }
                     }
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 18)
+                    .scrollIndicators(.hidden)
                     
+                    // Botão fechar
                     closeButton
                 }
-                .padding(.horizontal, 65)
-                .padding(.vertical, 30)
+                .padding(8)
+                .frame(maxHeight: geometry.size.height * 0.95) // Limita a 95% da tela para o ScrollView funcionar
                 .offset(y: 15)
                 .allowsHitTesting(!showingCounsil)
                 

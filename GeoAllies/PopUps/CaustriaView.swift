@@ -62,28 +62,32 @@ struct CaustriaView: View {
                         )
                     
                     
-                    HStack(spacing: 30) {
-                        
-                        countrySection
-                        
-                        statisticSection
+                    ScrollView {
+                        if dynamicTypeSize.isAccessibilitySize {
+                            VStack(spacing: 30) {
+                                countrySection
+                                statisticSection
+                            }
+                            .padding(.horizontal, 24)
+                            .padding(.vertical, 16)
+                        } else {
+                            HStack(spacing: 30) {
+                                countrySection
+                                statisticSection
+                            }
+                            .padding(.horizontal, 32)
+                            .padding(.vertical, 16)
+                        }
                     }
-                    .padding(.horizontal, 32)
-                    .padding(.vertical, 18)
+                    .scrollIndicators(.hidden)
                     
-                    
-                    // MARK: - Botão Fechar
-                    
+                    // Botão fechar
                     closeButton
                 }
-                
-                // Mesmo padrão do PlayerCountryView
-                
-                .padding(.horizontal, 65)
-                .padding(.vertical, 30)
+                .padding(8)
+                .frame(maxHeight: geometry.size.height * 0.95) // Limita a 95% da tela para o ScrollView funcionar
                 .offset(y: 15)
                 .allowsHitTesting(!showingCounsil)
-                
                 
                 // MARK: - Popup do Conselheiro
                 
@@ -135,6 +139,14 @@ struct CaustriaView: View {
                     .scaledToFit()
                     .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
 
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
+                    )
+                    .frame(
+                        width: 170,
+                        height: 22
+                        )
                 
             } else {
                 

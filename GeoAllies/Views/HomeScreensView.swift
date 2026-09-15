@@ -57,6 +57,7 @@ struct HomeScreensView: View {
                                 .foregroundStyle(.white)
                         }
                     }
+                    .dynamicTypeSize(.large)
                 }
             }
             // Esconde a barra de navegação
