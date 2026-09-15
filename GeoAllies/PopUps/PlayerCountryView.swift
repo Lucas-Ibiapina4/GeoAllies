@@ -9,6 +9,8 @@ import SwiftUI
 
 struct PlayerCountryView: View {
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     @Binding var isPresent: Bool
     
     @State private var showingCounsil = false
@@ -88,10 +90,8 @@ struct PlayerCountryView: View {
             Image("PaísSeu")
                 .resizable()
                 .scaledToFit()
-                .frame(
-                    width: 210,
-                    height: 180
-                )
+                .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
             
             Ellipse()
                 .fill(
@@ -147,6 +147,7 @@ struct PlayerCountryView: View {
             ) {
                 openEconomyQuiz()
             }
+            .font(.caption2)
             
             ProgressBar(
                 name: "Militarismo",
@@ -157,6 +158,7 @@ struct PlayerCountryView: View {
             ) {
                 openMilitarismQuiz()
             }
+            .font(.caption2)
             
             ProgressBar(
                 name: "Tecnologia",
@@ -167,6 +169,7 @@ struct PlayerCountryView: View {
             ) {
                 openTechnologyQuiz()
             }
+            .font(.caption2)
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 16)

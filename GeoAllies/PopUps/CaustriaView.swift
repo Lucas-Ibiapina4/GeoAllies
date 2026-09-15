@@ -10,6 +10,8 @@ import SwiftUI
 
 struct CaustriaView: View {
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+
     @Binding var isPresent: Bool
     @State private var showingCounsil = false
     
@@ -131,35 +133,30 @@ struct CaustriaView: View {
                 Image("CaustriaGreen")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
                 
             } else {
                 
                 Image("CaustriaImage")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
+                
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
                     )
+                    .frame(
+                        width: 170,
+                        height: 22
+                        )
             }
             
-            
-            // MARK: - Sombra
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
-            
-            
+        
             // MARK: - Conselheiro + requisito
             
             HStack(
@@ -183,6 +180,7 @@ struct CaustriaView: View {
                     )
                 )
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -209,6 +207,11 @@ struct CaustriaView: View {
             ) {
                 
             }
+            .font(.caption2)
+
+            
+            
+            // MARK: - Militarismo
             
             
             // MARK: - Militarismo
@@ -223,6 +226,11 @@ struct CaustriaView: View {
             ) {
                 
             }
+            .font(.caption2)
+
+            
+            
+            // MARK: - Tecnologia
             
             
             // MARK: - Tecnologia

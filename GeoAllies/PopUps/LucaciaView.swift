@@ -7,10 +7,13 @@
 
 import SwiftUI
 
-
+//teste
 struct LucaciaView: View {
     
     @Environment(GameManager.self) private var gameManager
+    
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
+    
     @Binding var isPresent: Bool
     @State private var showingCounsil = false
     
@@ -121,34 +124,26 @@ struct LucaciaView: View {
                 Image("País3")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
-                    )
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
                 
             } else {
                 
                 Image("LucaciaImage")
                     .resizable()
                     .scaledToFit()
-                    .frame(
-                        width: 210,
-                        height: 170
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+                        
+                // MARK: Sombra abaixo do país
+                
+                Ellipse()
+                    .fill(
+                        Color.gray.opacity(0.20)
                     )
+                    .frame(
+                        width: 170,
+                        height: 22
+                        )
             }
-            
-            
-            // MARK: - Sombra
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
-            
             
             // MARK: - Parte inferior
             
@@ -177,6 +172,7 @@ struct LucaciaView: View {
                     )
                 )
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -203,6 +199,7 @@ struct LucaciaView: View {
             ) {
                 // Sem ação
             }
+            .font(.caption2)
             
             
             // MARK: - Militarismo
@@ -217,6 +214,7 @@ struct LucaciaView: View {
             ) {
                 // Sem ação
             }
+            .font(.caption2)
             
             
             // MARK: - Tecnologia
@@ -231,6 +229,11 @@ struct LucaciaView: View {
             ) {
                 // Sem ação
             }
+            .font(.caption2)
+
+            
+            
+            
             Spacer()
             
             // MARK: - Estado da aliança

@@ -11,6 +11,7 @@ import SwiftData
 
 struct AgnoliaView: View {
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Binding var isPresent: Bool
     
     // MARK: - Conselheiro
@@ -114,34 +115,31 @@ struct AgnoliaView: View {
                 Image("AgnoliaGreen")
                     .resizable()
                     .scaledToFit()
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+                
+                Ellipse()
+                    .fill(Color.gray.opacity(0.20))
                     .frame(
-                        width: 210,
-                        height: 170
+                        width: 170,
+                        height: 22
                     )
+
                 
             } else {
                 
                 Image("AgnoliaImage")
                     .resizable()
                     .scaledToFit()
+                    .frame(maxHeight: dynamicTypeSize.isAccessibilitySize ? 100 : 170)
+
+                
+                Ellipse()
+                    .fill(Color.gray.opacity(0.20))
                     .frame(
-                        width: 210,
-                        height: 170
+                        width: 170,
+                        height: 22
                     )
             }
-            
-            
-            // MARK: - Sombra
-            
-            Ellipse()
-                .fill(
-                    Color.gray.opacity(0.20)
-                )
-                .frame(
-                    width: 170,
-                    height: 22
-                )
-            
             
             // MARK: - Conselheiro + requisito
             
@@ -166,6 +164,7 @@ struct AgnoliaView: View {
                     )
                 )
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .frame(
             maxWidth: .infinity,
@@ -187,10 +186,8 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .economia,
                 showImproveButton: false
-            ) {
-                
-            }
-            
+            ) {}
+                .font(.caption2)
             
             ProgressBar(
                 name: "Militarismo",
@@ -199,10 +196,8 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .militarismo,
                 showImproveButton: false
-            ) {
-                
-            }
-            
+            ) {}
+                .font(.caption2)
             
             ProgressBar(
                 name: "Tecnologia",
@@ -211,11 +206,9 @@ struct AgnoliaView: View {
                 maximumValue: 10,
                 type: .tecnologia,
                 showImproveButton: false
-            ) {
-                
-            }
-            
-            
+            ) {}
+                .font(.caption2)
+
             Spacer()
             
             
@@ -240,7 +233,7 @@ struct AgnoliaView: View {
                         .font(.custom("Fredoka-Bold", size: 23))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
-                        .padding(.vertical, 9)
+                        .padding(.vertical, 15)
                         .background(
                             canAlly
                             ? Color.green
