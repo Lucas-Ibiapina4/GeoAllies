@@ -42,7 +42,7 @@ struct PlayerCountryView: View {
                             isPresent = false
                         } label: {
                             Image(systemName: "xmark")
-                                .font(.system(size: 22, weight: .heavy))
+                                .font(.custom("Fredoka-Bold", size: 23))
                                 .foregroundStyle(.white)
                                 .frame(width: 50, height: 50)
                                 .background(.red)
@@ -73,7 +73,7 @@ struct PlayerCountryView: View {
     private var countrySection: some View {
         VStack(spacing: 10) {
             Text("SEU PAÍS")
-                .font(.body)
+                .font(.custom("Fredoka", size: 23))
                 .bold()
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)

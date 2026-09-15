@@ -103,8 +103,7 @@ struct LucaciaView: View {
         VStack(spacing: 8) {
             // MARK: Nome do país
             Text("LUCÁCIA")
-                .font(.body)
-                .bold()
+                .font(.custom("Fredoka-Bold", size: 23))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 24)
                 .padding(.vertical, 6)
@@ -154,18 +153,14 @@ struct LucaciaView: View {
             ) {
                 
                 // Conselheiro
-                
                 counselorButton
-                
                 
                 // Requisito
                 
                 Text(
                     "Você precisa de 10 pontos de Tecnologia para se aliar com esse país"
                 )
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .font(.caption2)
-                .bold()
+                .font(.custom("Fredoka-Bold", size: 13))
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.black)
                 .padding(.horizontal, 12)
@@ -241,16 +236,12 @@ struct LucaciaView: View {
             
             Spacer()
             
-            
             // MARK: - Estado da aliança
             
             if lucaciaAliada {
                 
                 Text("Você já é aliado desse país")
-                    .font(.subheadline)
-                    .bold()
-                    .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
-                    .padding(.vertical, 15)
+                    .font(.custom("Fredoka-Bold", size: 17))
                     .foregroundStyle(
                         Color(
                             red: 0.4,
@@ -269,8 +260,7 @@ struct LucaciaView: View {
                 } label: {
                     
                     Text("Aliar-se")
-                        .font(.body)
-                        .bold()
+                        .font(.custom("Fredoka-Bold", size: 23))
                         .foregroundStyle(.white)
                         .padding(.horizontal, 30)
                         .padding(.vertical, 10)
@@ -355,12 +345,7 @@ struct LucaciaView: View {
         } label: {
             
             Image(systemName: "xmark")
-                .font(
-                    .system(
-                        size: 22,
-                        weight: .heavy
-                    )
-                )
+                .font(.custom("Fredoka-Bold", size: 23))
                 .foregroundStyle(.white)
                 .frame(
                     width: 50,
@@ -397,11 +382,6 @@ struct LucaciaView: View {
         gameManager.aliar(
             gameManager.lucacia
         )
-        
-        
-        print("Aliança realizada com Lucácia")
-        
-        
         // Fecha o popup
         
         isPresent = false

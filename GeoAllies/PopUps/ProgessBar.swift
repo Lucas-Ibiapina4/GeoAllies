@@ -63,7 +63,7 @@ struct ProgressBar: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Label(name, systemImage: icon)
-                .font(.system(size: 17, weight: .bold, design: .rounded))
+                .font(.custom("Fredoka-Bold", size: 18))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 5)
@@ -85,7 +85,7 @@ struct ProgressBar: View {
                     .frame(height: 24)
                     
                     Text("\(value)/\(maximumValue)")
-                        .font(.system(size: 14, weight: .bold))
+                        .font(.custom("Fredoka-Bold", size: 17))
                         .foregroundStyle(.black)
                 }
                 
@@ -94,7 +94,7 @@ struct ProgressBar: View {
                         onImprove()
                     } label: {
                         Image(systemName: "plus")
-                            .font(.system(size: 24, weight: .heavy))
+                            .font(.custom("Fredoka-Bold", size: 17))
                             .foregroundStyle(.white)
                     }
                     .buttonStyle(EstiloBotaoMais3D())

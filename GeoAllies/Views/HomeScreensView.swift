@@ -52,13 +52,8 @@ struct HomeScreensView: View {
                                 .foregroundStyle(.white)
                             
                             Text("Play")
-                                .font(
-                                    .system(
-                                        size: 56,
-                                        weight: .bold,
-                                        design: .rounded
-                                    )
-                                )
+                                .font(.custom("Fredoka", size: 55))
+                                .bold()
                                 .foregroundStyle(.white)
                         }
                     }
