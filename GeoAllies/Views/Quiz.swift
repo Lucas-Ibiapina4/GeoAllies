@@ -11,6 +11,7 @@ struct Quiz: View {
     let pilar: QuizPilar
     
     @Environment(GameManager.self) private var gameManager
+    @Environment(\.dynamicTypeSize) var dynamicTypeSize
     @Binding var isPresent: Bool
     
     @State private var questions: [QuestionsModel] = []
@@ -35,46 +36,56 @@ struct Quiz: View {
     }
     
     var body: some View {
-        ZStack {
-            Color.black.opacity(0.4)
-                .ignoresSafeArea()
-            
+        GeometryReader { geometry in
             ZStack {
-                RoundedRectangle(cornerRadius: 30)
-                    .fill(Color(red: 0.95, green: 0.95, blue: 0.95))
+                // MARK: - Fundo escurecido
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
                 
-                if quizFinished {
-                    endQuizScreen
-                } else if let question = currentQuestion {
-                    questionScreen(question: question)
-                } else {
-                    Text("Você já respondeu todas as perguntas disponíveis!")
-                        .foregroundColor(.gray)
-                        .font(.headline)
+                // MARK: - Card do Quiz
+                ZStack(alignment: .topTrailing) {
+                    
+                    // Fundo
+                    RoundedRectangle(cornerRadius: 30)
+                        .fill(Color(red: 0.95, green: 0.95, blue: 0.95))
+                    
+                    VStack(spacing: 12) {
+                        // MARK: - Cabeçalho Fixo
+                        topHeaderSection
+                        
+                        // MARK: - Conteúdo com Rolagem
+                        ScrollView {
+                            if quizFinished {
+                                endQuizScreen
+                            } else if let question = currentQuestion {
+                                questionScreen(question: question)
+                            } else {
+                                Text("Você já respondeu todas as perguntas disponíveis!")
+                                    .foregroundColor(.gray)
+                                    .font(.headline)
+                                    .padding(30)
+                            }
+                        }
+                        .scrollIndicators(.hidden)
+                    }
+                    .padding(.bottom, 10)
+                    
+                    // Botão Fechar
+                    closeButton
                 }
-            }
-            .frame(width: 700, height: 350)
-            .overlay(alignment: .topTrailing) {
-                closeButton
-            }
-            .overlay(alignment: .bottomLeading) {
-                counselorButton
-                    .offset(x: 600, y: -280)
-            }
-            .overlay(alignment: .top) {
-                if !quizFinished && !questions.isEmpty {
-                    scoreBadge
-                        .offset(y: 25)
+                .frame(maxWidth: min(geometry.size.width - 32, 750))
+                .frame(maxHeight: geometry.size.height * 0.85)
+                .padding(24)
+                
+                // MARK: - Popup do Conselheiro
+                if showingGeoCounsil {
+                    ZStack {
+                        Color.black.opacity(0.35)
+                            .ignoresSafeArea()
+                        CounsilView(isPresent: $showingGeoCounsil)
+                    }
+                    .zIndex(1000)
                 }
-            }
-            // 600 e -280
-            if showingGeoCounsil {
-                ZStack {
-                    Color.black.opacity(0.35)
-                        .ignoresSafeArea()
-                    CounsilView(isPresent: $showingGeoCounsil)
-                }
-                .zIndex(1000)
             }
         }
         .onAppear {
@@ -82,6 +93,37 @@ struct Quiz: View {
         }
     }
     
+    // MARK: - Cabeçalho Fixo Topo
+    private var topHeaderSection: some View {
+        HStack(spacing: 12) {
+            counselorButton
+            
+            geoQuizBadge
+            
+            Spacer()
+            
+            if !quizFinished && !questions.isEmpty {
+                scoreBadge
+            }
+        }
+        .padding(.horizontal, 24)
+        .padding(.top, 20)
+        .padding(.trailing, 28)
+    }
+    
+    // MARK: - Badge GeoQuiz
+    private var geoQuizBadge: some View {
+        Text("GeoQuiz")
+            .font(.custom("Fredoka", size: 20))
+            .bold()
+            .foregroundColor(.white)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .background(Color(red: 0.53, green: 0.72, blue: 0.49))
+            .clipShape(Capsule())
+    }
+    
+    // MARK: - Tela de Fim do Quiz
     private var endQuizScreen: some View {
         VStack(spacing: 20) {
             Text("Quiz Concluído!")
@@ -93,43 +135,50 @@ struct Quiz: View {
                 .font(.custom("Fredoka", size: 20))
                 .bold()
                 .foregroundColor(.gray)
-        }
-        .padding()
-    }
-    
-    private func questionScreen(question: QuestionsModel) -> some View {
-        HStack(spacing: 20) {
-            leftSideQuestion(question: question)
-            rightSideOptions(question: question)
+                .multilineTextAlignment(.center)
         }
         .padding(30)
     }
     
-    private func leftSideQuestion(question: QuestionsModel) -> some View {
-        VStack(alignment: .leading, spacing: 15) {
-            Text("GeoQuiz")
-                .font(.custom("Fredoka", size: 20))
-                .bold()
-                .foregroundColor(.white)
-                .padding(.horizontal, 16)
-                .padding(.vertical, 8)
-                .background(Color(red: 0.53, green: 0.72, blue: 0.49))
-                .clipShape(Capsule())
-            
-            Text(question.question)
-                .font(.custom("Fredoka-Bold", size: 19))
-                .foregroundColor(.black)
-                .multilineTextAlignment(.leading)
-                .padding(20)
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
-                .background(Color(red: 0.85, green: 0.85, blue: 0.85))
-                .clipShape(RoundedRectangle(cornerRadius: 20))
+    // MARK: - Conteúdo da Pergunta (Adaptativo)
+    private func questionScreen(question: QuestionsModel) -> some View {
+        Group {
+            if dynamicTypeSize.isAccessibilitySize {
+                VStack(spacing: 20) {
+                    leftSideQuestion(question: question)
+                    rightSideOptions(question: question)
+                }
+            } else {
+                HStack(alignment: .top, spacing: 20) {
+                    leftSideQuestion(question: question)
+                    rightSideOptions(question: question)
+                }
+            }
         }
-        .frame(width: 230)
+        .padding(.horizontal, 24)
+        .padding(.vertical, 12)
     }
     
+    // MARK: - Pergunta (Expande na vertical)
+    private func leftSideQuestion(question: QuestionsModel) -> some View {
+        Text(question.question)
+            .font(.custom("Fredoka-Bold", size: 19))
+            .foregroundColor(.black)
+            .multilineTextAlignment(.leading)
+            .padding(20)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: dynamicTypeSize.isAccessibilitySize ? nil : .infinity,
+                alignment: .topLeading
+            )
+            .background(Color(red: 0.85, green: 0.85, blue: 0.85))
+            .clipShape(RoundedRectangle(cornerRadius: 20))
+            .frame(maxWidth: dynamicTypeSize.isAccessibilitySize ? .infinity : 250)
+    }
+    
+    // MARK: - Opções / Lado Direito
     private func rightSideOptions(question: QuestionsModel) -> some View {
-        VStack(spacing: 9) {
+        VStack(spacing: 12) {
             ForEach(question.options.indices, id: \.self) { index in
                 Button {
                     checkAnswer(option: question.options[index], index: index)
@@ -139,17 +188,19 @@ struct Quiz: View {
                         .foregroundColor(.black)
                         .multilineTextAlignment(.leading)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, 3)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 10)
                         .background(getButtonColor(for: index))
                         .clipShape(RoundedRectangle(cornerRadius: 15))
                 }
+                .buttonStyle(.plain)
                 .disabled(questionIsAnswered)
             }
         }
-        .padding(.top, 45)
+        .frame(maxWidth: .infinity)
     }
     
+    // MARK: - Botão Fechar
     private var closeButton: some View {
         Button {
             if !quizFinished {
@@ -165,9 +216,11 @@ struct Quiz: View {
                 .clipShape(Circle())
                 .shadow(radius: 3, x: 0, y: 2)
         }
-        .offset(x: 15, y: -15)
+        .buttonStyle(.plain)
+        .offset(x: 12, y: -12)
     }
     
+    // MARK: - Botão Conselheiro
     private var counselorButton: some View {
         Button(action: {
             showingGeoCounsil = true
@@ -175,28 +228,28 @@ struct Quiz: View {
             ZStack {
                 Circle()
                     .fill(Color(red: 241/255, green: 157/255, blue: 59/255))
-                    .frame(width: 50, height: 50)
+                    .frame(width: 44, height: 44)
                     .shadow(radius: 3)
                 
-                HStack(spacing: 2) {
-                    Image(systemName: "questionmark.bubble.fill")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 20)
-                        .foregroundColor(.white)
-                }
+                Image(systemName: "questionmark.bubble.fill")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(height: 18)
+                    .foregroundColor(.white)
             }
         }
+        .buttonStyle(.plain)
     }
     
+    // MARK: - Badge de Pontos
     private var scoreBadge: some View {
-            Text("\(totalPoints)/10")
-                .font(.custom("Fredoka-Bold", size: 20))
-                .foregroundColor(.white)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 8)
-                .background(Color(red: 0.53, green: 0.72, blue: 0.49))
-                .clipShape(Capsule())
+        Text("\(totalPoints)/10")
+            .font(.custom("Fredoka-Bold", size: 20))
+            .foregroundColor(.white)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 8)
+            .background(Color(red: 0.53, green: 0.72, blue: 0.49))
+            .clipShape(Capsule())
     }
     
     private var totalPoints: Int {

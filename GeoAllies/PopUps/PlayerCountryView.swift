@@ -21,23 +21,40 @@ struct PlayerCountryView: View {
         NavigationStack {
             GeometryReader { geometry in
                 ZStack {
+                    // MARK: - Fundo escurecido
                     Color.black.opacity(0.3)
                         .ignoresSafeArea()
                         .onTapGesture {
                             isPresent = false
                         }
                     
+                    // MARK: - Popup Principal
                     ZStack(alignment: .topTrailing) {
+                        
+                        // Fundo
                         RoundedRectangle(cornerRadius: 35)
                             .fill(Color(red: 245 / 255, green: 245 / 255, blue: 245 / 255))
                         
-                        HStack(spacing: 30) {
-                            countrySection
-                            statisticSection
+                        ScrollView {
+                            if dynamicTypeSize.isAccessibilitySize {
+                                VStack(spacing: 30) {
+                                    countrySection
+                                    statisticSection
+                                }
+                                .padding(.horizontal, 24)
+                                .padding(.vertical, 32)
+                            } else {
+                                HStack(spacing: 30) {
+                                    countrySection
+                                    statisticSection
+                                }
+                                .padding(.horizontal, 32)
+                                .padding(.vertical, 18)
+                            }
                         }
-                        .padding(.horizontal, 32)
-                        .padding(.vertical, 18)
+                        .scrollIndicators(.hidden)
                         
+                        // Botão Fechar
                         Button {
                             isPresent = false
                         } label: {
@@ -49,17 +66,18 @@ struct PlayerCountryView: View {
                                 .clipShape(Circle())
                                 .shadow(radius: 3)
                         }
-                        .offset(x: 15, y: -15)
+                        .offset(x: 12, y: -12)
                     }
-                    .padding(.horizontal, 65)
-                    .padding(.vertical, 25)
+                    .padding(8)
+                    .frame(maxHeight: geometry.size.height * 0.95) // Altura máxima para permitir rolagem
+                    
+                    // MARK: - Popups Sobrepostos
                     
                     if isQuizOpen, let pilar = pilarQuizselected {
                         Quiz(pilar: pilar, isPresent: $isQuizOpen)
                             .zIndex(1000)
                     }
                     
-                    // MARK: - Adicionado a chamada do Conselheiro aqui!
                     if showingCounsil {
                         CounsilView(isPresent: $showingCounsil)
                             .zIndex(1000)
@@ -70,6 +88,7 @@ struct PlayerCountryView: View {
         .navigationBarBackButtonHidden(true)
     }
     
+    // MARK: - Lado esquerdo (ou Cima)
     private var countrySection: some View {
         VStack(spacing: 10) {
             Text("SEU PAÍS")
@@ -103,15 +122,11 @@ struct PlayerCountryView: View {
                 )
             
             HStack {
-                // MARK: - Atualizado o botão do conselheiro para funcionar a ação
                 counselorButton
                 Spacer()
             }
         }
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity
-        )
+        .frame(maxWidth: .infinity)
     }
     
     // MARK: - Botão do Conselheiro
@@ -134,8 +149,10 @@ struct PlayerCountryView: View {
                 }
             }
         }
+        .buttonStyle(.plain)
     }
     
+    // MARK: - Lado direito (ou Baixo)
     private var statisticSection: some View {
         VStack(spacing: 12) {
             ProgressBar(
@@ -173,10 +190,7 @@ struct PlayerCountryView: View {
         }
         .padding(.horizontal, 22)
         .padding(.vertical, 16)
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity
-        )
+        .frame(maxWidth: .infinity) // Removido maxHeight: .infinity
         .background(.white)
         .clipShape(
             RoundedRectangle(cornerRadius: 22)
@@ -199,6 +213,7 @@ struct PlayerCountryView: View {
     }
 }
 
+// MARK: - Preview
 #Preview {
     PlayerCountryPreview()
 }
@@ -207,7 +222,7 @@ private struct PlayerCountryPreview: View {
     @State private var gameManager = GameManager()
     var body: some View {
         ZStack {
-            Color.blue // Mudado temporariamente para não dar erro sem o Color.blueSea
+            Color.blue
                 .ignoresSafeArea()
             PlayerCountryView(
                 isPresent: .constant(true)
